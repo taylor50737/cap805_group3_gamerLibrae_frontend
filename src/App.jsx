@@ -1,12 +1,17 @@
-import {Navbar} from './Components/Navbar'
+import { Navbar } from './Components/Navbar'
+import { Footer } from './Components/Footer'
+import { Container } from '@mui/material'
 
 const App = () => {
   return (
     <>
       <Navbar/>
-      <h1 className="text-3xl font-bold underline">
-        Hello 852_code9
-      </h1>
+      <Container>
+        <h1 className="text-3xl font-bold underline">
+          Hello 852_code9
+        </h1>
+      </Container>
+      <Footer/>
     </>
   )
 }
