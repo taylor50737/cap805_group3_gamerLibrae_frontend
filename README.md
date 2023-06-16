@@ -1,6 +1,6 @@
 # Gamer Librae (Frontend)
 
-This project is about a web application offering authentic game reviews and facilitating the trading of second-hand games, enhancing the shopping experience for gamers.
+This project is about a web application offering authentic game reviews for gamers.
 
 
 ## Getting Started
