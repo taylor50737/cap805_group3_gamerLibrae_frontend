@@ -1,9 +1,12 @@
+import AdminPanel from "./AdminPanel/AdminPanel";
+
 const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello 852_code9
-    </h1>
-  )
-}
+    <div>
+      <h1 className="text-3xl font-bold underline">Hello 852_code9</h1>
+      <AdminPanel />
+    </div>
+  );
+};
 
-export default App
+export default App;
