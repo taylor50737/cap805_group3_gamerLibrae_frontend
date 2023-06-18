@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import ChangeInfoPage from './MemberPanel/pages/ChangeInfoPage.jsx';
+import ChangeInfo from './MemberPanel/pages/ChangeInfo.jsx';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/member/changeInfo',
-    element: <ChangeInfoPage />,
+    element: <ChangeInfo />,
   },
 ]);
 
