@@ -5,9 +5,12 @@ import {
   InputAdornment,
   Grid,
   Typography,
+  Paper,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
+import Score from './Score';
 
 export const SearchBox = () => {
   return (
@@ -16,15 +19,32 @@ export const SearchBox = () => {
       id='search-game'
       size='small'
       forcePopupIcon={false}
-      freeSolo={true}
-      options={moreGames}
+      freeSolo
+      options={games}
       getOptionLabel={(game) => game.name}
       filterOptions={(games, state) => {
-        if (state.inputValue === '') { return []; }
+        if (state.inputValue === '') {
+          return [];
+        }
         return games.filter((game) =>
           game.name.toLowerCase().includes(state.inputValue.toLowerCase()),
         );
       }}
+      PaperComponent={({ children }) => <Paper sx={{ bgcolor: '#2b2725' }}>{children}</Paper>}
+      // TODO: change scroll bar
+      // ListboxProps={{
+      //   style:{
+      //     '-webkit-scrollbar' : {
+      //       width: '12px',
+      //       bgcolor: '#5f6f9c',
+      //     },
+      //     '-webkit-scrollbar-thumb' : {
+      //       borderRadius: '10px',
+      //       '-webkit-box-shadow': 'inset 0 0 6px rgba(0, 0, 0, 0.3)',
+      //       bgcolor: '#d62929',
+      //     }
+      //   }
+      // }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -59,7 +79,7 @@ export const SearchBox = () => {
               height: 8,
             },
             '& .MuiOutlinedInput-root': {
-              borderRadius: 40,
+              borderRadius: 5,
               color: 'white',
               fontSize: 12,
               '& fieldset': {
@@ -72,7 +92,11 @@ export const SearchBox = () => {
               '&.Mui-focused fieldset': {
                 borderColor: '#b7b7b7',
                 borderWidth: 1.5,
+                // TODO: Change border style when focused
+                // borderRadius: '20px 20px 0px 0px',
+                // borderBottomStyle: 'none',
               },
+
               '&.MuiInputBase-sizeSmall .MuiAutocomplete-input': {
                 pl: 0,
               },
@@ -91,8 +115,8 @@ export const SearchBox = () => {
               <img src={game.image} width='40' height='30' />
             </Grid>
 
-            <Grid item md={8.5}>
-              <Typography sx={{ fontSize: 8 }}>
+            <Grid item md={8}>
+              <Typography sx={{ fontSize: 8, color: 'white' }}>
                 {game.name}
                 <br />
                 {game.releaseYear} {game.platform}
@@ -100,7 +124,13 @@ export const SearchBox = () => {
                 {game.developer}
               </Typography>
             </Grid>
-            <Grid itemmd={1.5}>{game.rating}</Grid>
+            <Grid
+              item
+              md={2}
+              sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            >
+              <Score score={game.score} />
+            </Grid>
           </Grid>
         </li>
       )}
@@ -115,7 +145,7 @@ const games = [
     releaseYear: '2023',
     platform: 'Switch',
     developer: 'Nintendo EPD',
-    rating: 95,
+    score: 95,
   },
   {
     image: 'src/assets/searchBoxMockImage/gollum.jpg',
@@ -123,7 +153,7 @@ const games = [
     releaseYear: '2023',
     platform: 'PS5',
     developer: 'Daedalic Entertainment',
-    rating: 30,
+    score: 30,
   },
   {
     image: 'src/assets/searchBoxMockImage/diablo.jpg',
@@ -131,13 +161,11 @@ const games = [
     releaseYear: '2023',
     platform: 'Xbox One',
     developer: 'Activision Blizzard',
-    rating: 85,
+    score: 65,
   },
-  
 ];
 
-const moreGames = Array(10).fill(games).flat();
-
-// Long options for testing
+// TODO: Long options for testing
+// const moreGames = Array(10).fill(games).flat();
 
 export default SearchBox;
