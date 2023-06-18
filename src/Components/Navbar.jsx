@@ -15,6 +15,8 @@ import Badge from '@mui/material/Badge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
 
+import SearchBox from './SearchBox';
+
 const pages = ['Home', 'Top Games', 'New Games'];
 const settings = ['Profile', 'Account', 'Logout'];
 
@@ -102,7 +104,7 @@ export const Navbar = () => {
           {/* Site icon for mobile device */}
           <Typography
             variant='h5'
-            noWrap
+            
             component='a'
             href=''
             sx={{
@@ -131,15 +133,15 @@ export const Navbar = () => {
                   color: 'white',
                   display: 'block',
                   fontSize: 18,
-                  fontWeight: 700,
+                  fontWeight: 800,
                   textTransform: 'none',
                 }}
               >
                 {page}
               </Button>
             ))}
+            <SearchBox/>
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             {/* Notification */}
             <Tooltip title='View notification'>
