@@ -68,7 +68,8 @@ const ScoreText = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   font-family: 'Chakra Petch';
-  font-size: 20px
+  font-size: 20px;
+  color: white;
 `;
 
 export const Score = ({ score }) => {

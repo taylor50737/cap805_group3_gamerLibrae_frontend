@@ -1,26 +1,32 @@
 import { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import Badge from '@mui/material/Badge';
+
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Menu,
+  MenuItem,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  Badge,
+  IconButton,
+} from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBell, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-const pages = ['Home', 'Top Games', 'New Games'];
+import SearchBox from './SearchBox';
+
+const pages = ['Home', 'Top Games'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 export const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isSearch, setIsSearch] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -61,8 +67,35 @@ export const Navbar = () => {
             GamerLibrae
           </Typography>
 
+          {/* Button for desktop */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', sm: 'none', md: 'flex' },
+            }}
+          >
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  mx: 2,
+                  color: 'white',
+                  flex: 'none',
+                  fontSize: 18,
+                  fontWeight: 800,
+                  textTransform: 'none',
+                }}
+              >
+                {page}
+              </Button>
+            ))}
+            <SearchBox />
+          </Box>
+
           {/* Site drop down menu for mobile device */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
               aria-label='account of current user'
@@ -102,12 +135,11 @@ export const Navbar = () => {
           {/* Site icon for mobile device */}
           <Typography
             variant='h5'
-            noWrap
             component='a'
             href=''
             sx={{
-              ml: 4,
-              display: { xs: 'flex', md: 'none' },
+              ml: 12,
+              display: { xs: 'flex', sm: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'Lobster',
               fontWeight: 700,
@@ -118,36 +150,33 @@ export const Navbar = () => {
           >
             GamerLibrae
           </Typography>
+          
+          <Box
+              sx={{
+                display: { xs: 'inline-block', sm: 'inline-block', md: 'none' },
+                flexGrow: 6,
+              }}
+            >
+              <SearchBox></SearchBox>
+              {/* {isSearch ? (
+                <SearchBox />
+              ) : (
+                <IconButton onClick={() => {console.log(isSearch); setIsSearch(!isSearch)}}>
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    size='lg'
+                    style={{ color: '#ffffff' }}
+                  />
+                </IconButton>
+              )} */}
+            </Box>
 
-          {/* Button for desktop */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  mx: 2,
-                  color: 'white',
-                  display: 'block',
-                  fontSize: 18,
-                  fontWeight: 700,
-                  textTransform: 'none',
-                }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
+          {/* Member */}
           <Box sx={{ flexGrow: 0 }}>
             {/* Notification */}
             <Tooltip title='View notification'>
               <IconButton sx={{ pr: 2 }}>
-                <Badge
-                  variant='dot'
-                  color='secondary'
-                >
+                <Badge variant='dot' color='secondary'>
                   <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
                 </Badge>
               </IconButton>
