@@ -45,6 +45,7 @@ export const SearchBox = () => {
       //     }
       //   }
       // }}
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '45%'}}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -64,10 +65,6 @@ export const SearchBox = () => {
             ),
           }}
           sx={{
-            mt: 3.5,
-            mx: 2,
-            color: 'white',
-            width: 350,
             input: {
               '&::placeholder': {
                 opacity: 1,
