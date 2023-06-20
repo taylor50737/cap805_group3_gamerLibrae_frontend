@@ -6,14 +6,6 @@ const red = 'rgba(231, 77, 77, 1)';
 
 const toZeroOpacity = (color) => color.substring(0, color.length - 2) + '0)';
 
-const Container = styled.div`
-  width: 50px;
-  height: 50px;
-  display: Grid;
-  gap: 0px;
-  position: relative;
-`;
-
 const Cell1 = styled.div`
   background: linear-gradient(
     to bottom right,
@@ -62,17 +54,25 @@ const Cell4 = styled.div`
   grid-row-end: 3;
 `;
 
-const ScoreText = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Chakra Petch';
-  font-size: 20px;
-  color: white;
-`;
+export const Score = ({ score, size }) => {
+  const ScoreContainer = styled.div`
+    width: ${size}px;
+    height: ${size}px;
+    display: Grid;
+    gap: 0px;
+    position: relative;
+  `;
 
-export const Score = ({ score }) => {
+  const ScoreText = styled.div`
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Chakra Petch';
+    font-size: ${size / 2.5}px;
+    color: white;
+  `;
+
   let scoreColor = '';
   if (score > 70) {
     scoreColor = green;
@@ -82,13 +82,13 @@ export const Score = ({ score }) => {
     scoreColor = red;
   }
   return (
-    <Container>
+    <ScoreContainer>
       <ScoreText>{score}</ScoreText>
       <Cell1 color={scoreColor} />
       <Cell2 color={scoreColor} />
       <Cell3 color={scoreColor} />
       <Cell4 color={scoreColor} />
-    </Container>
+    </ScoreContainer>
   );
 };
 

@@ -2,9 +2,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Highlight from '@tiptap/extension-highlight';
 
-import Spoiler from '../util/Spoiler';
-
-import { ToggleButton, ToggleButtonGroup, Button, InputBase } from '@mui/material';
+import { InputBase, ToggleButtonGroup, ToggleButton } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,14 +10,14 @@ import {
   faItalic,
   faStrikethrough,
   faHighlighter,
+  faEye,
+  faHeading,
   faListUl,
   faListOl,
-  faHeading,
   faQuoteRight,
-  faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
-import React from 'react';
+import Spoiler from '../util/Spoiler';
 
 const Title = () => {
   return (
@@ -29,7 +27,7 @@ const Title = () => {
       fullWidth
       sx={{
         color: 'white',
-        backgroundColor: '#383838',
+        backgroundColor: '#262626',
         borderRadius: '20px',
         px: 1,
       }}
@@ -48,7 +46,7 @@ const MenuBar = ({ editor }) => {
       sx={{
         // Apply to all ToggleButton in this group
         '.MuiToggleButtonGroup-grouped': {
-          width: { xs: 24, sm: 36, md: 48 },
+          width: { xs: 36, md: 48 },
           color: 'white',
           '&.Mui-selected': {
             color: 'white',
@@ -96,9 +94,20 @@ const MenuBar = ({ editor }) => {
         value='highlight'
         onClick={() => editor.chain().focus().toggleHighlight({ color: '#666637' }).run()}
         disabled={!editor.can().chain().focus().toggleHighlight({ color: '#666637' }).run()}
-        selected={editor.isActive('highlight', { color: '#666637'}) ? true : false}
+        selected={editor.isActive('highlight', { color: '#666637' }) ? true : false}
       >
         <FontAwesomeIcon icon={faHighlighter} />
+      </ToggleButton>
+
+      {/* Spoiler */}
+      <ToggleButton
+        aria-label='spoiler'
+        value='spoiler'
+        onClick={() => editor.chain().focus().toggleSpoiler().run()}
+        disabled={!editor.can().chain().focus().toggleSpoiler().run()}
+        selected={editor.isActive('spoiler') ? true : false}
+      >
+        <FontAwesomeIcon icon={faEye} />
       </ToggleButton>
 
       {/* Header */}
@@ -144,22 +153,11 @@ const MenuBar = ({ editor }) => {
       >
         <FontAwesomeIcon icon={faQuoteRight} />
       </ToggleButton>
-
-      {/* Spoiler */}
-      <ToggleButton
-        aria-label='spoiler'
-        value='spoiler'
-        onClick={() => editor.chain().focus().toggleSpoiler().run()}
-        disabled={!editor.can().chain().focus().toggleSpoiler().run()}
-        selected={editor.isActive('spoiler') ? true : false}
-      >
-        <FontAwesomeIcon icon={faEye} />
-      </ToggleButton>
     </ToggleButtonGroup>
   );
 };
 
-export default function Editor() {
+export const ReviewEditor = () => {
   // If you are using tiptap editor with tailwind
   // You need to either
   // 1: explicitly configure tag with tailwind class to it because no default class is applied
@@ -202,7 +200,7 @@ export default function Editor() {
       attributes: {
         // Default tailwind typography style https://github.com/tailwindlabs/tailwindcss-typography/blob/master/src/styles.js
         class:
-          'prose p-2 bg-[#383838] min-h-[300px] max-w-none rounded-sm\
+          'prose p-2 bg-neutral-800 min-h-[300px] max-w-none rounded-sm\
                 focus:outline focus:outline-2 focus:outline-zinc-500 focus:rounded-sm',
       },
     },
@@ -250,57 +248,20 @@ export default function Editor() {
   });
 
   return (
-    <div className='flex-col'>
-      <div className='rounded-md bg-neutral-600'>
-        <div className='px-2 pt-2'>
-          <Title />
-        </div>
-
-        <div className='px-2 pt-2'>
-          <MenuBar editor={editor} />
-        </div>
-
-        <div className='p-2'>
-          <EditorContent editor={editor} />
-        </div>
+    <div className='rounded-md bg-neutral-700'>
+      <div className='px-1 pt-1'>
+        <Title />
       </div>
 
-      <div className='flex justify-end'>
-        <Button
-          variant='contained'
-          onClick={() => console.log('save draft')}
-          sx={{
-            my: 2,
-            mr: 4,
-            color: '#0d0c11',
-            bgcolor: '#d9d9d9',
-            '&:hover': {
-              color: '#0d0c11',
-              backgroundColor: '#d9d9d9',
-              opacity: 0.8,
-            },
-          }}
-        >
-          Save draft
-        </Button>
+      <div className='px-1 pt-1'>
+        <MenuBar editor={editor} />
+      </div>
 
-        <Button
-          variant='contained'
-          onClick={() => console.log(editor.getHTML())}
-          sx={{
-            my: 2,
-            color: '#FFFFFF',
-            bgcolor: '#565656',
-            '&:hover': {
-              color: '#FFFFFF',
-              backgroundColor: '#565656',
-              opacity: 0.8,
-            },
-          }}
-        >
-          Post review
-        </Button>
+      <div className='p-1'>
+        <EditorContent editor={editor} />
       </div>
     </div>
   );
-}
+};
+
+export default ReviewEditor;

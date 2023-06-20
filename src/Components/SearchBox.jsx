@@ -126,7 +126,7 @@ export const SearchBox = () => {
               md={2}
               sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
-              <Score score={game.score} />
+              <Score score={game.score} size={50}/>
             </Grid>
           </Grid>
         </li>
