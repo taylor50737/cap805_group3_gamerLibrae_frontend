@@ -4,6 +4,17 @@ import ReviewEditor from '../components/ReviewEditor';
 import ScoreSelector from '../components/ScoreSelector';
 
 export const ReviewEditPage = () => {
+  let score = '';
+  let reviewContentHTML = '';
+
+  const handleScoreChange = (newScore) => {
+    score = newScore;
+  };
+
+  const handleReviewContentChange = (newReviewContentHTML) => {
+    reviewContentHTML = newReviewContentHTML;
+  };
+
   return (
     <div className='flex-col'>
       {/* Scroll selector */}
@@ -15,10 +26,10 @@ export const ReviewEditPage = () => {
       >
         Select you score here:
       </Typography>
-      <ScoreSelector />
+      <ScoreSelector onScoreChange={handleScoreChange} />
 
       {/* Review editor*/}
-      <ReviewEditor />
+      <ReviewEditor onReviewContentChange={handleReviewContentChange} />
 
       {/* Submit buttons */}
       <div className='flex justify-end'>
@@ -42,7 +53,11 @@ export const ReviewEditPage = () => {
 
         <Button
           variant='contained'
-          onClick={() => console.log(editor.getHTML())}
+          onClick={() => {
+            // Insert form submission here
+            console.log(`Score: ${score}`);
+            console.log(`Content: ${reviewContentHTML}`);
+          }}
           sx={{
             my: 2,
             color: '#FFFFFF',

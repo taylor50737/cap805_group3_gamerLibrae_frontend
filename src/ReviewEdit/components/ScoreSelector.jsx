@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Grid, Slider } from '@mui/material';
 import { Score } from '../../Components/Score';
 
@@ -8,11 +8,17 @@ const red = 'rgba(231, 77, 77, 1)';
 const greenScore = 70;
 const yellowScore = 40;
 
-export const ScoreSelector = () => {
+export const ScoreSelector = ({onScoreChange}) => {
   const [value, setValue] = useState(yellowScore);
+
+  // Inform parent the default score when ScoreSelector initially loaded
+  useEffect(() => {
+    onScoreChange(value);
+  }, []);
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
+    onScoreChange(newValue);
   };
 
   const getColor = (value) => {

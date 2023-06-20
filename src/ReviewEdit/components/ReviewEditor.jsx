@@ -157,7 +157,7 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-export const ReviewEditor = () => {
+export const ReviewEditor = ({ onReviewContentChange }) => {
   // If you are using tiptap editor with tailwind
   // You need to either
   // 1: explicitly configure tag with tailwind class to it because no default class is applied
@@ -245,6 +245,12 @@ export const ReviewEditor = () => {
         Test Spoiler
       <span data-type="spoiler">
     `,
+    onUpdate({ editor }) {
+      onReviewContentChange(editor.getHTML());
+    },
+    onCreate({ editor }) {
+      onReviewContentChange(editor.getHTML());
+    },
   });
 
   return (
