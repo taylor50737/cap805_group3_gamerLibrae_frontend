@@ -8,7 +8,7 @@ export const GameInfo = () => {
       sx={{py:4}}
     >
       <Grid item>
-        <img src='src/assets/GameInfo/zelda_big.jpg' className='h-[120px] w-[120px] rounded' />
+        <img src='/src/assets/GameInfo/zelda_big.jpg' className='h-[120px] w-[120px] rounded' />
       </Grid>
       <Grid item>
         <Typography

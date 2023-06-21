@@ -84,4 +84,4 @@ export const ReviewEditPage = () => {
   );
 };
 
-export default ReviewEditor;
+export default ReviewEditPage;
