@@ -38,16 +38,22 @@ export const ScoreSelector = ({onScoreChange}) => {
             value={typeof value === 'number' ? value : 0}
             onChange={handleSliderChange}
             aria-labelledby='input-slider'
-            marks
             step={5}
             min={0}
             max={100}
             sx={{
               '.MuiSlider-thumb': {
                 color: '#d7dbe0',
+                height: 30,
+                width: 30,
               },
               '.MuiSlider-track': {
                 color: getColor(value),
+                height: 25,
+              },
+              '.MuiSlider-rail': {
+                height: 25,
+                bgcolor: 'black'
               },
             }}
           />

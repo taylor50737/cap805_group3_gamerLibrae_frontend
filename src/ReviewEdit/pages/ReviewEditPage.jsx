@@ -2,6 +2,7 @@ import { Button, Typography } from '@mui/material';
 
 import ReviewEditor from '../components/ReviewEditor';
 import ScoreSelector from '../components/ScoreSelector';
+import GameInfo from '../components/GameInfo';
 
 export const ReviewEditPage = () => {
   let score = '';
@@ -16,7 +17,8 @@ export const ReviewEditPage = () => {
   };
 
   return (
-    <div className='flex-col'>
+    <div className='flex-col mb-24'>
+      <GameInfo/>
       {/* Scroll selector */}
       <Typography
         sx={{
@@ -35,7 +37,12 @@ export const ReviewEditPage = () => {
       <div className='flex justify-end'>
         <Button
           variant='contained'
-          onClick={() => console.log('save draft')}
+          onClick={() => {
+            // Insert form submission here
+            alert(`Score: ${score}\nContent: ${reviewContentHTML}`)
+            console.log(`Score: ${score}`);
+            console.log(`Content: ${reviewContentHTML}`);
+          }}
           sx={{
             my: 2,
             mr: 4,
@@ -55,6 +62,7 @@ export const ReviewEditPage = () => {
           variant='contained'
           onClick={() => {
             // Insert form submission here
+            alert(`Score: ${score}\nContent: ${reviewContentHTML}`)
             console.log(`Score: ${score}`);
             console.log(`Content: ${reviewContentHTML}`);
           }}
