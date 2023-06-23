@@ -1,5 +1,5 @@
 const ChangeInfo = () => {
-    return <h2>This is change info page</h2>
+  return <div className='p-4 pt-2'></div>;
 };
 
 export default ChangeInfo;

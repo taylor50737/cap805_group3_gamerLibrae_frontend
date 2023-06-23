@@ -1,9 +1,18 @@
+import { Navbar } from './Components/Navbar';
+import { Footer } from './Components/Footer';
+import { Container } from '@mui/material';
+import { Outlet } from 'react-router-dom';
+
 const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello 852_code9
-    </h1>
-  )
-}
+    <>
+      <Navbar />
+      <Container>
+        <Outlet />
+      </Container>
+      <Footer />
+    </>
+  );
+};
 
-export default App
+export default App;
