@@ -1,6 +1,7 @@
 module.exports = {
   env: { browser: true, es2020: true },
   extends: [
+    'prettier',
     'airbnb',
     'airbnb/hooks',
     'eslint:recommended',
@@ -16,8 +17,5 @@ module.exports = {
     rules: {
       'react/react-in-jsx-scope': 0,
     },
-  },
-  'lint-staged': {
-    '*.{js,css,ts,tsx,jsx}': ['prettier --write', 'eslint --fix'],
   },
 };
