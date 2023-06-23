@@ -1,5 +1,5 @@
 const MainPanel = () => {
-    return <h1>This is Main Panel Page</h1>
+    return <div className='p-4 pt-2'>This is Change Info page</div>
 }
 
 export default MainPanel;
