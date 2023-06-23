@@ -1,7 +1,5 @@
 const ResetPassword = () => {
-    return (
-        <h1>This is ResetPassword Page!</h1>
-    );
-}
+  return <div className='p-4 pt-2'>This is Reset pw page</div>;
+};
 
 export default ResetPassword;
