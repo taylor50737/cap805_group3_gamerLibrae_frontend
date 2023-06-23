@@ -13,15 +13,16 @@ import {
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from 'react';
 
-const genreChoosable = ['Action', 'Adventure', 'RPG', 'Open World'];
-const platformChoosable = ['Switch', 'PS5', 'PC'];
+const genreChoosable = ['Action', 'Adventure', 'RPG', 'Open World', 'First Person Shooter', 'Simulation', 'Puzzlers'];
+const platformChoosable = ['Switch', 'PS5', 'PC', 'Xbox Series X'];
 const playModeChoosable = ['Single-Player', 'Offline', 'Multi-Player', 'Online'];
 const earliestYear = 1990;
 const currentYear = new Date().getFullYear();
 
-const MultiSelector = ({ categoryName, options, searchOption, setSearchOption }) => {
+const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchOption }) => {
   return (
     <Autocomplete
       multiple
@@ -30,6 +31,7 @@ const MultiSelector = ({ categoryName, options, searchOption, setSearchOption })
       getOptionLabel={(option) => option}
       value={searchOption}
       onChange={(event, newValues) => setSearchOption(newValues)}
+      popupIcon={<ArrowDropDownIcon sx={{ color: '#b7b7b7' }} />}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox
@@ -41,7 +43,17 @@ const MultiSelector = ({ categoryName, options, searchOption, setSearchOption })
         </li>
       )}
       renderInput={(params) => (
-        <TextField {...params} label={`Select ${categoryName}`} placeholder={`${categoryName}`} />
+        <TextField
+          {...params}
+          label={`Select ${categoryName}`}
+          placeholder={`${categoryName}`}
+          InputLabelProps={{ sx: { color: 'white', '& label.Mui-focused': { color: 'red' } } }}
+          sx={{
+            '& label.Mui-focused': {
+              color: 'white',
+            },
+          }}
+        />
       )}
       renderTags={(selectedTags, getTagProps) =>
         selectedTags.map((tag, i) => (
@@ -52,7 +64,8 @@ const MultiSelector = ({ categoryName, options, searchOption, setSearchOption })
             {...getTagProps({ i })}
             sx={{
               border: 'none',
-              bgcolor: 'purple',
+              bgcolor: '#9747ff',
+              color: '#ffffff',
               '.MuiChip-label': { fontSize: '12px', px: '8px' },
               '.MuiChip-deleteIcon': { fontSize: '15px' },
             }}
@@ -60,7 +73,23 @@ const MultiSelector = ({ categoryName, options, searchOption, setSearchOption })
         ))
       }
       sx={{
-        bgcolor: 'grey',
+        '& .MuiOutlinedInput-root': {
+          color: 'white',
+          '& fieldset': {
+            borderWidth: '2px',
+            borderRadius: '18px',
+            borderColor: '#B7B7B7',
+          },
+          '&:hover fieldset': {
+            borderColor: '#B7B7B7',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: '#B7B7B7',
+          },
+        },
+        '.MuiAutocomplete-clearIndicator': {
+          color: '#B7B7B7',
+        },
       }}
     />
   );
@@ -68,7 +97,7 @@ const MultiSelector = ({ categoryName, options, searchOption, setSearchOption })
 
 const MultiCheckboxSelector = ({ options, searchOption, setSearchOption }) => {
   return (
-    <FormGroup sx={{ bgcolor: 'grey' }}>
+    <FormGroup sx={{ borderWidth: '2px', borderColor: '#B7B7B7', borderRadius: '18px' }}>
       <Grid container>
         {options.map((option, i) => (
           <Grid key={i} item md={6}>
@@ -84,7 +113,7 @@ const MultiCheckboxSelector = ({ options, searchOption, setSearchOption }) => {
                       setSearchOption([...searchOption, option]);
                     }
                   }}
-                  sx={{ float: 'right' }}
+                  sx={{ float: 'right', color: '#B7B7B7' }}
                 />
               }
               label={`${option}`}
@@ -112,7 +141,7 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
   };
 
   return (
-    <Box sx={{ bgcolor: 'grey', px: '10px' }}>
+    <Box sx={{ px: '10px' }}>
       <span className='float-left'>{rangeName}</span>
       <span className='float-right'>
         {range[0]} - {range[1]}
@@ -131,7 +160,7 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
             width: 10,
           },
           '.MuiSlider-track': {
-            color: 'black',
+            color: '#adadad',
             height: 5,
           },
           '.MuiSlider-rail': {
@@ -178,17 +207,21 @@ export const AdvanceGameSearchBox = () => {
         flexDirection: 'column',
         height: '100%',
         p: '10px',
+        gap: '10px',
         justifyContent: 'space-between',
         bgcolor: '#292525',
+        overflowX: 'hidden',
+        overflowY: 'scroll',
+
       }}
     >
-      <MultiSelector
+      <MultiDropdownSelector
         categoryName='Genre'
         options={genreChoosable}
         searchOption={genres}
         setSearchOption={setGenres}
       />
-      <MultiSelector
+      <MultiDropdownSelector
         categoryName='Platform'
         options={platformChoosable}
         searchOption={platforms}
@@ -219,12 +252,22 @@ export const AdvanceGameSearchBox = () => {
       />
       <Grid container spacing={'10px'}>
         <Grid item md={4}>
-          <Button variant='contained' fullWidth onClick={handleReset}>
+          <Button
+            variant='contained'
+            fullWidth
+            onClick={handleReset}
+            sx={{ bgcolor: '#D9D9D9', color: '#000000' }}
+          >
             Reset
           </Button>
         </Grid>
         <Grid item md={8}>
-          <Button variant='contained' fullWidth onClick={handleSubmit}>
+          <Button
+            variant='contained'
+            fullWidth
+            onClick={handleSubmit}
+            sx={{ bgcolor: '#D9D9D9', color: '#000000' }}
+          >
             Submit
           </Button>
         </Grid>

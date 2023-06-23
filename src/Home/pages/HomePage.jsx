@@ -27,7 +27,7 @@ export const HomePage = () => {
       </div> */}
 
       <Grid container spacing={'15px'} sx={{mt: '2px'}}>
-        <Grid item xs={12} sm={12} md={3}>
+        <Grid item xs={12} sm={12} md={3.5}>
           <Box
             sx={{
               bgcolor: 'grey',
@@ -37,7 +37,7 @@ export const HomePage = () => {
             <AdvanceGameSearchBox/>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={12} md={9}>
+        <Grid item xs={12} sm={12} md={8.5}>
           <Box
             sx={{
               bgcolor: 'grey',
