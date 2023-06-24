@@ -1,0 +1,24 @@
+@media screen and (max-width: 600px) {
+  .affrule {
+    padding-left: 2rem !important;
+  }
+}
+
+.affrule {
+  max-width: 80vw;
+}
+
+.affrule--block {
+  margin: 3rem 0;
+}
+
+.affrule--para {
+  padding-top: 1rem;
+}
+
+.affrule--reg--button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+}
