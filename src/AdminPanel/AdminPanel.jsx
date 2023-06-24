@@ -1,4 +1,6 @@
 import GameTab from './GameTab';
+import ActionButton from './components/ActionButton';
+import NewButton from './components/NewButton';
 
 export default function AdminPanel() {
   const tabs = [
@@ -90,14 +92,29 @@ export default function AdminPanel() {
   return (
     <div className='m-10'>
       {/* Admin Panel */}
-      <div className='m-auto w-[57rem] rounded-xl border bg-gray-700 text-white'>
-        <div className='mx-20 flex justify-between p-3 '>
+      <div className='m-auto'>
+        <div className='tabs tabs-boxed flex justify-around'>
           {tabs.map((tab) => (
-            <button key={tab.name}>{tab.name}</button>
+            <a className='tab' key={tab.name}>
+              {tab.name}
+            </a>
           ))}
         </div>
       </div>
+
       <div className='mx-10 mt-20'>
+        <div className='flex flex-row justify-between'>
+          <div className='flex flex-row items-center gap-4'>
+            <div>Game</div>
+            <NewButton />
+            <ActionButton />
+          </div>
+          <input
+            type='text'
+            placeholder='Type here'
+            className='input-bordered input w-full max-w-xs'
+          />
+        </div>
         <GameTab games={games} />
       </div>
     </div>
