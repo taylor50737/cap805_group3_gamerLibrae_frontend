@@ -3,29 +3,18 @@ import { Link } from 'react-router-dom';
 import { Grid, Box } from '@mui/material';
 
 import AdvanceGameSearchBox from '../../Components/AdvanceGameSearchBox';
+import Carousel from './components/Carousel'
+import ImageSlider from './components/ImageSlider';
+
+const displayItems = [
+  { title: 'The Legend of Zelda: Tears of the Kingdom', img: 'src/assets/carousel/zelda.jpg' },
+  { title: 'Elden ring', img: 'src/assets/carousel/eldenRing.jpg' },
+  { title: 'Diablo IV', img: 'src/assets/carousel/diablo4.jpg' },
+];
 
 export const HomePage = () => {
   return (
     <>
-      {/* <h1 className='text-3xl font-bold underline'>
-        <i className='fa-solid fa-hand' /> Hi 852_code_9
-      </h1>
-      <div>
-        <button>
-          <i className='fa fa-pen' /> Write a Review
-        </button>
-      </div>
-      <div>
-        <button>
-          <i className='fa fa-send' /> Send us a message
-        </button>
-      </div>
-      <div>
-        <button>
-          <i className='fa fa-user' /> Login
-        </button>
-      </div> */}
-
       <Grid container spacing={'15px'} sx={{mt: '2px'}}>
         <Grid item xs={12} sm={12} md={3.5}>
           <Box
@@ -40,11 +29,10 @@ export const HomePage = () => {
         <Grid item xs={12} sm={12} md={8.5}>
           <Box
             sx={{
-              bgcolor: 'grey',
               height: { md: '100%', xs: '250px' },
             }}
           >
-            Featured game
+            <Carousel />
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
