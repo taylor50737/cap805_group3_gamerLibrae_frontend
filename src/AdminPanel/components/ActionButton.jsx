@@ -1,7 +1,7 @@
 export default function ActionButton() {
   return (
     <div className='dropdown-bottom dropdown'>
-      <label tabIndex={0} className='btn'>
+      <label tabIndex={0} className='btn-info btn'>
         Action
       </label>
       <ul
@@ -9,10 +9,10 @@ export default function ActionButton() {
         className='dropdown-content menu rounded-box z-[1] w-52 bg-base-100 p-2 shadow'
       >
         <li>
-          <a>Item 1</a>
+          <a>Edit</a>
         </li>
         <li>
-          <a>Item 2</a>
+          <a>Delete</a>
         </li>
       </ul>
     </div>

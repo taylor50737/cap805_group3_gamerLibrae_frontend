@@ -1,6 +1,8 @@
 import GameTab from './GameTab';
+import UserTab from './UserTab';
 import ActionButton from './components/ActionButton';
 import NewButton from './components/NewButton';
+import { games, users } from './tempData';
 
 export default function AdminPanel() {
   const tabs = [
@@ -10,85 +12,7 @@ export default function AdminPanel() {
     { name: 'Review', link: '/' },
     { name: 'Report', link: '/' },
   ];
-  const games = [
-    {
-      _id: '1',
-      name: 'Diablo 4',
-      developer: 'Blizzard',
-      publisher: 'admin',
-      releaseDate: 'June 6th, 2023',
-      gener: ['arpg'],
-      platform: ['pc', 'xbox', 'playstation'],
-      status: 'public',
-      publishedDate: 'Jun 14th, 2023',
-    },
-    {
-      _id: '2',
-      name: 'Diablo 4',
-      developer: 'Blizzard',
-      publisher: 'admin',
-      releaseDate: 'June 6th, 2023',
-      gener: ['arpg'],
-      platform: ['pc', 'xbox', 'playstation'],
-      status: 'public',
-      publishedDate: 'Jun 14th, 2023',
-    },
-    {
-      _id: '3',
-      name: 'Diablo 4',
-      developer: 'Blizzard',
-      publisher: 'admin',
-      releaseDate: 'June 6th, 2023',
-      gener: ['arpg'],
-      platform: ['pc', 'xbox', 'playstation'],
-      status: 'public',
-      publishedDate: 'Jun 14th, 2023',
-    },
-    {
-      _id: '4',
-      name: 'Diablo 4',
-      developer: 'Blizzard',
-      publisher: 'admin',
-      releaseDate: 'June 6th, 2023',
-      gener: ['arpg'],
-      platform: ['pc', 'xbox', 'playstation'],
-      status: 'public',
-      publishedDate: 'Jun 14th, 2023',
-    },
-    {
-      _id: '5',
-      name: 'Diablo 4',
-      developer: 'Blizzard',
-      publisher: 'admin',
-      releaseDate: 'June 6th, 2023',
-      gener: ['arpg'],
-      platform: ['pc', 'xbox', 'playstation'],
-      status: 'public',
-      publishedDate: 'Jun 14th, 2023',
-    },
-    {
-      _id: '6',
-      name: 'Diablo 4',
-      developer: 'Blizzard',
-      publisher: 'admin',
-      releaseDate: 'June 6th, 2023',
-      gener: ['arpg'],
-      platform: ['pc', 'xbox', 'playstation'],
-      status: 'public',
-      publishedDate: 'Jun 14th, 2023',
-    },
-    {
-      _id: '7',
-      name: 'Diablo 4',
-      developer: 'Blizzard',
-      publisher: 'admin',
-      releaseDate: 'June 6th, 2023',
-      gener: ['arpg'],
-      platform: ['pc', 'xbox', 'playstation'],
-      status: 'public',
-      publishedDate: 'Jun 14th, 2023',
-    },
-  ];
+
   return (
     <div className='m-10'>
       {/* Admin Panel */}
@@ -111,7 +35,7 @@ export default function AdminPanel() {
           </div>
           <input
             type='text'
-            placeholder='Type here'
+            placeholder='Search'
             className='input-bordered input w-full max-w-xs'
           />
         </div>
