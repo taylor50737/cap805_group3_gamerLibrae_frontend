@@ -1,17 +1,25 @@
 import { useState, useRef, useEffect } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { IconButton, Box, Typography } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesLeft, faAnglesRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 const displayItems = [
-  { title: 'The Legend of Zelda: Tears of the Kingdom', img: 'src/assets/carousel/zelda.jpg' },
-  { title: 'Elden ring', img: 'src/assets/carousel/eldenRing.jpg' },
-  { title: 'Diablo IV', img: 'src/assets/carousel/diablo4.jpg' },
+  {
+    title: 'The Legend of Zelda: Tears of the Kingdom',
+    imgUrl: 'src/assets/carousel/zelda.jpg',
+    pageUrl: 'game/123',
+  },
+  { title: 'Elden ring', imgUrl: 'src/assets/carousel/eldenRing.jpg', pageUrl: 'game/123' },
+  { title: 'Diablo IV', imgUrl: 'src/assets/carousel/diablo4.jpg', pageUrl: 'game/123' },
+  { title: 'Final Fantasy XVI', imgUrl: 'src/assets/carousel/ff16.jpg', pageUrl: 'game/123' },
+  { title: 'Starfield', imgUrl: 'src/assets/carousel/starfield.jpg', pageUrl: 'game/123' },
 ];
 
-const autoSwipeTimerMs = 3000;
+const autoSwipeTimerMs = 5000;
 
 const Carousel = () => {
   const [index, setIndex] = useState(0);
@@ -38,8 +46,7 @@ const Carousel = () => {
   };
 
   return (
-    <Box sx={{ display: 'inline-block', position: 'relative', width: '100%', height: '100%'}}>
-
+    <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
       {/* Title */}
       <Typography
         sx={{
@@ -47,7 +54,7 @@ const Carousel = () => {
           top: '80%',
           left: '5%',
           fontFamily: 'Chakra Petch',
-          fontSize: '24px',
+          fontSize: '36px',
           fontWeight: 600,
         }}
       >
@@ -105,31 +112,22 @@ const Carousel = () => {
       </Box>
 
       {/* image */}
-      {/* <img
-        src={displayItems[index].img}
-        onClick={() => alert('Game page')}
-        style={{
-          display: 'block',
-          width: '100%',
-          height: '100%',
-        }}
-        className='z-0 after:absolute after:top-0 after:left-0 after:z-[1] after:bg-blue-300'
-      /> */}
-
       <div
         style={{
-          display: 'block',
           width: '100%',
           height: '100%',
           background: 'rgba(0, 0, 0, 0.4)',
-          backgroundImage: `url(${displayItems[index].img})`,
+          backgroundImage: `url(${displayItems[index].imgUrl})`,
           backgroundBlendMode: 'darken',
           backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '0% 0%',
           borderRadius: '18px',
+          transitionDuration: '500ms',
         }}
-      />
+      >
+        <Link to={displayItems[index].pageUrl} />
+      </div>
     </Box>
   );
 };

@@ -4,13 +4,6 @@ import { Grid, Box } from '@mui/material';
 
 import AdvanceGameSearchBox from '../../Components/AdvanceGameSearchBox';
 import Carousel from './components/Carousel'
-import ImageSlider from './components/ImageSlider';
-
-const displayItems = [
-  { title: 'The Legend of Zelda: Tears of the Kingdom', img: 'src/assets/carousel/zelda.jpg' },
-  { title: 'Elden ring', img: 'src/assets/carousel/eldenRing.jpg' },
-  { title: 'Diablo IV', img: 'src/assets/carousel/diablo4.jpg' },
-];
 
 export const HomePage = () => {
   return (
