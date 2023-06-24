@@ -9,6 +9,11 @@ import AdminPanel from './AdminPanel/AdminPanel';
 import ReviewEditPage from './ReviewEdit/pages/ReviewEditPage';
 import HomePage from './Home/pages/HomePage';
 import ErrorPage from './Error/pages/ErrorPage';
+import MainPanel from './MemberPanel/pages/MainPanel';
+import ChangeInfo from './MemberPanel/pages/ChangeInfo';
+import ResetPassword from './MemberPanel/pages/ResetPassword';
+import UploadProfilePic from './MemberPanel/pages/UploadProfilePic';
+import WishList from './MemberPanel/pages/WishList';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +42,31 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'member/:uid',
+        children: [
+          {
+            index: true,
+            element: <MainPanel />
+          },
+          {
+            path: 'change-info',
+            element: <ChangeInfo />
+          },
+          {
+            path: 'reset-password',
+            element: <ResetPassword />
+          },
+          {
+            path: 'upload-profile-pic',
+            element: <UploadProfilePic />
+          },
+          {
+            path: 'wishlist',
+            element: <WishList />
+          }
+        ]
+      }
     ],
   },
 ]);

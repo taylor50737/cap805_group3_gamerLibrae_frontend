@@ -1,5 +1,5 @@
 const UploadProfilePic = () => {
-  return <h2>This is change icon page</h2>;
+  return <div className='p-4 pt-2'>This upload profile pic page</div>;
 };
 
 export default UploadProfilePic;
