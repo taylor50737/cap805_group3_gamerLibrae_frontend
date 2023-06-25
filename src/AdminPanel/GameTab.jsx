@@ -57,22 +57,24 @@ export default function GameTab({ games }) {
         </table>
       </div>
       {/* Pagination */}
-      <div className='join'>
-        <button className='btn-ghost join-item btn'>«</button>
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-          <button
-            key={pageNumber}
-            onClick={() => handlePageChange(pageNumber)}
-            className={
-              pageNumber === currentPage
-                ? 'btn-ghost btn-active join-item btn'
-                : 'btn-ghost join-item btn'
-            }
-          >
-            {pageNumber}
-          </button>
-        ))}
-        <button className='btn-ghost join-item btn'>»</button>
+      <div className='m-auto text-center'>
+        <div className='join flex justify-around'>
+          <button className='btn-ghost join-item btn'>«</button>
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={
+                pageNumber === currentPage
+                  ? 'btn-ghost btn-active join-item btn'
+                  : 'btn-ghost join-item btn'
+              }
+            >
+              {pageNumber}
+            </button>
+          ))}
+          <button className='btn-ghost join-item btn'>»</button>
+        </div>
       </div>
     </div>
   );
