@@ -123,6 +123,8 @@ const Carousel = () => {
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '0% 0%',
           borderRadius: '18px',
+          transitionDelay: '100ms',
+          transitionProperty: 'background',
           transitionDuration: '500ms',
         }}
       >

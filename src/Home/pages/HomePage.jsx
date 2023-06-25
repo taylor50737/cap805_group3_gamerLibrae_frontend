@@ -4,22 +4,22 @@ import { Grid, Box } from '@mui/material';
 
 import AdvanceGameSearchBox from '../../Components/AdvanceGameSearchBox';
 import Carousel from './components/Carousel'
+import TopGames from './components/TopGames';
 
 export const HomePage = () => {
   return (
     <>
       <Grid container spacing={'15px'} sx={{mt: '2px'}}>
-        <Grid item xs={12} sm={12} md={3.5}>
+        <Grid item xs={12} sm={12} md={3}>
           <Box
             sx={{
-              bgcolor: 'grey',
               height: { md: '500px', xs: '250px' },
             }}
           >
             <AdvanceGameSearchBox/>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={12} md={8.5}>
+        <Grid item xs={12} sm={12} md={9}>
           <Box
             sx={{
               height: { md: '100%', xs: '250px' },
@@ -31,11 +31,10 @@ export const HomePage = () => {
         <Grid item xs={12} sm={12} md={12}>
           <Box
             sx={{
-              bgcolor: 'grey',
               height: { md: '250px', xs: '200px' },
             }}
           >
-            Top game
+            <TopGames/>
           </Box>
         </Grid>
       </Grid>
