@@ -9,6 +9,8 @@ import {
   Chip,
   Grid,
   Button,
+  Paper,
+  Typography,
 } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -16,11 +18,68 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from 'react';
 
-const genreChoosable = ['Action', 'Adventure', 'RPG', 'Open World', 'First Person Shooter', 'Simulation', 'Puzzlers'];
+const genreChoosable = [
+  'Action',
+  'Adventure',
+  'RPG',
+  'Open World',
+  'First Person Shooter',
+  'Simulation',
+  'Puzzlers',
+];
 const platformChoosable = ['Switch', 'PS5', 'PC', 'Xbox Series X'];
 const playModeChoosable = ['Single-Player', 'Offline', 'Multi-Player', 'Online'];
 const earliestYear = 1990;
 const currentYear = new Date().getFullYear();
+
+const scrollBarStyle = {
+  '&::-webkit-scrollbar': {
+    width: '0.2em',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: '#19191a',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    bgcolor: '#888',
+    borderRadius: '4px',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    background: '#555',
+  },
+};
+
+const DropdownPaper = ({ children }) => {
+  return (
+    <Paper
+      sx={{
+        bgcolor: '#2b2b2a',
+        borderRadius: 2,
+        '& .MuiAutocomplete-listbox': {
+          color: 'white',
+          '& .MuiAutocomplete-option': {
+            py: 0,
+          },
+          "& .MuiAutocomplete-option[aria-selected='true']": {
+            bgcolor: '#424140',
+
+            '&.Mui-focused': {
+              bgcolor: '#424140',
+            },
+          },
+        },
+        '& .MuiAutocomplete-listbox .MuiAutocomplete-option.Mui-focused': {
+          bgcolor: '#403f3e',
+        },
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        maxHeight: '250px',
+        ...scrollBarStyle,
+      }}
+    >
+      {children}
+    </Paper>
+  );
+};
 
 const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchOption }) => {
   return (
@@ -32,12 +91,19 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
       value={searchOption}
       onChange={(event, newValues) => setSearchOption(newValues)}
       popupIcon={<ArrowDropDownIcon sx={{ color: '#b7b7b7' }} />}
+      PaperComponent={DropdownPaper}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox
             icon={<CheckBoxOutlineBlankIcon fontSize='small' />}
             checkedIcon={<CheckBoxIcon fontSize='small' />}
             checked={selected}
+            sx={{
+              color: '#B7B7B7',
+              '&.Mui-checked': {
+                color: '#cfcecc',
+              },
+            }}
           />
           {option}
         </li>
@@ -47,7 +113,7 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
           {...params}
           label={`Select ${categoryName}`}
           placeholder={`${categoryName}`}
-          InputLabelProps={{ sx: { color: 'white', '& label.Mui-focused': { color: 'red' } } }}
+          InputLabelProps={{ sx: { color: '#808080', '& label.Mui-focused': { color: 'red' } } }}
           sx={{
             '& label.Mui-focused': {
               color: 'white',
@@ -113,12 +179,22 @@ const MultiCheckboxSelector = ({ options, searchOption, setSearchOption }) => {
                       setSearchOption([...searchOption, option]);
                     }
                   }}
-                  sx={{ float: 'right', color: '#B7B7B7' }}
+                  sx={{
+                    float: 'right',
+                    color: '#B7B7B7',
+                    '&.Mui-checked': {
+                      color: '#cfcecc',
+                    },
+                  }}
                 />
               }
               label={`${option}`}
               labelPlacement='start'
-              sx={{ m: 0, float: 'right', '.MuiFormControlLabel-label': { fontSize: '14px' } }}
+              sx={{
+                m: 0,
+                float: 'right',
+                '.MuiFormControlLabel-label': { fontSize: '12px', color: '#808080' },
+              }}
             />
           </Grid>
         ))}
@@ -142,10 +218,12 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
 
   return (
     <Box sx={{ px: '10px' }}>
-      <span className='float-left'>{rangeName}</span>
-      <span className='float-right'>
+      <Typography sx={{ display: 'inline', float: 'left', color: '#808080' }}>
+        {rangeName}
+      </Typography>
+      <Typography sx={{ display: 'inline', float: 'right', fontWeight: 600 }}>
         {range[0]} - {range[1]}
-      </span>
+      </Typography>
       <Slider
         value={range}
         onChange={handleChange}
@@ -206,13 +284,14 @@ export const AdvanceGameSearchBox = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        borderRadius: 2,
         p: '10px',
         gap: '10px',
         justifyContent: 'space-between',
         bgcolor: '#292525',
         overflowX: 'hidden',
-        overflowY: 'scroll',
-
+        overflowY: 'auto',
+        ...scrollBarStyle,
       }}
     >
       <MultiDropdownSelector
@@ -256,7 +335,14 @@ export const AdvanceGameSearchBox = () => {
             variant='contained'
             fullWidth
             onClick={handleReset}
-            sx={{ bgcolor: '#D9D9D9', color: '#000000' }}
+            sx={{
+              bgcolor: '#D9D9D9',
+              color: '#000000',
+              ':hover': {
+                bgcolor: '#33353d',
+                color: 'white',
+              },
+            }}
           >
             Reset
           </Button>
@@ -266,7 +352,14 @@ export const AdvanceGameSearchBox = () => {
             variant='contained'
             fullWidth
             onClick={handleSubmit}
-            sx={{ bgcolor: '#D9D9D9', color: '#000000' }}
+            sx={{
+              bgcolor: '#D9D9D9',
+              color: '#000000',
+              ':hover': {
+                bgcolor: '#33353d',
+                color: 'white',
+              },
+            }}
           >
             Submit
           </Button>
