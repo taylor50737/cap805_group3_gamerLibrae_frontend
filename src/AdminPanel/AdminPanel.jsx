@@ -40,6 +40,7 @@ export default function AdminPanel() {
           />
         </div>
         <GameTab games={games} />
+        <UserTab users={users} />
       </div>
     </div>
   );
