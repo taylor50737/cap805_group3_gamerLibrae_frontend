@@ -51,8 +51,8 @@ export default function UserTab({ users }) {
                 {/* <td>{user._id}</td> */}
                 <td>{user.userName}</td>
                 <td>{user.email}</td>
-                <td>{user.isAdmin}</td>
-                <td>{user.joinedAffiliation}</td>
+                <td>{user.isAdmin === true ? 'Admin' : 'Member'}</td>
+                <td>{user.joinedAffiliation === true ? 'Yes' : 'No'}</td>
                 <td>{user.status}</td>
               </tr>
             ))}
@@ -60,16 +60,24 @@ export default function UserTab({ users }) {
         </table>
       </div>
       {/* Pagination */}
-      <div className='pagination'>
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-          <button
-            key={pageNumber}
-            onClick={() => handlePageChange(pageNumber)}
-            className={pageNumber === currentPage ? 'active' : ''}
-          >
-            {pageNumber}
-          </button>
-        ))}
+      <div className='m-auto text-center'>
+        <div className='join flex justify-around'>
+          <button className='btn-ghost join-item btn'>«</button>
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={
+                pageNumber === currentPage
+                  ? 'btn-ghost btn-active join-item btn'
+                  : 'btn-ghost join-item btn'
+              }
+            >
+              {pageNumber}
+            </button>
+          ))}
+          <button className='btn-ghost join-item btn'>»</button>
+        </div>
       </div>
     </div>
   );
