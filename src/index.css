@@ -8,19 +8,21 @@
 html {
   overscroll-behavior: none;
   height: 100%;
+  overflow: auto;
 }
 
 body {
-  background: linear-gradient(45deg, #1c1917, #1f2937);
+  background: linear-gradient(270deg, rgba(28, 25, 23, 1), rgba(31, 41, 55, 1));
   background-repeat: no-repeat;
   background-attachment: fixed;
 
   color: white;
   height: 100%;
+  overflow: auto;
 }
 
 /* For sticky footer */
-#root{
+#root {
   min-height: 100%;
   display: flex;
   flex-direction: column;
