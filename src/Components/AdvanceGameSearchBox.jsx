@@ -46,6 +46,7 @@ const scrollBarStyle = {
   '&::-webkit-scrollbar-thumb:hover': {
     background: '#555',
   },
+  scrollbarGutter: 'stable',
 };
 
 const DropdownPaper = ({ children }) => {

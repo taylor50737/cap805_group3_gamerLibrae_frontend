@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBell, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
 
 import SearchBox from './SearchBox';
 
@@ -26,7 +26,6 @@ const settings = ['Profile', 'Account', 'Logout'];
 export const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [isSearch, setIsSearch] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -45,7 +44,7 @@ export const Navbar = () => {
   };
 
   return (
-    <AppBar position='static' sx={{ bgcolor: 'inherit' }}>
+    <AppBar position='static' style={{ backgroundColor: 'transparent' }}>
       <Container>
         <Toolbar disableGutters>
           {/* Site icon for dekstop */}
@@ -150,15 +149,15 @@ export const Navbar = () => {
           >
             GamerLibrae
           </Typography>
-          
+
           <Box
-              sx={{
-                display: { xs: 'inline-block', sm: 'inline-block', md: 'none' },
-                flexGrow: 6,
-              }}
-            >
-              <SearchBox></SearchBox>
-              {/* {isSearch ? (
+            sx={{
+              display: { xs: 'inline-block', sm: 'inline-block', md: 'none' },
+              flexGrow: 6,
+            }}
+          >
+            <SearchBox></SearchBox>
+            {/* {isSearch ? (
                 <SearchBox />
               ) : (
                 <IconButton onClick={() => {console.log(isSearch); setIsSearch(!isSearch)}}>
@@ -169,7 +168,7 @@ export const Navbar = () => {
                   />
                 </IconButton>
               )} */}
-            </Box>
+          </Box>
 
           {/* Member */}
           <Box sx={{ flexGrow: 0 }}>
