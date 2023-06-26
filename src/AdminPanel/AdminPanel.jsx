@@ -1,8 +1,9 @@
 import GameTab from './GameTab';
 import UserTab from './UserTab';
+import CommentTab from './CommentTab';
 import ActionButton from './components/ActionButton';
 import NewButton from './components/NewButton';
-import { games, users } from './tempData';
+import { games, users, reviews } from './tempData';
 import { useState } from 'react';
 
 export default function AdminPanel() {
@@ -52,6 +53,7 @@ export default function AdminPanel() {
         </div>
         {currentTab === 'Game' && <GameTab games={games} />}
         {currentTab === 'User' && <UserTab users={users} />}
+        {currentTab === 'Comment' && <CommentTab reviews={reviews} />}
       </div>
     </div>
   );
