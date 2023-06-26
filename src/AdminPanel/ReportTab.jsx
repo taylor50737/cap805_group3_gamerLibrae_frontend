@@ -1,22 +1,57 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function UserTab({ users }) {
-  const fields = ['ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
+export default function ReportTab({ reviews }) {
+  const fields = ['ID', 'Report', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
+  // Filter out all reports
+  const [reports, setReports] = useState([]);
+
+  useEffect(() => {
+    const extractedReports = [];
+
+    for (let i = 0; i < reviews.length; i++) {
+      const review = reviews[i];
+      const reviewReports = review.reports;
+
+      if (reviewReports) {
+        for (let j = 0; j < reviewReports.length; j++) {
+          const report = reviewReports[j];
+          extractedReports.push(report);
+        }
+      }
+    }
+
+    setReports(extractedReports);
+  }, [reviews]);
+
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = reports.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
-  const totalPages = Math.ceil(users.length / itemsPerPage);
+  const totalPages = Math.ceil(reports.length / itemsPerPage);
 
   // Function to handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  // Function to handle previous page navigation
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  // Function to handle next page navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
   return (
@@ -38,22 +73,16 @@ export default function UserTab({ users }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((user) => (
-              <tr key={user.userName}>
+            {currentItems.map((report, index) => (
+              <tr key={index}>
                 <th>
                   <label>
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>
-                  <img src={user.avatar} />
-                </td>
-                {/* <td>{user._id}</td> */}
-                <td>{user.userName}</td>
-                <td>{user.email}</td>
-                <td>{user.isAdmin === true ? 'Admin' : 'Member'}</td>
-                <td>{user.joinedAffiliation === true ? 'Yes' : 'No'}</td>
-                <td>{user.status}</td>
+                <td>{index}</td>
+                <td>{report.report}</td>
+                <td>{report.status}</td>
               </tr>
             ))}
           </tbody>
@@ -62,7 +91,9 @@ export default function UserTab({ users }) {
       {/* Pagination */}
       <div className='m-auto text-center'>
         <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn'>«</button>
+          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+            «
+          </button>
           {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
             <button
               key={pageNumber}
@@ -76,7 +107,9 @@ export default function UserTab({ users }) {
               {pageNumber}
             </button>
           ))}
-          <button className='btn-ghost join-item btn'>»</button>
+          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+            »
+          </button>
         </div>
       </div>
     </div>

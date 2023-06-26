@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export default function UserTab({ reviews }) {
-  const fields = ['ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
+export default function CommentTab({ reviews }) {
+  const fields = ['ID', 'Comment', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -17,20 +17,15 @@ export default function UserTab({ reviews }) {
       const reviewComments = review.comments;
 
       if (reviewComments) {
-        const commentKeys = Object.keys(reviewComments);
-
-        for (let j = 0; j < commentKeys.length; j++) {
-          const commentKey = commentKeys[j];
-
-          if (commentKey.startsWith('comment')) {
-            extractedComments.push(reviewComments[commentKey]);
-          }
+        for (let j = 0; j < reviewComments.length; j++) {
+          const comment = reviewComments[j];
+          extractedComments.push(comment);
         }
       }
     }
 
     setComments(extractedComments);
-  }, []);
+  }, [reviews]);
 
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
