@@ -19,6 +19,20 @@ export default function UserTab({ users }) {
     setCurrentPage(pageNumber);
   };
 
+  // Function to handle previous page navigation
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  // Function to handle next page navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
   return (
     <div>
       <div className='m-3 overflow-x-auto'>
@@ -38,7 +52,7 @@ export default function UserTab({ users }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((user) => (
+            {currentItems.map((user, index) => (
               <tr key={user.userName}>
                 <th>
                   <label>
@@ -62,7 +76,9 @@ export default function UserTab({ users }) {
       {/* Pagination */}
       <div className='m-auto text-center'>
         <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn'>«</button>
+          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+            «
+          </button>
           {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
             <button
               key={pageNumber}
@@ -76,7 +92,9 @@ export default function UserTab({ users }) {
               {pageNumber}
             </button>
           ))}
-          <button className='btn-ghost join-item btn'>»</button>
+          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+            »
+          </button>
         </div>
       </div>
     </div>

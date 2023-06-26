@@ -1,7 +1,7 @@
 export default function NewButton() {
   return (
     <div>
-      <button className='btn-info btn'>+ New</button>
+      <button className='btn-primary btn'>+ New</button>
     </div>
   );
 }

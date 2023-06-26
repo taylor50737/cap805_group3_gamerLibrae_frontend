@@ -19,6 +19,20 @@ export default function GameTab({ games }) {
     setCurrentPage(pageNumber);
   };
 
+  // Function to handle previous page navigation
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  // Function to handle next page navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
   return (
     <div>
       <div className='m-3 overflow-x-auto'>
@@ -38,14 +52,14 @@ export default function GameTab({ games }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((game) => (
+            {currentItems.map((game, index) => (
               <tr key={game._id}>
                 <th>
                   <label>
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{game._id}</td>
+                <td>{index}</td>
                 <td>{game.name}</td>
                 <td>{game.developer}</td>
                 <td>{game.publisher}</td>
@@ -59,7 +73,9 @@ export default function GameTab({ games }) {
       {/* Pagination */}
       <div className='m-auto text-center'>
         <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn'>«</button>
+          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+            «
+          </button>
           {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
             <button
               key={pageNumber}
@@ -73,7 +89,9 @@ export default function GameTab({ games }) {
               {pageNumber}
             </button>
           ))}
-          <button className='btn-ghost join-item btn'>»</button>
+          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+            »
+          </button>
         </div>
       </div>
     </div>

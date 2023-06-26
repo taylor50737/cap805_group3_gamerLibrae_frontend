@@ -1,6 +1,6 @@
 import GameTab from './GameTab';
 import UserTab from './UserTab';
-import CommentTab from './CommentTab';
+import ReviewTab from './ReviewTab';
 import ActionButton from './components/ActionButton';
 import NewButton from './components/NewButton';
 import { games, users, reviews } from './tempData';
@@ -10,8 +10,8 @@ export default function AdminPanel() {
   const tabs = [
     { name: 'Game', link: '/gameTab' },
     { name: 'User', link: '/userTab' },
-    { name: 'Comment', link: '/' },
     { name: 'Review', link: '/' },
+    { name: 'Comment', link: '/' },
     { name: 'Report', link: '/' },
   ];
 
@@ -28,7 +28,7 @@ export default function AdminPanel() {
         <div className='btn-group'>
           {tabs.map((tab) => (
             <button
-              className={tab.name === currentTab ? 'btn-info btn' : 'btn'}
+              className={tab.name === currentTab ? 'btn-primary btn' : 'btn'}
               key={tab.name}
               onClick={() => handleChangeTab(tab.name)}
             >
@@ -53,7 +53,7 @@ export default function AdminPanel() {
         </div>
         {currentTab === 'Game' && <GameTab games={games} />}
         {currentTab === 'User' && <UserTab users={users} />}
-        {currentTab === 'Comment' && <CommentTab reviews={reviews} />}
+        {currentTab === 'Review' && <ReviewTab reviews={reviews} />}
       </div>
     </div>
   );

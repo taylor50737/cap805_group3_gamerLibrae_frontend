@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function UserTab({ reviews }) {
   const fields = ['ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
@@ -6,13 +6,39 @@ export default function UserTab({ reviews }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
+  // Filter out all comments
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const extractedComments = [];
+
+    for (let i = 0; i < reviews.length; i++) {
+      const review = reviews[i];
+      const reviewComments = review.comments;
+
+      if (reviewComments) {
+        const commentKeys = Object.keys(reviewComments);
+
+        for (let j = 0; j < commentKeys.length; j++) {
+          const commentKey = commentKeys[j];
+
+          if (commentKey.startsWith('comment')) {
+            extractedComments.push(reviewComments[commentKey]);
+          }
+        }
+      }
+    }
+
+    setComments(extractedComments);
+  }, []);
+
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = reviews.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = comments.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
-  const totalPages = Math.ceil(reviews.length / itemsPerPage);
+  const totalPages = Math.ceil(comments.length / itemsPerPage);
 
   // Function to handle page change
   const handlePageChange = (pageNumber) => {
@@ -33,6 +59,10 @@ export default function UserTab({ reviews }) {
     }
   };
 
+  useEffect(() => {
+    console.log(comments);
+  }, [comments]);
+
   return (
     <div>
       <div className='m-3 overflow-x-auto'>
@@ -52,21 +82,18 @@ export default function UserTab({ reviews }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((review) =>
-              Object.values(review.comments).map((comment) => (
-                <tr key={comment.commentId}>
-                  <th>
-                    <label>
-                      <input type='checkbox' className='checkbox' />
-                    </label>
-                  </th>
-                  {/* <td>{comment.commentId.$numberInt}</td>
-                  <td>{comment.commentUserId.$numberInt}</td> */}
-                  <td>{comment.comment}</td>
-                  <td>{comment.status}</td>
-                </tr>
-              )),
-            )}
+            {currentItems.map((comment, index) => (
+              <tr key={index}>
+                <th>
+                  <label>
+                    <input type='checkbox' className='checkbox' />
+                  </label>
+                </th>
+                <td>{index}</td>
+                <td>{comment.comment}</td>
+                <td>{comment.status}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
