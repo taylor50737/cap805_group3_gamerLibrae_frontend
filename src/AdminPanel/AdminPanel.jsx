@@ -3,25 +3,36 @@ import UserTab from './UserTab';
 import ActionButton from './components/ActionButton';
 import NewButton from './components/NewButton';
 import { games, users } from './tempData';
+import { useState } from 'react';
 
 export default function AdminPanel() {
   const tabs = [
-    { name: 'Game', link: '/' },
-    { name: 'Member', link: '/' },
+    { name: 'Game', link: '/gameTab' },
+    { name: 'User', link: '/userTab' },
     { name: 'Comment', link: '/' },
     { name: 'Review', link: '/' },
     { name: 'Report', link: '/' },
   ];
 
+  const [currentTab, setCurrentTab] = useState('Game');
+
+  const handleChangeTab = (tab) => {
+    setCurrentTab(tab);
+  };
+
   return (
     <div className='m-10'>
       {/* Admin Panel */}
-      <div className='m-auto'>
-        <div className='tabs tabs-boxed flex justify-around'>
+      <div className='m-auto flex justify-center'>
+        <div className='btn-group'>
           {tabs.map((tab) => (
-            <a className='tab' key={tab.name}>
+            <button
+              className={tab.name === currentTab ? 'btn-info btn' : 'btn'}
+              key={tab.name}
+              onClick={() => handleChangeTab(tab.name)}
+            >
               {tab.name}
-            </a>
+            </button>
           ))}
         </div>
       </div>
@@ -39,7 +50,8 @@ export default function AdminPanel() {
             className='input-bordered input w-full max-w-xs'
           />
         </div>
-        <GameTab games={games} />
+        {currentTab === 'Game' && <GameTab games={games} />}
+        {currentTab === 'User' && <UserTab users={users} />}
       </div>
     </div>
   );
