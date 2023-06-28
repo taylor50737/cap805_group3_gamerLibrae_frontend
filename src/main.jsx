@@ -9,7 +9,8 @@ import AdminPanel from './AdminPanel/AdminPanel';
 import ReviewEditPage from './ReviewEdit/pages/ReviewEditPage';
 import HomePage from './Home/pages/HomePage';
 import ErrorPage from './Error/pages/ErrorPage';
-import MainPanel from './MemberPanel/pages/MainPanel';
+import MemberPanelLayout from './MemberPanel/pages/MemberPanelLayout';
+import ReviewCommentHistory from './MemberPanel/pages/ReviewCommentHistory';
 import ChangeInfo from './MemberPanel/pages/ChangeInfo';
 import ResetPassword from './MemberPanel/pages/ResetPassword';
 import UploadProfilePic from './MemberPanel/pages/UploadProfilePic';
@@ -44,29 +45,30 @@ const router = createBrowserRouter([
       },
       {
         path: 'member/:uid',
+        element: <MemberPanelLayout />,
         children: [
           {
             index: true,
-            element: <MainPanel />
+            element: <ReviewCommentHistory />,
           },
           {
             path: 'change-info',
-            element: <ChangeInfo />
+            element: <ChangeInfo />,
           },
           {
             path: 'reset-password',
-            element: <ResetPassword />
+            element: <ResetPassword />,
           },
           {
             path: 'upload-profile-pic',
-            element: <UploadProfilePic />
+            element: <UploadProfilePic />,
           },
           {
             path: 'wishlist',
-            element: <WishList />
-          }
-        ]
-      }
+            element: <WishList />,
+          },
+        ],
+      },
     ],
   },
 ]);
