@@ -15,6 +15,7 @@ import ChangeInfo from './MemberPanel/pages/ChangeInfo';
 import ResetPassword from './MemberPanel/pages/ResetPassword';
 import UploadProfilePic from './MemberPanel/pages/UploadProfilePic';
 import WishList from './MemberPanel/pages/WishList';
+import GameSearchResult from './GameSearchResult/GameSearchResultPage';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,15 @@ const router = createBrowserRouter([
           {
             path: 'reviewEdit',
             element: <ReviewEditPage />,
+          },
+        ],
+      },
+      {
+        path: 'search',
+        children: [
+          {
+            index: true,
+            element: <GameSearchResult />,
           },
         ],
       },
