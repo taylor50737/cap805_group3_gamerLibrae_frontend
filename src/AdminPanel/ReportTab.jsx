@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ReportTab({ reviews }) {
   const fields = ['ID', 'Report', 'Status'];
