@@ -1,0 +1,42 @@
+@media screen and (max-width: 600px) {
+  .affsuc--block {
+    max-width: 80vw;
+    padding-left: 10vw;
+  }
+  .affsuc--next--step {
+    display: block !important;
+  }
+
+  .affsuc--next--list {
+    padding-left: 0 !important;
+  }
+
+  .affsuc,
+  .affsuc--next--title,
+  .affsuc--next--list {
+    text-align: center;
+  }
+
+  .affsuc--next--list li:nth-of-type(1) {
+    padding-top: 0;
+  }
+
+  .affsuc--next--list li {
+    padding-top: 1.5rem;
+  }
+}
+
+.affsuc--block {
+  margin: 3rem 0;
+}
+
+.affsuc--next--list {
+  padding: 1rem 0 0 0.5rem;
+}
+
+.affsuc--back--home--button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+}
