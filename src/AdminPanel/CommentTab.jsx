@@ -55,10 +55,6 @@ export default function CommentTab({ reviews }) {
     }
   };
 
-  useEffect(() => {
-    console.log(comments);
-  }, [comments]);
-
   return (
     <div>
       <div className='m-3 overflow-x-auto'>
