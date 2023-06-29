@@ -192,6 +192,7 @@ export const Navbar = () => {
             <Menu
               sx={{ mt: '45px' }}
               id='menu-appbar'
+              disableScrollLock={true}
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: 'top',

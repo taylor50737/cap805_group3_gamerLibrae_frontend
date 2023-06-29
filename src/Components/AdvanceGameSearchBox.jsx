@@ -114,7 +114,7 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
           {...params}
           label={`Select ${categoryName}`}
           placeholder={`${categoryName}`}
-          InputLabelProps={{ sx: { color: '#808080', '& label.Mui-focused': { color: 'red' } } }}
+          InputLabelProps={{ sx: { color: '#808080' } }}
           sx={{
             '& label.Mui-focused': {
               color: 'white',
@@ -253,7 +253,7 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
   );
 };
 
-export const AdvanceGameSearchBox = () => {
+export const AdvanceGameSearchBox = ({ extraSx }) => {
   const [genres, setGenres] = useState([]);
   const [platforms, setPlatforms] = useState([]);
   const [playModes, setPlayModes] = useState([]);
@@ -282,13 +282,12 @@ export const AdvanceGameSearchBox = () => {
   return (
     <Box
       sx={{
+        ...extraSx,
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
         borderRadius: 2,
         p: '10px',
         gap: '10px',
-        justifyContent: 'space-between',
         bgcolor: '#292525',
         overflowX: 'hidden',
         overflowY: 'auto',

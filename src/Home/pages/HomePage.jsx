@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom';
 import { Grid, Box } from '@mui/material';
 
 import AdvanceGameSearchBox from '../../Components/AdvanceGameSearchBox';
-import Carousel from './components/Carousel'
+import Carousel from './components/Carousel';
 import TopGames from './components/TopGames';
 
 export const HomePage = () => {
   return (
     <>
-      <Grid container spacing={'15px'} sx={{mt: '2px'}}>
+      <Grid container spacing={'15px'} sx={{ mt: '2px' }}>
         <Grid item xs={12} sm={12} md={3}>
           <Box
             sx={{
               height: { md: '500px', xs: '250px' },
             }}
           >
-            <AdvanceGameSearchBox/>
+            <AdvanceGameSearchBox extraSx={{ justifyContent: 'space-between', height: '100%' }} />
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={9}>
@@ -34,7 +34,7 @@ export const HomePage = () => {
               height: { md: '250px', xs: '200px' },
             }}
           >
-            <TopGames/>
+            <TopGames />
           </Box>
         </Grid>
       </Grid>
@@ -47,6 +47,8 @@ export const HomePage = () => {
       <Link to={'game/123/reviewEdit'}>game/123/reviewEdit</Link>
       <br />
       <Link to={'adminPanel'}>adminPanel</Link>
+      <br />
+      <Link to={'search'}>search</Link>
     </>
   );
 };
