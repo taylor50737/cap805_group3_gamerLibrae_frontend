@@ -1,5 +1,3 @@
-import MainNavigation from '../components/SideNavigation/MainNavigation';
-
 const ChangeInfo = () => {
   return (
     <>
