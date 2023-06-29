@@ -3,16 +3,6 @@ import { NavLink } from 'react-router-dom';
 const NavLinks = (props) => {
   return (
     <ul className='space-y-2 font-medium'>
-      {/* <li>
-        <NavLink
-          to=''
-          exact
-          className='flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
-        >
-          <i className="fa-solid fa-desktop" />
-          <span className='ml-4'>Main Panel</span>
-        </NavLink>
-      </li> */}
       <li>
         <NavLink
           to='change-info'

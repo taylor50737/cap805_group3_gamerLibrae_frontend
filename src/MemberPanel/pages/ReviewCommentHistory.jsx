@@ -1,17 +1,14 @@
 const ReviewCommentHistory = () => {
   return (
     <>
-      <div className='pt-4'>
-        <div className='text-sm font-semibold uppercase tracking-wide text-indigo-500'>
-          Your Reviews
-        </div>
+      <div>
         <div className='rounded-lg bg-gray-700'>
-          <div className='m-4'>
+          <div className='p-4'>
             <a
               href='#'
-              className='mt-1 block text-lg font-medium leading-tight text-black hover:underline'
+              className='block text-lg font-medium leading-tight text-black hover:underline'
             >
-              Lorem ipsum dolor sit amet.
+              Your Reviews
             </a>
             <p className='mt-2'>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla tempore rerum nisi
@@ -37,14 +34,11 @@ const ReviewCommentHistory = () => {
         </div>
       </div>
       <div className='py-4'>
-        <div className='text-sm font-semibold uppercase tracking-wide text-indigo-500'>
-          Your Comments
-        </div>
         <div className='rounded-lg bg-gray-700'>
-          <div className='m-4'>
+          <div className='p-4'>
             <a
               href='#'
-              className='mt-1 block text-lg font-medium leading-tight text-black hover:underline'
+              className='block text-lg font-medium leading-tight text-black hover:underline'
             >
               Lorem ipsum dolor sit amet.
             </a>
