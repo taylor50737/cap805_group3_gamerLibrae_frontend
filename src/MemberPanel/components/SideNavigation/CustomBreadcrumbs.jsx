@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Typography, Breadcrumbs } from '@mui/material';
+import { Breadcrumbs } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const CustomBreadcrumbs = () => {
