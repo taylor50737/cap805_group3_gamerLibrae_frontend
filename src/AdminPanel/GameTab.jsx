@@ -62,7 +62,7 @@ export default function GameTab({ games }) {
                 </th>
                 <td>{index + 1}</td>
                 <td>
-                  <Link to={`/game/${game._id}`}>{game.name}</Link>
+                  <Link to={`/game/${game._id}/reviewEdit`}>{game.name}</Link>
                 </td>
                 <td>{game.developer}</td>
                 <td>{game.publisher}</td>

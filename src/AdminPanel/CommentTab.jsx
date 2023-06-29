@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function CommentTab({ reviews }) {
-  const fields = ['ID', 'Comment', 'Status'];
+  const fields = ['Index', 'Comment', 'User', '#Reports', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -86,7 +86,9 @@ export default function CommentTab({ reviews }) {
                   </label>
                 </th>
                 <td>{index}</td>
-                <td>{comment.comment}</td>
+                <td>{comment.comment.split('. ')[0]}...</td>
+                <td>{comment.commentUserId}</td>
+                <td>{comment.commentReportCount}</td>
                 <td>{comment.status}</td>
               </tr>
             ))}

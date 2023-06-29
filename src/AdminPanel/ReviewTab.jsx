@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function ReviewTab({ reviews }) {
-  const fields = ['Index', 'User', 'Game', 'No. of Comments', 'No. of Reports'];
+  const fields = ['Index', 'Review', 'User', 'Game', '#Comments', '#Reports', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -61,10 +61,12 @@ export default function ReviewTab({ reviews }) {
                   </label>
                 </th>
                 <td>{index}</td>
-                <td>{review.userId}</td>
-                <td>{review.gameId}</td>
+                <td>{review.content.split('. ')[0]}...</td>
+                <td>Get user {review.userId}</td>
+                <td>Get game {review.gameId}</td>
                 <td>{review.comments.length}</td>
                 <td>{review.reviewReportCount}</td>
+                <td>{review.reviewStatus}</td>
               </tr>
             ))}
           </tbody>

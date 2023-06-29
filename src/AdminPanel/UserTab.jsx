@@ -66,7 +66,7 @@ export default function UserTab({ users }) {
                     <img src={user.avatar} />
                   </div>
                 </td>
-                <Link to={`/user/${user._id}`}>{user.userName}</Link>
+                <Link to={`/member/${user._id}`}>{user.userName}</Link>
                 <td>{user.email}</td>
                 <td>{user.isAdmin === true ? 'Admin' : 'Member'}</td>
                 <td>{user.joinedAffiliation === true ? 'Yes' : 'No'}</td>
