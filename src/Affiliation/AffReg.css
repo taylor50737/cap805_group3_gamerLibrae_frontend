@@ -1,0 +1,24 @@
+@media screen and (max-width: 600px) {
+  .affreg--button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.affreg--block {
+  margin: 1rem 0;
+}
+
+.affreg--textfield {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.affreg--button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+}
