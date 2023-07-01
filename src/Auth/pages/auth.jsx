@@ -5,6 +5,7 @@ import CustomButton from '../../shared/components/FormElements/CustomButton';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../shared/util/validators';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth_context';
+import { redirect } from 'react-router-dom';
 
 const Auth = () => {
   const auth = useContext(AuthContext);
@@ -52,6 +53,7 @@ const Auth = () => {
     event.preventDefault();
     console.log(formState.inputs);
     auth.login();
+    redirect('/');
   };
 
   return (
