@@ -7,7 +7,7 @@ import AffTNC from './components/AffRegTNC';
 import AffRegTNCCheckbox from './components/AffRegTNCCheckbox';
 
 const AffRegTextFieldList = AffRegTextFieldProps.map((data) => {
-  return <AffRegTextField label={data.label} defaultValue={data.defaultValue} />;
+  return <AffRegTextField key={data.key} label={data.label} defaultValue={data.defaultValue} />;
 });
 
 const AffReg = () => {
