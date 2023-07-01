@@ -16,6 +16,7 @@ import ResetPassword from './MemberPanel/pages/ResetPassword';
 import UploadProfilePic from './MemberPanel/pages/UploadProfilePic';
 import WishList from './MemberPanel/pages/WishList';
 import GameSearchResult from './GameSearchResult/GameSearchResultPage';
+import AffReg from './Affiliation/AffReg';
 import { AuthContext } from './shared/context/auth_context';
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
         <Route path='/auth' element={<Auth />} />
         <Route path='/search' element={<GameSearchResult />} />
         <Route path='/admin-panel' element={<AdminPanel />} />
+        <Route path='/aff-reg' element={<AffReg />} />
 
         {/* Game Route */}
         <Route path='/game'>

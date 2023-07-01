@@ -5,9 +5,11 @@ const AffRegTextField = (props) => {
     <TextField
       required
       id='outlined-basic'
+      name={props.name}
       label={props.label}
       variant='filled'
       defaultValue={props.defaultValue}
+      onChange={props.onChange}
       InputLabelProps={{
         style: { color: 'rgba(183,183,183,0.5)' },
       }}
