@@ -38,16 +38,24 @@ const App = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/admin-panel' element={<AdminPanel />} />
         <Route path='/auth' element={<Navigate to='/' replace />} />
+        {/* Member Route */}
+        <Route path='/member/:uid' element={<MemberPanelLayout />}>
+          <Route index element={<ReviewCommentHistory />} />
+          <Route path='change-info' element={<ChangeInfo />} />
+          <Route path='reset-password' element={<ResetPassword />} />
+          <Route path='upload-profile-pic' element={<UploadProfilePic />} />
+          <Route path='wishlist' element={<WishList />} />
+        </Route>
       </Routes>
     );
   } else {
     routes = (
       <Routes>
-        <Route path='*' element={<Navigate to='/auth' replace />} />
         <Route path='/' element={<HomePage />} />
         <Route path='/auth' element={<Auth />} />
         <Route path='/search' element={<GameSearchResult />} />
         <Route path='/admin-panel' element={<AdminPanel />} />
+        <Route path='/*' element={<Navigate to='/auth' replace />} />
 
         {/* Game Route */}
         <Route path='/game'>
@@ -56,15 +64,6 @@ const App = () => {
             <Route index element={<h1>Individual game page here</h1>} />
             <Route path='review-edit' element={<ReviewEditPage />} />
           </Route>
-        </Route>
-
-        {/* Member Route */}
-        <Route path='/member/:uid' element={<MemberPanelLayout />}>
-          <Route index element={<ReviewCommentHistory />} />
-          <Route path='change-info' element={<ChangeInfo />} />
-          <Route path='reset-password' element={<ResetPassword />} />
-          <Route path='upload-profile-pic' element={<UploadProfilePic />} />
-          <Route path='wishlist' element={<WishList />} />
         </Route>
       </Routes>
     );

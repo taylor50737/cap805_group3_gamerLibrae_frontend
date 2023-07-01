@@ -6,7 +6,7 @@ import CustomBreadcrumbs from '../components/SideNavigation/CustomBreadcrumbs';
 const DUMMY_USERS = [
   {
     uid: 'u1',
-    name: 'Taylor Lo',
+    name: 'Remy Sharp',
     avatar: 'https://i.etsystatic.com/25924315/r/il/b87247/4826173692/il_794xN.4826173692_e7xp.jpg',
   },
   {

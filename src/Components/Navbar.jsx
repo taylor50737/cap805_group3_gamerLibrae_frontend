@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import {
   AppBar,
@@ -22,7 +23,18 @@ import SearchBox from './SearchBox';
 import { AuthContext } from '../shared/context/auth_context';
 
 const pages = ['Home', 'Top Games'];
-const settings = ['Profile', 'Account', 'Logout'];
+
+const publicSettings = [
+  { id: 1, name: 'Authenticate', url: '/auth' },
+  { id: 2, name: 'Forget Password', url: '/forget-password' },
+];
+const memberSettings = [
+  { id: 1, name: 'My Profile', url: '/member/u1' },
+  { id: 2, name: 'Change Info', url: '/member/u1/change-info' },
+  { id: 3, name: 'Reset Password', url: '/member/u1/reset-password' },
+  { id: 4, name: 'Upload Profile Pic', url: '/member/u1/upload-profile-pic' },
+  { id: 5, name: 'Wishlist', url: '/member/u1/wishlist' },
+];
 
 export const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -173,49 +185,99 @@ export const Navbar = () => {
               )} */}
           </Box>
 
+          {/* Public */}
+          {!auth.isLoggedIn && (
+            <Box sx={{ flexGrow: 0 }}>
+              {/* Avatar */}
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt='Member'>
+                    <i className='fa-solid fa-user' />
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+
+              {/* Avatar drop down menu */}
+              <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                disableScrollLock={true}
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {publicSettings.map((setting) => (
+                  <NavLink to={setting.url}>
+                    <MenuItem key={setting.id} id={setting.id} onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>{setting.name}</Typography>
+                    </MenuItem>
+                  </NavLink>
+                ))}
+              </Menu>
+            </Box>
+          )}
+
           {/* Member */}
-          <Box sx={{ flexGrow: 0 }}>
-            {/* Notification */}
-            <Tooltip title='View notification'>
-              <IconButton sx={{ pr: 2 }}>
-                <Badge variant='dot' color='secondary'>
-                  <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
-                </Badge>
-              </IconButton>
-            </Tooltip>
+          {auth.isLoggedIn && (
+            <Box sx={{ flexGrow: 0 }}>
+              {/* Notification */}
+              <Tooltip title='View notification'>
+                <IconButton sx={{ pr: 2 }}>
+                  <Badge variant='dot' color='secondary'>
+                    <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
 
-            {/* Avatar */}
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='Remy Sharp'>R</Avatar>
-              </IconButton>
-            </Tooltip>
+              {/* Avatar */}
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    src='https://i.etsystatic.com/25924315/r/il/b87247/4826173692/il_794xN.4826173692_e7xp.jpg'
+                    alt='Remy Sharp'
+                  >
+                    R
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
 
-            {/* Avatar drop down menu */}
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              disableScrollLock={true}
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              {/* Avatar drop down menu */}
+              <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                disableScrollLock={true}
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {memberSettings.map((setting) => (
+                  <NavLink to={setting.url}>
+                    <MenuItem key={setting.id} id={setting.id} onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>{setting.name}</Typography>
+                    </MenuItem>
+                  </NavLink>
+                ))}
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
