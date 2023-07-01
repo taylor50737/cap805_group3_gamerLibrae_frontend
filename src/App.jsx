@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate, redirect } from 'reac
 import { Navbar } from './Components/Navbar';
 import { Footer } from './Components/Footer';
 import { Container } from '@mui/material';
-import Auth from './Auth/pages/Auth';
+import Auth from './Auth/pages/auth';
 import AdminPanel from './AdminPanel/AdminPanel';
 import ReviewEditPage from './ReviewEdit/pages/ReviewEditPage';
 import HomePage from './Home/pages/HomePage';
