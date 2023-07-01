@@ -46,8 +46,6 @@ const App = () => {
     isAdminLoggedIn &&
       (routes = (
         <Routes>
-          <Route path='/admin-panel' element={<AdminPanel />} />
-          <Route path='/auth' element={<Navigate to='/admin-panel' />} />
           <Route path='*' element={<ErrorPage />} />
           <Route path='/' element={<HomePage />} />
           <Route path='/about-us' />
@@ -61,6 +59,10 @@ const App = () => {
               <Route path='review-edit' element={<ReviewEditPage />} />
             </Route>
           </Route>
+
+          {/* Admin Route */}
+          <Route path='/admin-panel' element={<AdminPanel />} />
+          <Route path='/auth' element={<Navigate to='/admin-panel' />} />
         </Routes>
       ));
   }
@@ -92,6 +94,9 @@ const App = () => {
             <Route path='upload-profile-pic' element={<UploadProfilePic />} />
             <Route path='wishlist' element={<WishList />} />
           </Route>
+
+          {/* Admin Route */}
+          <Route path='/admin-panel/*' element={<Navigate to='/auth' />} />
         </Routes>
       ));
   }
@@ -117,6 +122,12 @@ const App = () => {
               <Route path='review-edit' element={<ReviewEditPage />} />
             </Route>
           </Route>
+
+          {/* Member Route */}
+          <Route path='/member/*' element={<Navigate to='/auth' replace />} />
+
+          {/* Admin Route */}
+          <Route path='/admin-panel/*' element={<Navigate to='/auth' />} />
         </Routes>
       ));
   }
