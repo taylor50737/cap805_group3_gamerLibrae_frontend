@@ -22,7 +22,7 @@ const MemberPanelLayout = () => {
   const loadedUser = DUMMY_USERS.filter((user) => user.uid === userId);
   return (
     <div className='overflow-hidden rounded-xl'>
-      <CustomBreadcrumbs />
+      <CustomBreadcrumbs uid={userId} />
       <div className='md:flex'>
         <div className='md:shrink-0 md:pb-5'>
           <MainNavigation user={loadedUser} />
