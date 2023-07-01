@@ -1,3 +1,5 @@
-/* .cs--geninq {
-
-} */
+@media screen and (max-width: 600px) {
+  .cs--geninq--header {
+    text-align: center;
+  }
+}

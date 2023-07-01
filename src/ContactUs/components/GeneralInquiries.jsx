@@ -17,9 +17,9 @@ const clickToCall = (phoneNo) => {
 const GeneralInquiries = () => {
   return (
     <div className='cs--geninq font-dmsans'>
-      <h1 className=''>General Inquiries</h1>
-      <List>
-        <ListItem>
+      <h1 className='cs--geninq--header text-2xl'>General Inquiries</h1>
+      <List sx={{ paddingTop: 2 }}>
+        <ListItem dense>
           <ListItemIcon>
             <EmailSharpIcon sx={{ color: '#E1E1E1' }} />
           </ListItemIcon>
@@ -30,16 +30,18 @@ const GeneralInquiries = () => {
               '& .MuiListItemText-primary': {
                 fontFamily: '"DM Sans", sans-serif',
                 display: 'inline',
+                fontSize: '1.1rem',
               },
               '& .MuiListItemText-secondary': {
                 fontFamily: '"DM Sans", sans-serif',
                 color: '#FFFFFF',
                 display: 'inline',
+                fontSize: '1rem',
               },
             }}
           />
         </ListItem>
-        <ListItem>
+        <ListItem dense>
           <ListItemIcon>
             <LocalPhoneSharpIcon sx={{ color: '#E1E1E1' }} />
           </ListItemIcon>
@@ -50,11 +52,13 @@ const GeneralInquiries = () => {
               '& .MuiListItemText-primary': {
                 fontFamily: '"DM Sans", sans-serif',
                 display: 'inline',
+                fontSize: '1.1rem',
               },
               '& .MuiListItemText-secondary': {
                 fontFamily: '"DM Sans", sans-serif',
                 color: '#FFFFFF',
                 display: 'inline',
+                fontSize: '1rem',
               },
             }}
           />

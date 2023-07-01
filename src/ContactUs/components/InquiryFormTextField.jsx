@@ -15,6 +15,7 @@ const InquiryFormTextField = (props) => {
       }}
       sx={{
         maxWidth: { xs: '100vw', sm: '50vw' },
+        minWidth: { sm: '25vw' },
         paddingBottom: 3.5,
         '& .MuiInputLabel-root': {
           color: '#B7B7B7',

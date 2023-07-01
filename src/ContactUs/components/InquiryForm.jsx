@@ -17,10 +17,10 @@ const InquiryFormTextFieldMap = InquiryFormTextFieldProps.map((data) => {
 
 const InquiryForm = () => {
   return (
-    <div>
+    <div className='inquiryform'>
       <FormControl fullWidth>
         <div className=''>
-          <h4 className='text-lg'>Drop Us A Line</h4>
+          <h4 className='inquiryform--header text-2xl'>Drop Us A Line</h4>
           <div className='inquiryform--textfield'>
             <InquiryFormAreaTextField />
             {InquiryFormTextFieldMap}
@@ -36,8 +36,6 @@ const InquiryForm = () => {
               border: 1,
               borderColor: '#F2F3EE',
               fontFamily: '"DM Sans", sans-serif',
-              marginRight: { xs: 0, sm: 2 },
-              marginBottom: { xs: 1, sm: 0 },
               ':hover': {
                 borderColor: '#F2F3EE !important',
                 borderRadius: 0.8,
