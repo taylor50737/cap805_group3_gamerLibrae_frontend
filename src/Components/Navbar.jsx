@@ -22,7 +22,11 @@ import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
 import SearchBox from './SearchBox';
 import { AuthContext } from '../shared/context/auth_context';
 
-const pages = ['Home', 'Top Games'];
+const pages = [
+  { id: 1, name: 'About Us', url: '/about-us' },
+  { id: 2, name: 'Contact Us', url: '/contact-us' },
+  { id: 3, name: 'Affiliation', url: '/about-us' },
+];
 
 const publicSettings = [
   { id: 1, name: 'Authenticate', url: '/auth' },
@@ -32,9 +36,10 @@ const memberSettings = [
   { id: 1, name: 'My Profile', url: '/member/u1' },
   { id: 2, name: 'Change Info', url: '/member/u1/change-info' },
   { id: 3, name: 'Reset Password', url: '/member/u1/reset-password' },
-  { id: 4, name: 'Upload Profile Pic', url: '/member/u1/upload-profile-pic' },
+  { id: 4, name: 'Upload Profile Picture', url: '/member/u1/upload-profile-pic' },
   { id: 5, name: 'Wishlist', url: '/member/u1/wishlist' },
 ];
+const adminSettings = [{ id: 1, name: 'Admin Panel', url: '/admin-panel' }];
 
 export const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -63,23 +68,23 @@ export const Navbar = () => {
       <Container>
         <Toolbar disableGutters>
           {/* Site icon for dekstop */}
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
-            href='/'
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Lobster',
-              fontWeight: 700,
-              letterSpacing: '.05rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            GamerLibrae
-          </Typography>
+          <NavLink to='/'>
+            <Typography
+              variant='h6'
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'Lobster',
+                fontWeight: 700,
+                letterSpacing: '.05rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              GamerLibrae
+            </Typography>
+          </NavLink>
 
           {/* Button for desktop */}
           <Box
@@ -89,37 +94,40 @@ export const Navbar = () => {
             }}
           >
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  mx: 2,
-                  color: 'white',
-                  flex: 'none',
-                  fontSize: 18,
-                  fontWeight: 800,
-                  textTransform: 'none',
-                }}
-              >
-                {page}
-              </Button>
+              <NavLink to={page.url} key={page.id}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    mx: 2,
+                    color: 'white',
+                    flex: 'none',
+                    fontSize: 18,
+                    fontWeight: 800,
+                    textTransform: 'none',
+                  }}
+                >
+                  {page.name}
+                </Button>
+              </NavLink>
             ))}
             <SearchBox />
           </Box>
 
           {/* Site drop down menu for mobile device */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'flex', md: 'none' } }}>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            >
-              <FontAwesomeIcon icon={faBars} />
-            </IconButton>
+            <NavLink to='/'>
+              <IconButton
+                size='large'
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleOpenNavMenu}
+                color='inherit'
+              >
+                <FontAwesomeIcon icon={faBars} />
+              </IconButton>
+            </NavLink>
             <Menu
               id='menu-appbar'
               anchorEl={anchorElNav}
@@ -139,31 +147,33 @@ export const Navbar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
+                <NavLink to={page.url} key={page.id}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign='center'>{page.name}</Typography>
+                  </MenuItem>
+                </NavLink>
               ))}
             </Menu>
           </Box>
 
           {/* Site icon for mobile device */}
-          <Typography
-            variant='h5'
-            component='a'
-            href=''
-            sx={{
-              ml: 12,
-              display: { xs: 'flex', sm: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'Lobster',
-              fontWeight: 700,
-              letterSpacing: '.05rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            GamerLibrae
-          </Typography>
+          <NavLink to='/'>
+            <Typography
+              variant='h5'
+              sx={{
+                ml: 12,
+                display: { xs: 'flex', sm: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'Lobster',
+                fontWeight: 700,
+                letterSpacing: '.05rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              GamerLibrae
+            </Typography>
+          </NavLink>
 
           <Box
             sx={{
@@ -186,7 +196,7 @@ export const Navbar = () => {
           </Box>
 
           {/* Public */}
-          {!auth.isLoggedIn && (
+          {!auth.isLoggedIn && !auth.isAdminLoggedIn && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Avatar */}
               <Tooltip title='Open settings'>
@@ -216,8 +226,8 @@ export const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {publicSettings.map((setting) => (
-                  <NavLink to={setting.url}>
-                    <MenuItem key={setting.id} id={setting.id} onClick={handleCloseUserMenu}>
+                  <NavLink to={setting.url} key={setting.id}>
+                    <MenuItem id={setting.id} onClick={handleCloseUserMenu}>
                       <Typography textAlign='center'>{setting.name}</Typography>
                     </MenuItem>
                   </NavLink>
@@ -269,12 +279,68 @@ export const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {memberSettings.map((setting) => (
-                  <NavLink to={setting.url}>
-                    <MenuItem key={setting.id} id={setting.id} onClick={handleCloseUserMenu}>
+                  <NavLink to={setting.url} key={setting.id}>
+                    <MenuItem id={setting.id} onClick={handleCloseUserMenu}>
                       <Typography textAlign='center'>{setting.name}</Typography>
                     </MenuItem>
                   </NavLink>
                 ))}
+                <a href='/'>
+                  <MenuItem>Logout</MenuItem>
+                </a>
+              </Menu>
+            </Box>
+          )}
+
+          {/* Admin */}
+          {auth.isAdminLoggedIn && (
+            <Box sx={{ flexGrow: 0 }}>
+              {/* Notification */}
+              <Tooltip title='View notification'>
+                <IconButton sx={{ pr: 2 }}>
+                  <Badge variant='dot' color='secondary'>
+                    <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+
+              {/* Avatar */}
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt='Admin'>
+                    <i className='fa-solid fa-user-gear' />
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+
+              {/* Avatar drop down menu */}
+              <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                disableScrollLock={true}
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {adminSettings.map((setting) => (
+                  <NavLink to={setting.url} key={setting.id}>
+                    <MenuItem id={setting.id} onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>{setting.name}</Typography>
+                    </MenuItem>
+                  </NavLink>
+                ))}
+                <a href='/'>
+                  <MenuItem>Logout</MenuItem>
+                </a>
               </Menu>
             </Box>
           )}

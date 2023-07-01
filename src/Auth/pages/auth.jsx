@@ -5,7 +5,11 @@ import CustomButton from '../../shared/components/FormElements/CustomButton';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../shared/util/validators';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth_context';
-import { redirect } from 'react-router-dom';
+
+const DUMMY_ADMIN = {
+  email: 'admin@test.com',
+  password: 'admin123',
+};
 
 const Auth = () => {
   const auth = useContext(AuthContext);
@@ -51,9 +55,15 @@ const Auth = () => {
 
   const authSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
-    auth.login();
-    redirect('/');
+    if (
+      isLoginMode &&
+      formState.inputs.email.value === DUMMY_ADMIN.email &&
+      formState.inputs.password.value === DUMMY_ADMIN.password
+    ) {
+      auth.adminLogin();
+    } else {
+      auth.login();
+    }
   };
 
   return (
