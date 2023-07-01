@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import {
   AppBar,
@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
 
 import SearchBox from './SearchBox';
+import { AuthContext } from '../shared/context/auth_context';
 
 const pages = ['Home', 'Top Games'];
 const settings = ['Profile', 'Account', 'Logout'];
@@ -42,6 +43,8 @@ export const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const auth = useContext(AuthContext);
 
   return (
     <AppBar position='static' style={{ backgroundColor: 'transparent' }}>
