@@ -38,6 +38,7 @@ const App = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/admin-panel' element={<AdminPanel />} />
         <Route path='/auth' element={<Navigate to='/' replace />} />
+
         {/* Member Route */}
         <Route path='/member/:uid' element={<MemberPanelLayout />}>
           <Route index element={<ReviewCommentHistory />} />
@@ -51,11 +52,11 @@ const App = () => {
   } else {
     routes = (
       <Routes>
+        <Route path='/*' element={<ErrorPage />} />
         <Route path='/' element={<HomePage />} />
         <Route path='/auth' element={<Auth />} />
         <Route path='/search' element={<GameSearchResult />} />
         <Route path='/admin-panel' element={<AdminPanel />} />
-        <Route path='/*' element={<Navigate to='/auth' replace />} />
 
         {/* Game Route */}
         <Route path='/game'>
