@@ -91,6 +91,7 @@ const Auth = () => {
           id='password'
           type='password'
           label='Password'
+          forgetpassword={isLoginMode ? false : true}
           placeholder={
             isLoginMode ? 'Enter your password' : 'Enter a password with at least 5 characters'
           }

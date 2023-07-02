@@ -24,6 +24,14 @@
 
 .form-control .forgetpassword {
   display: inline;
+  float: right;
+  font-size: 0.875rem;
+  color: #bcbcbc;
+  cursor: pointer;
+}
+
+.form-control .forgetpassword:hover {
+  color: #959595;
 }
 
 .form-control input,
