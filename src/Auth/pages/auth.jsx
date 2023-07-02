@@ -37,6 +37,7 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
+          username: undefined,
           confirmPassword: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid,
@@ -45,6 +46,10 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
+          username: {
+            value: '',
+            isValid: false,
+          },
           confirmPassword: {
             value: '',
             isValid: false,
@@ -86,6 +91,18 @@ const Auth = () => {
           errorText='Please enter a valid email address.'
           onInput={inputHandler}
         />
+        {!isLoginMode && (
+          <CustomInput
+            element='input'
+            id='username'
+            type='text'
+            label='Username'
+            placeholder='Enter your username'
+            validators={[VALIDATOR_MINLENGTH(8)]}
+            errorText='Please enter a valid username, at least 8 characters.'
+            onInput={inputHandler}
+          />
+        )}
         <CustomInput
           element='input'
           id='password'
