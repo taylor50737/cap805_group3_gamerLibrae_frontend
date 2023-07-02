@@ -30,7 +30,7 @@ const pages = [
 
 const publicSettings = [
   { id: 1, name: 'Authenticate', url: '/auth' },
-  { id: 2, name: 'Forget Password', url: '/forget-password' },
+  { id: 2, name: 'Forget Password', url: '/auth/forget-password' },
 ];
 const memberSettings = [
   { id: 1, name: 'My Profile', url: '/member/u2' },
