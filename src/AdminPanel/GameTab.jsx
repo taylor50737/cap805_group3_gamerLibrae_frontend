@@ -67,7 +67,7 @@ export default function GameTab({ games }) {
                 <td>{game.developer}</td>
                 <td>{game.publisher}</td>
                 <td>{game.releaseDate}</td>
-                <td>{game.status}</td>
+                <td>{game.status}Public</td>
               </tr>
             ))}
           </tbody>

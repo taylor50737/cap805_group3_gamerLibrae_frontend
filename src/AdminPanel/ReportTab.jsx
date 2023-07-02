@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function ReportTab({ reviews }) {
-  const fields = ['ID', 'Report', 'Status'];
+  const fields = ['ID', 'Report', 'User', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -81,9 +81,10 @@ export default function ReportTab({ reviews }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{index}</td>
+                <td>{index + 1}</td>
                 <td>{report.report}</td>
-                <td>{report.status}</td>
+                <td>{report.report_userId}</td>
+                <td>{report.status}Reviewed</td>
               </tr>
             ))}
           </tbody>

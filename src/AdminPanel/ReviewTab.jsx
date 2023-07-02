@@ -60,7 +60,7 @@ export default function ReviewTab({ reviews }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{index}</td>
+                <td>{index + 1}</td>
                 <td>{review.content.split('. ')[0]}...</td>
                 <td>Get user {review.userId}</td>
                 <td>Get game {review.gameId}</td>

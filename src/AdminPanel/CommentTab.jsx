@@ -81,7 +81,7 @@ export default function CommentTab({ reviews }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{index}</td>
+                <td>{index + 1}</td>
                 <td>{comment.comment.split('. ')[0]}...</td>
                 <td>{comment.commentUserId}</td>
                 <td>{comment.commentReportCount}</td>
