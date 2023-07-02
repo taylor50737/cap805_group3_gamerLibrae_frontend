@@ -71,7 +71,7 @@ const CustomInput = (props) => {
     );
 
   const forgetPasswordButton =
-    props.forgetpassword === 'false' ? <p className='forgetpassword'>Forget password?</p> : <></>;
+    props.forgetpassword === false ? <p className='forgetpassword'>Forget password?</p> : <></>;
 
   return (
     <div
