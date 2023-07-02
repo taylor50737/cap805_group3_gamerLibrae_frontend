@@ -70,13 +70,19 @@ const CustomInput = (props) => {
       />
     );
 
+  const forgetPasswordButton =
+    props.forgetpassword === 'false' ? <p className='forgetpassword'>Forget password?</p> : <></>;
+
   return (
     <div
       className={`form-control ${
         !inputState.isValid && inputState.isTouched && 'form-control--invalid'
       }`}
     >
-      <label htmlFor={props.id}>{props.label}</label>
+      <div>
+        <label htmlFor={props.id}>{props.label}</label>
+        {forgetPasswordButton}
+      </div>
       {element}
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>

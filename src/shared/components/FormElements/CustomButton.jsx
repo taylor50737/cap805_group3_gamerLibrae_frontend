@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import './CustomButton.css';
+import './CustomButtonKuri.css';
 
 const CustomButton = (props) => {
   if (props.href) {

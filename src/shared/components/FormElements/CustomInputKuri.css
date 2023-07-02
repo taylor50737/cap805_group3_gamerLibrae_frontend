@@ -1,8 +1,13 @@
-.form-control {
-  margin: 1rem 0;
-  font-family: 'DM Sans', sans-serif;
+@media screen and (max-width: 600px) {
+  .form-control {
+    min-width: 90vw !important;
+  }
+}
 
-  max-width: 50vw;
+.form-control {
+  margin: 0.5rem 0;
+  font-family: 'DM Sans', sans-serif;
+  min-width: 50vw;
 }
 
 .form-control label,
@@ -14,6 +19,11 @@
 .form-control label {
   /* font-weight: bold; */
   margin-bottom: 0.5rem;
+  display: inline;
+}
+
+.form-control .forgetpassword {
+  display: inline;
 }
 
 .form-control input,
@@ -41,13 +51,19 @@
 
 .form-control input:focus,
 .form-control textarea:focus {
-  outline: none;
-  /* background: #1b1c20; */
+  border: 0;
+  outline: 2px solid #8386f5;
+  background: #000003;
 }
 
 .form-control--invalid label,
 .form-control--invalid p {
   color: red;
+}
+
+.form-control--invalid p {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
 }
 
 .form-control--invalid input,
