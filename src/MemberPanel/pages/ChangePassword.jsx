@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '@mui/material';
 
-const ResetPassword = () => {
+const ChangePassword = () => {
   const {
     register,
     handleSubmit,
@@ -52,4 +52,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ChangePassword;

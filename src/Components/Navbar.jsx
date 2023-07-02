@@ -35,7 +35,7 @@ const publicSettings = [
 const memberSettings = [
   { id: 1, name: 'My Profile', url: '/member/u2' },
   { id: 2, name: 'Wishlist', url: '/member/u2/wishlist' },
-  { id: 3, name: 'Reset Password', url: '/member/u2/reset-password' },
+  { id: 3, name: 'Change Password', url: '/member/u2/change-password' },
   { id: 4, name: 'Upload Profile Picture', url: '/member/u2/upload-profile-pic' },
   { id: 5, name: 'Change Info', url: '/member/u2/change-info' },
 ];
@@ -43,7 +43,7 @@ const adminSettings = [
   { id: 1, name: 'Admin Panel', url: '/admin-panel' },
   { id: 2, name: 'My Profile', url: '/member/u1' },
   { id: 3, name: 'Wishlist', url: '/member/u1/wishlist' },
-  { id: 4, name: 'Reset Password', url: '/member/u1/reset-password' },
+  { id: 4, name: 'Change Password', url: '/member/u1/change-password' },
   { id: 5, name: 'Upload Profile Picture', url: '/member/u1/upload-profile-pic' },
   { id: 6, name: 'Change Info', url: '/member/u1/change-info' },
 ];
