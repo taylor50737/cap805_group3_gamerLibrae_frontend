@@ -86,6 +86,9 @@ const Auth = () => {
           id='password'
           type='password'
           label='Password'
+          placeholder={
+            isLoginMode ? 'Enter your password' : 'Enter a password with at least 5 characters'
+          }
           validators={[VALIDATOR_MINLENGTH(5)]}
           errorText='Please enter a valid password, at least 5 characters.'
           onInput={inputHandler}
@@ -96,6 +99,7 @@ const Auth = () => {
             id='confirmPassword'
             type='password'
             label='Confirm Password'
+            placeholder='Re-enter your password'
             validators={[VALIDATOR_MINLENGTH(5)]}
             errorText='Please enter a valid confirm password, at least 5 characters.'
             onInput={inputHandler}
