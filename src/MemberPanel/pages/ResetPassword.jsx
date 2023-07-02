@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Input } from '@mui/material';
 
 const ResetPassword = () => {
   const {
@@ -14,31 +15,35 @@ const ResetPassword = () => {
       <h1 className='text-3xl'>Change Password</h1>
       <div>
         <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
-          <input
+          <Input
             {...register('currentPassword', { required: true, minLength: 8 })}
             aria-invalid={errors.userName ? 'true' : 'false'}
             placeholder='Current Password'
           />
-          {errors.userName?.type === 'required' && <p role='alert'>Current Password is required</p>}
-          {errors.userName?.type === 'maxLength' && (
-            <p role='alert'>Only allow maximum 20 characters</p>
+          {errors.currentPassword?.type === 'required' && (
+            <p role='alert'>Current Password is required</p>
           )}
-          <input
+          {errors.currentPassword?.type === 'minLength' && (
+            <p role='alert'>At least 8 characters</p>
+          )}
+          <Input
             {...register('newPassword', { required: true, minLength: 8 })}
             aria-invalid={errors.userName ? 'true' : 'false'}
             placeholder='New Password'
           />
-          {errors.userName?.type === 'required' && <p role='alert'>New Password is required</p>}
-          {errors.userName?.type === 'maxLength' && (
-            <p role='alert'>Only allow maximum 20 characters</p>
-          )}
-          <input
+          {errors.newPassword?.type === 'required' && <p role='alert'>New Password is required</p>}
+          {errors.newPassword?.type === 'minLength' && <p role='alert'>At least 8 characters</p>}
+          <Input
             {...register('confirmPassword', { required: true, minLength: 8 })}
             aria-invalid={errors.userName ? 'true' : 'false'}
             placeholder='Confirm Password'
           />
-          {errors.userName?.type === 'required' && <p role='alert'>Confirm Password is required</p>}
-          {errors.userName?.type === 'maxLength' && <p role='alert'>Min 8 characters</p>}
+          {errors.confirmPassword?.type === 'required' && (
+            <p role='alert'>Confirm Password is required</p>
+          )}
+          {errors.confirmPassword?.type === 'minLength' && (
+            <p role='alert'>At least 8 characters</p>
+          )}
           <p>{data}</p>
           <input type='submit' />
         </form>
