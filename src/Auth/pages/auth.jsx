@@ -75,7 +75,8 @@ const Auth = () => {
           element='input'
           id='email'
           type='email'
-          label='E-Mail'
+          label='Email'
+          placeholder='Enter your email address'
           validators={[VALIDATOR_EMAIL()]}
           errorText='Please enter a valid email address.'
           onInput={inputHandler}
