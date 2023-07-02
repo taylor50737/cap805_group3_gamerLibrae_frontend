@@ -1,18 +1,17 @@
 import './AffReg.css';
 import { useState } from 'react';
 import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui/material';
-import AffRegTextField from './components/AffRegTextField';
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
 import AffRegTNCCheckbox from './components/AffRegTNCCheckbox';
 
 const AffReg = () => {
   const [affRegFormData, setAffRegFormData] = useState({
-    channelUrl: '',
+    channelUrl: 'https://',
     email: '',
   });
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setAffRegFormData((prevState) => {
       return {
@@ -20,21 +19,59 @@ const AffReg = () => {
         [name]: value,
       };
     });
-  }
+    // console.log(affRegFormData);
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(affRegFormData);
-  }
+    // console.log(affRegFormData);
+  };
 
   const AffRegTextFieldList = AffRegTextFieldProps.map((data) => {
     return (
-      <AffRegTextField
-        key={data.key}
+      <TextField
+        required
+        id='outlined-basic'
         name={data.name}
         label={data.label}
+        variant='filled'
+        value={data.value == 'channelUrl' ? affRegFormData.channelUrl : affRegFormData.email}
         defaultValue={data.defaultValue}
         onChange={handleChange}
+        InputLabelProps={{
+          style: { color: 'rgba(183,183,183,0.5)' },
+        }}
+        sx={{
+          maxWidth: { xs: '100vw', sm: '50vw' },
+          paddingBottom: 4,
+          '& .MuiInputLabel-root': {
+            color: '#B7B7B7',
+            fontFamily: '"DM Sans", sans-serif',
+            fontSize: '1rem',
+          },
+          '& .MuiFilledInput-root': {
+            border: 2,
+            borderColor: '#F2F3EE',
+            borderRadius: 0.8,
+            '::before, ::after': {
+              borderBottom: '0 !important',
+            },
+            ':hover': {
+              borderBottom: 2,
+              borderColor: '#F2F3EE',
+              borderRadius: 0.8,
+              bgcolor: 'rgba(183, 183, 183, 0.2)',
+            },
+          },
+          '& .MuiFilledInput-input': {
+            color: '#F2F3EE',
+            fontFamily: '"DM Sans", sans-serif',
+            fontSize: '1rem',
+            ':hover': {
+              color: '#F2F3EE',
+            },
+          },
+        }}
       />
     );
   });
@@ -92,6 +129,9 @@ const AffReg = () => {
                 color: '#F2F3EE',
                 border: 1,
               },
+            }}
+            onClick={() => {
+              setAffRegFormData({ channelUrl: 'https://', email: '' });
             }}
           >
             Reset

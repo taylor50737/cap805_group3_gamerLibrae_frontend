@@ -112,7 +112,7 @@ const App = () => {
           <Route path='/search' element={<GameSearchResult />} />
           <Route path='/about-us' />
           <Route path='/contact-us' element={<ContactUs />} />
-          <Route path='/affiliation' element={<AffReg />} />
+          <Route path='/affiliation-registration' element={<AffReg />} />
 
           {/* Game Route */}
           <Route path='/game'>
