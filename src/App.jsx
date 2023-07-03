@@ -23,6 +23,7 @@ import AffReg from './Affiliation/AffReg';
 import AffSuc from './Affiliation/AffSuc';
 import AffRule from './Affiliation/AffRule';
 import PublicProfileLayout from './PublicProfile/pages/PublicProfileLayout';
+import AddGamePage from './AdminPanel/AddGamePage';
 import { AuthContext } from './shared/context/auth_context';
 
 const App = () => {
@@ -83,6 +84,7 @@ const App = () => {
           {/* Admin Route */}
           <Route path='/admin-panel' element={<AdminPanel />} />
           <Route path='/auth' element={<Navigate to='/admin-panel' />} />
+          <Route path='/add-game' element={<AddGamePage />} />
         </Routes>
       ));
   }
