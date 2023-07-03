@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { Navbar } from './Components/Navbar';
 import { Footer } from './Components/Footer';
 import { Container } from '@mui/material';
-import Auth from './Auth/pages/Auth';
+import Auth from './Auth/pages/auth';
 import ForgetPassword from './Auth/pages/ForgetPassword';
 import ResetPassword from './Auth/pages/ResetPassword';
 import AdminPanel from './AdminPanel/AdminPanel';
@@ -20,6 +20,8 @@ import WishList from './MemberPanel/pages/WishList';
 import GameSearchResult from './GameSearchResult/GameSearchResultPage';
 import ContactUs from './ContactUs/ContactUs';
 import AffReg from './Affiliation/AffReg';
+import AffSuc from './Affiliation/AffSuc';
+import AffRule from './Affiliation/AffRule';
 import PublicProfileLayout from './PublicProfile/pages/PublicProfileLayout';
 import { AuthContext } from './shared/context/auth_context';
 
@@ -136,6 +138,8 @@ const App = () => {
           <Route path='/about-us' />
           <Route path='/contact-us' element={<ContactUs />} />
           <Route path='/affiliation-registration' element={<AffReg />} />
+          <Route path='/affiliation-rule' element={<AffRule />} />
+          <Route path='/affiliation-suc' element={<AffSuc />} />
 
           {/* Auth Route */}
           <Route path='/auth'>
