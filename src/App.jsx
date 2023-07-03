@@ -25,10 +25,12 @@ import AffRule from './Affiliation/AffRule';
 import PublicProfileLayout from './PublicProfile/pages/PublicProfileLayout';
 import AddGamePage from './AdminPanel/AddGamePage';
 import { AuthContext } from './shared/context/auth_context';
+import { AffRegContext } from './shared/context/AffRegContext';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [isAffRegistered, setIsAffRegistered] = useState(false);
 
   const login = useCallback(() => {
     setIsLoggedIn(true);
@@ -44,6 +46,10 @@ const App = () => {
 
   const adminLogout = useCallback(() => {
     setIsAdminLoggedIn(false);
+  }, []);
+
+  const affregister = useCallback(() => {
+    setIsAffRegistered(true);
   }, []);
 
   let routes;
@@ -80,6 +86,11 @@ const App = () => {
             <Route path='change-password' element={<ChangePassword />} />
             <Route path='upload-profile-pic' element={<UploadProfilePic />} />
           </Route>
+
+          {/* Affiliation Route */}
+          <Route path='/affiliation-registration' element={<AffReg />} />
+          <Route path='/affiliation-rule' element={<AffRule />} />
+          <Route path='/affiliation-suc' element={<AffSuc />} />
 
           {/* Admin Route */}
           <Route path='/admin-panel' element={<AdminPanel />} />
@@ -123,6 +134,12 @@ const App = () => {
             <Route path='upload-profile-pic' element={<UploadProfilePic />} />
           </Route>
 
+          {/* Affiliation Route */}
+          {isAffRegistered &&
+            (routes = <Route path='/affiliation-registration' element={<AffSuc />} />)}
+          <Route path='/affiliation-registration' element={<AffReg />} />
+          <Route path='/affiliation-rule' element={<AffRule />} />
+
           {/* Admin Route */}
           <Route path='/admin-panel/*' element={<Navigate to='/auth' />} />
         </Routes>
@@ -139,9 +156,6 @@ const App = () => {
           <Route path='/search' element={<GameSearchResult />} />
           <Route path='/about-us' />
           <Route path='/contact-us' element={<ContactUs />} />
-          <Route path='/affiliation-registration' element={<AffReg />} />
-          <Route path='/affiliation-rule' element={<AffRule />} />
-          <Route path='/affiliation-suc' element={<AffSuc />} />
 
           {/* Auth Route */}
           <Route path='/auth'>
@@ -168,6 +182,9 @@ const App = () => {
           {/* Member Route */}
           <Route path='/member/*' element={<Navigate to='/auth' replace />} />
 
+          {/* Affiliation Route */}
+          <Route path='/affiliation-rule' element={<AffRule />} />
+          <Route path='/affiliation-registration' element={<Navigate to='/auth' replace />} />
           {/* Admin Route */}
           <Route path='/admin-panel/*' element={<Navigate to='/auth' replace />} />
         </Routes>
@@ -185,13 +202,20 @@ const App = () => {
         adminLogout: adminLogout,
       }}
     >
-      <Router>
-        <Navbar />
-        <Container>
-          <main>{routes}</main>
-        </Container>
-        <Footer />
-      </Router>
+      <AffRegContext.Provider
+        value={{
+          isAffRegistered: isAffRegistered,
+          affregister: affregister,
+        }}
+      >
+        <Router>
+          <Navbar />
+          <Container>
+            <main>{routes}</main>
+          </Container>
+          <Footer />
+        </Router>
+      </AffRegContext.Provider>
     </AuthContext.Provider>
   );
 };

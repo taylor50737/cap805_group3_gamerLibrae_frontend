@@ -12,7 +12,7 @@ const ErrorPage = () => {
             Looks like you've found the doorway to the great nothing
           </div>
           <div className='mb-8 text-lg'>
-            Sorry about that! Please visit our hompage to get where you need to go.
+            Sorry about that! Please visit our home page to get where you need to go.
           </div>
           <NavLink to='/' className='rounded border border-white p-4'>
             Go Home

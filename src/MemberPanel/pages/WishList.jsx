@@ -1,46 +1,112 @@
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Grid, Box } from '@mui/material';
 
-import WishListList from '../components/WishList/WishListList';
+import SortSelector from '../../GameSearchResult/components/SortSelector';
+import WishListItem from '../components/WishList/WishListItem';
 
 const DUMMY_WISHLIST = [
   {
-    gid: 'g1',
-    imageUrl:
-      'https://image.api.playstation.com/vulcan/ap/rnd/202205/2800/iQGgKYUg9YwjPVNM0kE8jeRN.jpg',
-
-    title: 'Call of Duty®: Modern Warfare® II',
-    description:
-      'Call of Duty: Modern Warfare II is a 2022 first-person shooter video game developed by Infinity Ward and published by Activision. It is a sequel to the 2019 reboot, and serves as the nineteenth installment in the overall Call of Duty series. It was released on October 28, 2022 for PlayStation 4, PlayStation 5, Windows, Xbox One, and Xbox Series X/S.',
-    creator: 'u1',
+    gid: 1,
+    title: 'Street Fighter 6',
+    platform: 'PS5',
+    releaseDate: 'June 2, 2023',
+    genre: 'Fighting',
+    mode: 'Multi-Player',
+    tags: ['Adventure', 'Fight', 'Funny'],
+    score: 94,
+    imgSrc: '/src/assets/topGames/streetFighter6.jpg',
+    uid: 'u1',
   },
   {
-    gid: 'g2',
-    imageUrl:
-      'https://images.g2a.com/360x600/1x1x1/the-lord-of-the-rings-gollum-pc-steam-account-account-global-i10000326298016/abfd4110b5e24708b7877ebf',
-
-    title: 'The Lord of the Rings: Gollum',
-    description:
-      'The Lord of the Rings: Gollum is an action-adventure game developed by Daedalic Entertainment, who also published the game with Nacon. The game, set in the fictional world of Middle-earth created by J. R. R. Tolkien, takes place in between the events of The Hobbit and The Fellowship of the Ring. The player controls Gollum through a series of locations, such as Cirith Ungol, Barad-dûr, and Mirkwood, as he attempts to find Bilbo Baggins and retake the One Ring whilst battling and avoiding Sauron.',
-    creator: 'u2',
+    gid: 2,
+    title: 'Resident Evil 4',
+    platform: 'PC',
+    releaseDate: 'March 24, 2023',
+    genre: 'Fighting',
+    mode: 'Single-Player',
+    tags: ['Adventure', 'Fight', 'Funny'],
+    score: 93,
+    imgSrc: '/src/assets/topGames/residentEvil4.jpg',
+    uid: 'u1',
+  },
+  {
+    gid: 3,
+    title: 'Dead Space',
+    platform: 'Xbox Series X',
+    releaseDate: 'January 27, 2023',
+    genre: 'Fighting',
+    mode: 'Single-Player',
+    tags: ['Adventure', 'Fight', 'Funny'],
+    score: 92,
+    imgSrc: '/src/assets/topGames/deadSpace.jpg',
+    uid: 'u1',
+  },
+  {
+    gid: 4,
+    title: 'Hi-Fi RUSH',
+    platform: 'PC',
+    releaseDate: 'January 25, 2023',
+    genre: 'Fighting',
+    mode: 'Single-Player',
+    tags: ['Adventure', 'Fight', 'Funny'],
+    score: 90,
+    imgSrc: '/src/assets/topGames/hifiRush.jpg',
+    uid: 'u2',
+  },
+  {
+    gid: 5,
+    title: 'Persona 4 Golden',
+    platform: 'Switch',
+    releaseDate: 'Jan 19, 2023',
+    genre: 'Fighting',
+    mode: 'Single-Player',
+    tags: ['Adventure', 'Fight', 'Funny'],
+    score: 89,
+    imgSrc: '/src/assets/topGames/p4g.jpg',
+    uid: 'u2',
+  },
+  {
+    gid: 6,
+    title: 'Dead Cells: Return to Castlevania',
+    platform: 'PC',
+    releaseDate: 'March 6, 2023',
+    genre: 'Fighting',
+    mode: 'Single-Player',
+    tags: ['Adventure', 'Fight', 'Funny'],
+    score: 88,
+    imgSrc: '/src/assets/topGames/deadCell.jpg',
+    uid: 'u2',
   },
 ];
 
 const WishList = () => {
   const userId = useParams().uid;
-  const loadedWishList = DUMMY_WISHLIST.filter((wishlist) => wishlist.creator === userId);
+  const loadedWishList = DUMMY_WISHLIST.filter((wishlist) => wishlist.uid === userId);
+  const [games, setGames] = useState(loadedWishList);
+  const handleSortBy = (newGames) => {
+    setGames(newGames);
+  };
   return (
     <div className='rounded-lg bg-gray-700'>
-      <div className='p-4'>
-        <a
-          href='#'
-          className='block text-lg font-medium leading-tight text-yellow-400 hover:underline'
-        >
-          Your Wish List
-        </a>
-        <div className='mt-2'>
-          <WishListList items={loadedWishList} />
-        </div>
-      </div>
+      <Grid container sx={{ mt: 0, mb: 2 }} spacing={'15px'}>
+        <Grid item md={12}>
+          <Box sx={{ mx: 4, float: 'right', display: 'table' }}>
+            <SortSelector games={games} handleSortBy={handleSortBy} />
+          </Box>
+        </Grid>
+
+        <Grid item md={12}>
+          <Box sx={{ mx: 4, mb: 4 }}>
+            {loadedWishList.length === 0 && (
+              <div className='mx-40 my-72 flex flex-col items-center justify-center text-5xl'>
+                <div>The Wishlist is empty</div>
+              </div>
+            )}
+            <WishListItem games={games} />
+          </Box>
+        </Grid>
+      </Grid>
     </div>
   );
 };

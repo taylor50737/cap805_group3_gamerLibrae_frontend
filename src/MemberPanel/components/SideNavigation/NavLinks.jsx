@@ -33,7 +33,7 @@ const NavLinks = (props) => {
           className='flex items-center rounded-lg p-2 text-white hover:bg-gray-600'
         >
           <i className='fa-solid fa-lock' />
-          <span className='ml-4'>Password</span>
+          <span className='ml-4'>Change Password</span>
         </NavLink>
       </li>
       <li>

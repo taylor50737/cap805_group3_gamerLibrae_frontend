@@ -1,6 +1,7 @@
 import React from 'react';
 import './AffRule.css';
 import Button from '@mui/material/Button';
+import CustomButton from '../shared/components/FormElements/CustomButton';
 
 const AffRule = () => {
   return (
@@ -28,26 +29,7 @@ const AffRule = () => {
         </p>
       </div>
       <div className='affrule--reg--button'>
-        <Button
-          variant='contained'
-          sx={{
-            color: '#0D0C11',
-            bgcolor: '#F2F3EE',
-            borderRadius: 0.8,
-            border: 1,
-            borderColor: '#F2F3EE',
-            fontFamily: '"DM Sans", sans-serif',
-            ':hover': {
-              borderColor: '#F2F3EE !important',
-              borderRadius: 0.8,
-              bgcolor: 'transparent',
-              color: '#F2F3EE',
-              border: 1,
-            },
-          }}
-        >
-          Register
-        </Button>
+        <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>
       </div>
     </div>
   );
