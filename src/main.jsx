@@ -12,7 +12,7 @@ import App from './App';
 // import MemberPanelLayout from './MemberPanel/pages/MemberPanelLayout';
 // import ReviewCommentHistory from './MemberPanel/pages/ReviewCommentHistory';
 // import ChangeInfo from './MemberPanel/pages/ChangeInfo';
-// import ResetPassword from './MemberPanel/pages/ResetPassword';
+// import ChangePassword from './MemberPanel/pages/ChangePassword';
 // import UploadProfilePic from './MemberPanel/pages/UploadProfilePic';
 // import WishList from './MemberPanel/pages/WishList';
 // import GameSearchResult from './GameSearchResult/GameSearchResultPage';
@@ -66,8 +66,8 @@ import App from './App';
 //             element: <ChangeInfo />,
 //           },
 //           {
-//             path: 'reset-password',
-//             element: <ResetPassword />,
+//             path: 'change-password',
+//             element: <ChangePassword />,
 //           },
 //           {
 //             path: 'upload-profile-pic',

@@ -37,9 +37,9 @@ const WishList = () => {
         >
           Your Wish List
         </a>
-        <p className='mt-2'>
+        <div className='mt-2'>
           <WishListList items={loadedWishList} />
-        </p>
+        </div>
       </div>
     </div>
   );

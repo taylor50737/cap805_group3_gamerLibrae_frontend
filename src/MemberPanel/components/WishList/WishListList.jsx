@@ -17,8 +17,8 @@ const WishListList = (props) => {
     <ul>
       {props.items.map((wishItem) => (
         <WishListItem
-          key={wishItem.id}
-          id={wishItem.id}
+          key={wishItem.gid}
+          id={wishItem.gid}
           imageUrl={wishItem.imageUrl}
           game={wishItem.title}
           description={wishItem.description}

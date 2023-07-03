@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { validate } from '../../util/validators';
 import './CustomInputKuri.css';
@@ -70,13 +71,25 @@ const CustomInput = (props) => {
       />
     );
 
+  const forgetPasswordButton =
+    props.forgetpassword === false ? (
+      <NavLink to='forget-password'>
+        <p className='forgetpassword'>Forget password?</p>
+      </NavLink>
+    ) : (
+      <></>
+    );
+
   return (
     <div
       className={`form-control ${
         !inputState.isValid && inputState.isTouched && 'form-control--invalid'
       }`}
     >
-      <label htmlFor={props.id}>{props.label}</label>
+      <div>
+        <label htmlFor={props.id}>{props.label}</label>
+        {forgetPasswordButton}
+      </div>
       {element}
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>

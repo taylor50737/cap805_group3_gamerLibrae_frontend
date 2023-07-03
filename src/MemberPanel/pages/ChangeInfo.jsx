@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Input } from '@mui/material';
 
 const ChangeInfo = () => {
   const {
@@ -14,7 +15,7 @@ const ChangeInfo = () => {
       <h1 className='text-3xl'>Change Member Info</h1>
       <div>
         <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
-          <input
+          <Input
             {...register('userName', { required: true, maxLength: 20 })}
             aria-invalid={errors.userName ? 'true' : 'false'}
             placeholder='Username'
@@ -23,7 +24,7 @@ const ChangeInfo = () => {
           {errors.userName?.type === 'maxLength' && (
             <p role='alert'>Only allow maximum 20 characters</p>
           )}
-          <input
+          <Input
             {...register('url', { required: 'URL is required' })}
             aria-invalid={errors.url ? 'true' : 'false'}
             placeholder='YouTube/Twitch URL'

@@ -2,9 +2,12 @@ import { useState, useContext } from 'react';
 
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
+import CustomTextButton from '../../shared/components/FormElements/CustomTextButton';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../shared/util/validators';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth_context';
+
+import './Auth.css';
 
 const DUMMY_ADMIN = {
   email: 'admin@test.com',
@@ -34,6 +37,7 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
+          username: undefined,
           confirmPassword: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid,
@@ -42,6 +46,10 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
+          username: {
+            value: '',
+            isValid: false,
+          },
           confirmPassword: {
             value: '',
             isValid: false,
@@ -67,10 +75,12 @@ const Auth = () => {
   };
 
   return (
-    <div>
-      <h2>{isLoginMode ? 'LOGIN' : 'SIGNUP'}</h2>
-      <hr />
-      <form onSubmit={authSubmitHandler}>
+    <div className='auth'>
+      <h2 className='auth--greeting'>
+        {isLoginMode ? 'Welcome back!' : 'Create an account to get started!'}
+      </h2>
+      {/* <hr /> */}
+      <form className='auth--form' onSubmit={authSubmitHandler}>
         <CustomInput
           element='input'
           id='email'
@@ -81,11 +91,24 @@ const Auth = () => {
           errorText='Please enter a valid email address.'
           onInput={inputHandler}
         />
+        {!isLoginMode && (
+          <CustomInput
+            element='input'
+            id='username'
+            type='text'
+            label='Username'
+            placeholder='Enter your username'
+            validators={[VALIDATOR_MINLENGTH(8)]}
+            errorText='Please enter a valid username, at least 8 characters.'
+            onInput={inputHandler}
+          />
+        )}
         <CustomInput
           element='input'
           id='password'
           type='password'
           label='Password'
+          forgetpassword={isLoginMode ? false : true}
           placeholder={
             isLoginMode ? 'Enter your password' : 'Enter a password with at least 5 characters'
           }
@@ -105,13 +128,18 @@ const Auth = () => {
             onInput={inputHandler}
           />
         )}
-        <CustomButton type='submit' disabled={!formState.isValid}>
-          {isLoginMode ? 'LOGIN' : 'SIGNUP'}
-        </CustomButton>
+        <div className='auth--form--submit'>
+          <CustomButton type='submit' disabled={!formState.isValid}>
+            {isLoginMode ? 'LOGIN' : 'SIGN UP'}
+          </CustomButton>
+        </div>
+        <div className='auth--form--textbutton'>
+          <p>{isLoginMode ? "Don't have an account yet?" : 'Have an account?'} </p>
+          <CustomTextButton onClick={switchModeHandler}>
+            {isLoginMode ? 'Sign Up' : 'Log In'}
+          </CustomTextButton>
+        </div>
       </form>
-      <CustomButton inverse onClick={switchModeHandler}>
-        SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
-      </CustomButton>
     </div>
   );
 };

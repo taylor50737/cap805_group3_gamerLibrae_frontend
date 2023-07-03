@@ -30,16 +30,23 @@ const pages = [
 
 const publicSettings = [
   { id: 1, name: 'Authenticate', url: '/auth' },
-  { id: 2, name: 'Forget Password', url: '/forget-password' },
+  { id: 2, name: 'Forget Password', url: '/auth/forget-password' },
 ];
 const memberSettings = [
-  { id: 1, name: 'My Profile', url: '/member/u1' },
-  { id: 2, name: 'Change Info', url: '/member/u1/change-info' },
-  { id: 3, name: 'Reset Password', url: '/member/u1/reset-password' },
-  { id: 4, name: 'Upload Profile Picture', url: '/member/u1/upload-profile-pic' },
-  { id: 5, name: 'Wishlist', url: '/member/u1/wishlist' },
+  { id: 1, name: 'My Profile', url: '/member/u2' },
+  { id: 2, name: 'Wishlist', url: '/member/u2/wishlist' },
+  { id: 3, name: 'Change Password', url: '/member/u2/change-password' },
+  { id: 4, name: 'Upload Profile Picture', url: '/member/u2/upload-profile-pic' },
+  { id: 5, name: 'Change Info', url: '/member/u2/change-info' },
 ];
-const adminSettings = [{ id: 1, name: 'Admin Panel', url: '/admin-panel' }];
+const adminSettings = [
+  { id: 1, name: 'Admin Panel', url: '/admin-panel' },
+  { id: 2, name: 'My Profile', url: '/member/u1' },
+  { id: 3, name: 'Wishlist', url: '/member/u1/wishlist' },
+  { id: 4, name: 'Change Password', url: '/member/u1/change-password' },
+  { id: 5, name: 'Upload Profile Picture', url: '/member/u1/upload-profile-pic' },
+  { id: 6, name: 'Change Info', url: '/member/u1/change-info' },
+];
 
 export const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -252,11 +259,9 @@ export const Navbar = () => {
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    src='https://i.etsystatic.com/25924315/r/il/b87247/4826173692/il_794xN.4826173692_e7xp.jpg'
-                    alt='Remy Sharp'
-                  >
-                    R
-                  </Avatar>
+                    src='https://robohash.org/nisiiustoomnis.png?size=50x50&set=set1'
+                    alt='mwinsom3'
+                  />
                 </IconButton>
               </Tooltip>
 
@@ -307,9 +312,10 @@ export const Navbar = () => {
               {/* Avatar */}
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Admin'>
-                    <i className='fa-solid fa-user-gear' />
-                  </Avatar>
+                  <Avatar
+                    alt='Admin'
+                    src='https://robohash.org/etimpeditcorporis.png?size=50x50&set=set1'
+                  />
                 </IconButton>
               </Tooltip>
 

@@ -1,7 +1,6 @@
 import { Outlet, useParams } from 'react-router-dom';
 
-import MainNavigation from '../components/SideNavigation/MainNavigation';
-import CustomBreadcrumbs from '../components/SideNavigation/CustomBreadcrumbs';
+import ProfileMainNavigation from '../components/ProfileMainNavigation';
 
 const DUMMY_USERS = [
   {
@@ -21,7 +20,7 @@ const DUMMY_USERS = [
   },
 ];
 
-const MemberPanelLayout = () => {
+const PublicProfileLayout = () => {
   const userId = useParams().uid;
   const loadedUser = DUMMY_USERS.filter((user) => user.uid === userId);
   return (
@@ -29,7 +28,7 @@ const MemberPanelLayout = () => {
       {/* <CustomBreadcrumbs uid={userId} /> */}
       <div className='pt-5 md:flex'>
         <div className='md:shrink-0 md:pb-5'>
-          <MainNavigation user={loadedUser} />
+          <ProfileMainNavigation user={loadedUser} />
         </div>
         <div className='py-5 md:py-0 md:pl-5 lg:py-0 lg:pl-5'>
           <Outlet />
@@ -39,4 +38,4 @@ const MemberPanelLayout = () => {
   );
 };
 
-export default MemberPanelLayout;
+export default PublicProfileLayout;

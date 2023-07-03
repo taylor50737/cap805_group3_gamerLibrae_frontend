@@ -1,9 +1,8 @@
 import { Avatar } from '@mui/material';
-import { NavLink } from 'react-router-dom';
 
 import NavLinks from './NavLinks';
 
-const MainNavigation = (props) => {
+const ProfileMainNavigation = (props) => {
   return (
     <div>
       <aside className='sm:w-full lg:w-64'>
@@ -16,9 +15,6 @@ const MainNavigation = (props) => {
             />
             <div className='pt-4'>Username: {props.user[0].name}</div>
             <div>Tier: {props.user[0].uid === 'u1' ? 'Admin' : 'Regular User'}</div>
-            <div>
-              <NavLink href='#'>[View My Public Profile]</NavLink>
-            </div>
           </div>
           <nav>
             <NavLinks />
@@ -29,4 +25,4 @@ const MainNavigation = (props) => {
   );
 };
 
-export default MainNavigation;
+export default ProfileMainNavigation;
