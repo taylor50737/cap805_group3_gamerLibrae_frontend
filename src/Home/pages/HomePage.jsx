@@ -47,6 +47,10 @@ export const HomePage = () => {
       <Link to={'admin-panel'}>admin-panel</Link>
       <br />
       <Link to={'search'}>search</Link>
+      <br />
+      <Link to={'profile/u1'}>Admin Profile</Link>
+      <br />
+      <Link to={'profile/u2'}>Member Profile</Link>
     </>
   );
 };
