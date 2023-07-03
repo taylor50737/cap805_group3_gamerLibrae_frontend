@@ -81,7 +81,7 @@ export default function ReportTab({ reviews }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{index + 1}</td>
+                <td>{indexOfFirstItem + index + 1}</td>
                 <td>{report.report}</td>
                 <td>{report.report_userId}</td>
                 <td>{report.status}Reviewed</td>

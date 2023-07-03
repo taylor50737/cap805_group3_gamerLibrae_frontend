@@ -60,7 +60,7 @@ export default function UserTab({ users }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{index + 1}</td>
+                <td>{indexOfFirstItem + index + 1}</td>
                 <td className='avatar'>
                   <div className='w-8'>
                     <img src={user.avatar} />

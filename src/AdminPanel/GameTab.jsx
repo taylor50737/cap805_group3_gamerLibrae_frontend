@@ -60,7 +60,7 @@ export default function GameTab({ games }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{index + 1}</td>
+                <td>{indexOfFirstItem + index + 1}</td>
                 <td>
                   <Link to={`/game/${game._id}/reviewEdit`}>{game.name}</Link>
                 </td>

@@ -7,7 +7,6 @@ import NewButton from './components/NewButton';
 import { games, users, reviews } from './tempData';
 import { useState } from 'react';
 import ReportTab from './ReportTab';
-import { Link } from 'react-router-dom';
 
 export default function AdminPanel() {
   const tabs = [
