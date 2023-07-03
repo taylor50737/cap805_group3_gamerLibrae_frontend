@@ -22,7 +22,8 @@ const ReviewItem = (props) => {
             >
               {props.reviewTitle}
             </NavLink>
-            <p className='mt-2 text-slate-500 line-clamp-4'>{props.reviewContext}</p>
+            <p className='mt-2 text-slate-400 line-clamp-1'>{props.date}</p>
+            <p className=' text-slate-500 line-clamp-3'>{props.reviewContext}</p>
           </div>
           <div className='shrink-0 px-6 py-14'>
             <Score score={props.score} size={100} />

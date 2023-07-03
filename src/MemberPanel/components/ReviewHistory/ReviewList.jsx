@@ -26,6 +26,7 @@ const ReviewList = (props) => {
           score={review.score}
           reviewTitle={review.reviewTitle}
           reviewContext={review.reviewContext}
+          date={review.date}
           comments={review.comments}
         />
       ))}
