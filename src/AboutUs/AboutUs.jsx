@@ -1,7 +1,7 @@
 import './AboutUs.css';
 import BrandnameSec from './components/BrandnameSec';
 import { useRef } from 'react';
-import WhoAreWe from './components/Whoarewe';
+import WhoAreWe from './components/WhoWeAre';
 import OurVision from './components/OurVision';
 
 const AboutUs = () => {
