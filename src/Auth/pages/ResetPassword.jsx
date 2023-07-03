@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
-import { VALIDATOR_MINLENGTH } from '../../shared/util/validators';
+import { VALIDATOR_MINLENGTH, VALIDATOR_CONFIRMPASSWORD } from '../../shared/util/validators';
 
 import './ResetPassword.css';
 
@@ -49,8 +49,8 @@ const ResetPassword = () => {
           type='password'
           label='Confirm New Password'
           placeholder='Re-enter your password'
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText='Please enter a valid confirm password, at least 5 characters.'
+          validators={[VALIDATOR_CONFIRMPASSWORD(formState.inputs.newPassword.value)]}
+          errorText='Please check whether your password is entered correctly!'
           onInput={inputHandler}
         />
         <div className='resetPW--form--submit'>
