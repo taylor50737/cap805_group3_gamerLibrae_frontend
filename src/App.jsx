@@ -24,10 +24,12 @@ import AffSuc from './Affiliation/AffSuc';
 import AffRule from './Affiliation/AffRule';
 import PublicProfileLayout from './PublicProfile/pages/PublicProfileLayout';
 import { AuthContext } from './shared/context/auth_context';
+import { AffRegContext } from './shared/context/AffRegContext';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(true);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [isAffRegistered, setIsAffRegistered] = useState(false);
 
   const login = useCallback(() => {
     setIsLoggedIn(true);
@@ -43,6 +45,10 @@ const App = () => {
 
   const adminLogout = useCallback(() => {
     setIsAdminLoggedIn(false);
+  }, []);
+
+  const affregister = useCallback(() => {
+    setIsAffRegistered(true);
   }, []);
 
   let routes;
@@ -127,9 +133,10 @@ const App = () => {
           </Route>
 
           {/* Affiliation Route */}
+          {isAffRegistered &&
+            (routes = <Route path='/affiliation-registration' element={<AffSuc />} />)}
           <Route path='/affiliation-registration' element={<AffReg />} />
           <Route path='/affiliation-rule' element={<AffRule />} />
-          <Route path='/affiliation-suc' element={<AffSuc />} />
 
           {/* Admin Route */}
           <Route path='/admin-panel/*' element={<Navigate to='/auth' />} />
@@ -190,13 +197,20 @@ const App = () => {
         adminLogout: adminLogout,
       }}
     >
-      <Router>
-        <Navbar />
-        <Container>
-          <main>{routes}</main>
-        </Container>
-        <Footer />
-      </Router>
+      <AffRegContext.Provider
+        value={{
+          isAffRegistered: isAffRegistered,
+          affregister: affregister,
+        }}
+      >
+        <Router>
+          <Navbar />
+          <Container>
+            <main>{routes}</main>
+          </Container>
+          <Footer />
+        </Router>
+      </AffRegContext.Provider>
     </AuthContext.Provider>
   );
 };
