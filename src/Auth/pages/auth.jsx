@@ -3,7 +3,11 @@ import { useState, useContext } from 'react';
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
 import CustomTextButton from '../../shared/components/FormElements/CustomTextButton';
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../shared/util/validators';
+import {
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_CONFIRMPASSWORD,
+} from '../../shared/util/validators';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth_context';
 
@@ -123,8 +127,8 @@ const Auth = () => {
             type='password'
             label='Confirm Password'
             placeholder='Re-enter your password'
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText='Please enter a valid confirm password, at least 5 characters.'
+            validators={[VALIDATOR_CONFIRMPASSWORD(formState.inputs.password.value)]}
+            errorText='Please check whether your password is entered correctly!'
             onInput={inputHandler}
           />
         )}
