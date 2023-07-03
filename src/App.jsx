@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { Navbar } from './Components/Navbar';
 import { Footer } from './Components/Footer';
 import { Container } from '@mui/material';
-import Auth from './Auth/pages/Auth';
+import Auth from './Auth/pages/auth';
 import ForgetPassword from './Auth/pages/ForgetPassword';
 import ResetPassword from './Auth/pages/ResetPassword';
 import AdminPanel from './AdminPanel/AdminPanel';
