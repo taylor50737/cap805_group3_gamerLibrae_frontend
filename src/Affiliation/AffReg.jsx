@@ -1,5 +1,5 @@
 import './AffReg.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import CustomInput from '../shared/components/FormElements/CustomInput';
 import CustomButton from '../shared/components/FormElements/CustomButton';
 import { CustomUseForm } from '../shared/hooks/form-hook';
@@ -8,8 +8,11 @@ import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
 import AffRegTNCCheckbox from './components/AffRegTNCCheckbox';
+import { AffRegContext } from '../shared/context/AffRegContext';
 
 const AffReg = () => {
+  const affReg = useContext(AffRegContext);
+
   const [formState, inputHandler, setFormData, clearInput] = CustomUseForm(
     {
       channelUrl: {
@@ -54,9 +57,26 @@ const AffReg = () => {
   //   console.log(formState.inputs.email.value);
   // };
 
+  const submitAffRegForm = (event) => {
+    event.preventDefault();
+    if (
+      formState.inputs.channelUrl.value != '' &&
+      formState.inputs.email.value != '' &&
+      formState.inputs.channelUrl.isValid == true &&
+      formState.inputs.email.isValid == true
+    ) {
+      affReg.affregister();
+      console.log(formState.inputs.channelUrl.value);
+      console.log(formState.inputs.email.value);
+      console.log(formState.inputs.channelUrl.isValid);
+      console.log(formState.inputs.email.isValid);
+      console.log(affReg.isAffRegistered);
+    }
+  };
+
   return (
     <div className='affreg font-dmsans'>
-      <form className='affreg--form'>
+      <form className='affreg--form' onSubmit={submitAffRegForm}>
         <div className='affreg--block'>
           <h4 className='text-lg'>
             Please fill in the below form to register for the affiliation program.
@@ -95,8 +115,8 @@ const AffReg = () => {
             }}
           >
             Submit
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             variant='contained'
             sx={{
               color: '#F2F3EE',
@@ -114,10 +134,10 @@ const AffReg = () => {
                 color: '#F2F3EE',
                 border: 1,
               },
+            }} 
+            onClick={() => {
+              setAffRegFormData({ channelUrl: 'https://', email: '' });
             }}
-            // onClick={() => {
-            //   setAffRegFormData({ channelUrl: 'https://', email: '' });
-            // }}
           >
             Reset
           </Button> */}
