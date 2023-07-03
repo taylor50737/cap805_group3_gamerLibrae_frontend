@@ -27,7 +27,7 @@ import { AuthContext } from './shared/context/auth_context';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(true);
 
   const login = useCallback(() => {
     setIsLoggedIn(true);
@@ -80,6 +80,11 @@ const App = () => {
             <Route path='upload-profile-pic' element={<UploadProfilePic />} />
           </Route>
 
+          {/* Affiliation Route */}
+          <Route path='/affiliation-registration' element={<AffReg />} />
+          <Route path='/affiliation-rule' element={<AffRule />} />
+          <Route path='/affiliation-suc' element={<AffSuc />} />
+
           {/* Admin Route */}
           <Route path='/admin-panel' element={<AdminPanel />} />
           <Route path='/auth' element={<Navigate to='/admin-panel' />} />
@@ -121,6 +126,11 @@ const App = () => {
             <Route path='upload-profile-pic' element={<UploadProfilePic />} />
           </Route>
 
+          {/* Affiliation Route */}
+          <Route path='/affiliation-registration' element={<AffReg />} />
+          <Route path='/affiliation-rule' element={<AffRule />} />
+          <Route path='/affiliation-suc' element={<AffSuc />} />
+
           {/* Admin Route */}
           <Route path='/admin-panel/*' element={<Navigate to='/auth' />} />
         </Routes>
@@ -137,9 +147,6 @@ const App = () => {
           <Route path='/search' element={<GameSearchResult />} />
           <Route path='/about-us' />
           <Route path='/contact-us' element={<ContactUs />} />
-          <Route path='/affiliation-registration' element={<AffReg />} />
-          <Route path='/affiliation-rule' element={<AffRule />} />
-          <Route path='/affiliation-suc' element={<AffSuc />} />
 
           {/* Auth Route */}
           <Route path='/auth'>
