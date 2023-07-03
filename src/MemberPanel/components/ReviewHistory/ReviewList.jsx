@@ -17,8 +17,10 @@ const ReviewList = (props) => {
     <ul>
       {props.items.map((review) => (
         <ReviewItem
-          key={review.id}
-          id={review.id}
+          key={review.rid}
+          id={review.rid}
+          rid={review.gid}
+          gid={review.gid}
           imageUrl={review.imageUrl}
           game={review.game}
           score={review.score}
