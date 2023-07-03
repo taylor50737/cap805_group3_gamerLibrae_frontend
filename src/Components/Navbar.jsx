@@ -247,13 +247,13 @@ export const Navbar = () => {
           {auth.isLoggedIn && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Notification */}
-              <Tooltip title='View notification'>
+              {/* <Tooltip title='View notification'>
                 <IconButton sx={{ pr: 2 }}>
                   <Badge variant='dot' color='secondary'>
                     <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
                   </Badge>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
 
               {/* Avatar */}
               <Tooltip title='Open settings'>
@@ -301,13 +301,13 @@ export const Navbar = () => {
           {auth.isAdminLoggedIn && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Notification */}
-              <Tooltip title='View notification'>
+              {/* <Tooltip title='View notification'>
                 <IconButton sx={{ pr: 2 }}>
                   <Badge variant='dot' color='secondary'>
                     <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
                   </Badge>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
 
               {/* Avatar */}
               <Tooltip title='Open settings'>
