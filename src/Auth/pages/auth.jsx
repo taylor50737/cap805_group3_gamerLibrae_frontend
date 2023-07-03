@@ -7,7 +7,7 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../shared/util/validato
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth_context';
 
-import './Auth.css';
+import './auth.css';
 
 const DUMMY_ADMIN = {
   email: 'admin@test.com',
