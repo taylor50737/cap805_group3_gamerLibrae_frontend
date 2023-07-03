@@ -1,37 +1,40 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import CustomButton from '../../shared/components/FormElements/CustomButton';
+import CustomImageUpload from '../../shared/components/FormElements/CustomImageUpload';
+import { CustomUseForm } from '../../shared/hooks/form-hook';
 
 const UploadProfilePic = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [successSubmission, setSuccessSubmission] = useState('');
+  const [formState, inputHandler, setFormData] = CustomUseForm(
+    {
+      image: {
+        value: null,
+        isValid: false,
+      },
+    },
+    false,
+  );
+
+  const uploadPicSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+    setSuccessSubmission('You have successfully changed your password!');
+  };
 
   return (
-    <div className='flex flex-col items-center rounded-lg bg-gray-700 pb-4'>
+    <div className='flex flex-col items-center rounded-lg bg-gray-700 py-4 pb-4 pr-8'>
       <h1 className='text-3xl'>Upload Profile Picture</h1>
-      <form>
-        {selectedImage && (
-          <div>
-            <img
-              alt='not found'
-              width={'250px'}
-              src={URL.createObjectURL(selectedImage)}
-              className='h-48 w-48 rounded-full'
-            />
-            <br />
-            <button onClick={() => setSelectedImage(null)}>Remove</button>
-          </div>
-        )}
-
-        <br />
-        <br />
-
-        <input
-          type='file'
-          name='myImage'
-          onChange={(event) => {
-            console.log(event.target.files[0]);
-            setSelectedImage(event.target.files[0]);
-          }}
-        />
-        <input type='submit' />
+      <form
+        className='flex flex-col items-center justify-center py-12'
+        onSubmit={uploadPicSubmitHandler}
+      >
+        <CustomImageUpload center id='image' onInput={inputHandler} />
+        <p className='pt-6'>{successSubmission}</p>
+        <div className='auth--form--submit'>
+          <CustomButton type='submit' disabled={!formState.isValid}>
+            UPLOAD IMAGE
+          </CustomButton>
+        </div>
       </form>
     </div>
   );
