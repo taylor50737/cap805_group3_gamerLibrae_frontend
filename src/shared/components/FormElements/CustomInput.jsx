@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { validate } from '../../util/validators';
-import './CustomInputKuri.css';
+import './CustomInput.css';
 
 const inputReducer = (state, action) => {
   switch (action.type) {
