@@ -1,0 +1,17 @@
+@media screen and (max-width: 600px) {
+  .inquiryform {
+    margin-top: 2rem !important;
+  }
+}
+
+.inquiryform {
+  background-color: rgba(100, 100, 100, 0.5);
+  padding: 2rem;
+  border-radius: 0.2rem;
+}
+
+.inquiryform--textfield {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}

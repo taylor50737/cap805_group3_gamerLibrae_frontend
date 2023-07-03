@@ -1,3 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Chakra+Petch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  overscroll-behavior: none;
+  height: 100%;
+  overflow: auto;
+}
+
+body {
+  /* background: linear-gradient(180deg, rgba(0, 100, 212, 0.5), rgba(49, 10, 94, 0.5)); */
+  /* background: linear-gradient(180deg, rgba(9, 32, 71, 1), rgba(74, 38, 70, 1)); */
+  background: linear-gradient(270deg, rgba(28, 25, 23, 1), rgba(31, 41, 55, 1));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  color: white;
+  height: 100%;
+  overflow: auto;
+}
+
+/* For sticky footer */
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}

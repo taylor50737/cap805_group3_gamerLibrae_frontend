@@ -2,12 +2,11 @@
 
 This project is about a web application offering authentic game reviews for gamers.
 
-
 ## Getting Started
 
 To get started with the Gamer Librae (Frontend) locally, follow these steps:
 
-Step 1. Clone the repository in your terminal:
+Step 1. Clone the repository in your IDE terminal:
 
 ```bash
   git clone https://github.com/taylor50737/cap805_group3_gamerLibrae_frontend.git
@@ -32,4 +31,3 @@ Step 4. Start the development server:
 ```
 
 This command will start the development server and you can view the application by navigating to http://localhost:5173 in your browser.
-    
