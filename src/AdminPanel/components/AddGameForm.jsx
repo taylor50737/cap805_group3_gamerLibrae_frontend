@@ -17,6 +17,11 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import CustomButton from '../../shared/components/FormElements/CustomButton';
+import CustomImageUpload from '../../shared/components/FormElements/CustomImageUpload';
+import { CustomUseForm } from '../../shared/hooks/form-hook';
 
 const genreChoosable = [
   'Action',
@@ -285,6 +290,43 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
   );
 };
 
+const UploadPic = () => {
+  const [successSubmission, setSuccessSubmission] = useState('');
+  const [formState, inputHandler, setFormData] = CustomUseForm(
+    {
+      image: {
+        value: null,
+        isValid: false,
+      },
+    },
+    false,
+  );
+
+  const uploadPicSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+    setSuccessSubmission('You have successfully changed your password!');
+  };
+
+  return (
+    <div className='flex max-w-lg flex-col items-center rounded-lg bg-gray-700'>
+      {/* <h1 className='text-3xl'>Upload Game Picture</h1> */}
+      <form
+        className='flex flex-col items-center justify-center py-12'
+        onSubmit={uploadPicSubmitHandler}
+      >
+        <CustomImageUpload center id='image' onInput={inputHandler} />
+        <p className=''>{successSubmission}</p>
+        <div className='auth--form--submit'>
+          <CustomButton type='submit' disabled={!formState.isValid}>
+            UPLOAD IMAGE
+          </CustomButton>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 const AddGameForm = ({ extraSx }) => {
   const [genres, setGenres] = useState([]);
   const [platforms, setPlatforms] = useState([]);
@@ -312,7 +354,8 @@ const AddGameForm = ({ extraSx }) => {
   };
 
   return (
-    <div>
+    <div className='sm:flex sm:flex-row sm:justify-center'>
+      <UploadPic />
       <Box
         sx={{
           ...extraSx,
@@ -322,7 +365,7 @@ const AddGameForm = ({ extraSx }) => {
           p: '10px',
           gap: '10px',
           bgcolor: '#',
-          overflowX: 'hidden',
+          overflowX: 'auto',
           overflowY: 'auto',
           ...scrollBarStyle,
         }}
@@ -348,6 +391,7 @@ const AddGameForm = ({ extraSx }) => {
           searchOption={playModes}
           setSearchOption={setPlayModes}
         />
+
         <Grid container spacing={'10px'}>
           <Grid item md={4}>
             <Button
@@ -367,21 +411,23 @@ const AddGameForm = ({ extraSx }) => {
             </Button>
           </Grid>
           <Grid item md={8}>
-            <Button
-              variant='contained'
-              fullWidth
-              onClick={handleSubmit}
-              sx={{
-                bgcolor: '#D9D9D9',
-                color: '#000000',
-                ':hover': {
-                  bgcolor: '#33353d',
-                  color: 'white',
-                },
-              }}
-            >
-              Submit
-            </Button>
+            <Link to='/admin-panel'>
+              <Button
+                variant='contained'
+                fullWidth
+                // onClick={handleSubmit}
+                sx={{
+                  bgcolor: '#D9D9D9',
+                  color: '#000000',
+                  ':hover': {
+                    bgcolor: '#33353d',
+                    color: 'white',
+                  },
+                }}
+              >
+                Submit
+              </Button>
+            </Link>
           </Grid>
         </Grid>
       </Box>
