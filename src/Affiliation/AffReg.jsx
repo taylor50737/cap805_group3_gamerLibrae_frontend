@@ -127,6 +127,7 @@ const AffReg = () => {
       // />
     );
   });
+
   return (
     <div className='affreg font-dmsans'>
       <form className='affreg--form'>
