@@ -69,5 +69,5 @@ export const CustomUseForm = (initialInputs, initialFormValidity) => {
   //     inputId: id,
   //   });
   // }, []);
-  return [formState, inputHandler, setFormData, clearInput];
+  return [formState, inputHandler, setFormData];
 };
