@@ -19,6 +19,7 @@ import UploadProfilePic from './MemberPanel/pages/UploadProfilePic';
 import WishList from './MemberPanel/pages/WishList';
 import GameSearchResult from './GameSearchResult/GameSearchResultPage';
 import ContactUs from './ContactUs/ContactUs';
+import AboutUs from './AboutUs/AboutUs';
 import AffReg from './Affiliation/AffReg';
 import AffSuc from './Affiliation/AffSuc';
 import AffRule from './Affiliation/AffRule';
@@ -60,7 +61,7 @@ const App = () => {
         <Routes>
           <Route path='*' element={<ErrorPage />} />
           <Route path='/' element={<HomePage />} />
-          <Route path='/about-us' />
+          <Route path='/about-us' element={<AboutUs />} />
           <Route path='/contact-us' element={<ContactUs />} />
 
           {/* Game Route */}
@@ -107,7 +108,7 @@ const App = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/auth' element={<Navigate to='/' replace />} />
           <Route path='/search' element={<GameSearchResult />} />
-          <Route path='/about-us' />
+          <Route path='/about-us' element={<AboutUs />} />
           <Route path='/contact-us' element={<ContactUs />} />
 
           {/* Game Route */}
@@ -154,7 +155,7 @@ const App = () => {
           <Route path='/' element={<HomePage />} />
 
           <Route path='/search' element={<GameSearchResult />} />
-          <Route path='/about-us' />
+          <Route path='/about-us' element={<AboutUs />} />
           <Route path='/contact-us' element={<ContactUs />} />
 
           {/* Auth Route */}
