@@ -98,6 +98,11 @@ const WishList = () => {
 
         <Grid item md={12}>
           <Box sx={{ mx: 4, mb: 4 }}>
+            {loadedWishList.length === 0 && (
+              <div className='mx-40 my-72 flex flex-col items-center justify-center text-5xl'>
+                <div>The Wishlist is empty</div>
+              </div>
+            )}
             <WishListItem games={games} />
           </Box>
         </Grid>
