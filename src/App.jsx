@@ -180,6 +180,9 @@ const App = () => {
           {/* Member Route */}
           <Route path='/member/*' element={<Navigate to='/auth' replace />} />
 
+          {/* Affiliation Route */}
+          <Route path='/affiliation-rule' element={<AffRule />} />
+          <Route path='/affiliation-registration' element={<Navigate to='/auth' replace />} />
           {/* Admin Route */}
           <Route path='/admin-panel/*' element={<Navigate to='/auth' replace />} />
         </Routes>
