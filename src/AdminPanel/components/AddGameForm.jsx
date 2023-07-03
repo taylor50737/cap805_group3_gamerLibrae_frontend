@@ -18,8 +18,6 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from 'react';
 
-import Link from '@mui/material';
-
 const genreChoosable = [
   'Action',
   'Adventure',
@@ -287,7 +285,7 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
   );
 };
 
-export const AddGameForm = ({ extraSx }) => {
+const AddGameForm = ({ extraSx }) => {
   const [genres, setGenres] = useState([]);
   const [platforms, setPlatforms] = useState([]);
   const [playModes, setPlayModes] = useState([]);
@@ -369,23 +367,21 @@ export const AddGameForm = ({ extraSx }) => {
             </Button>
           </Grid>
           <Grid item md={8}>
-            <Link to='/admin-panel'>
-              <Button
-                variant='contained'
-                fullWidth
-                onClick={handleSubmit}
-                sx={{
-                  bgcolor: '#D9D9D9',
-                  color: '#000000',
-                  ':hover': {
-                    bgcolor: '#33353d',
-                    color: 'white',
-                  },
-                }}
-              >
-                Submit
-              </Button>
-            </Link>
+            <Button
+              variant='contained'
+              fullWidth
+              onClick={handleSubmit}
+              sx={{
+                bgcolor: '#D9D9D9',
+                color: '#000000',
+                ':hover': {
+                  bgcolor: '#33353d',
+                  color: 'white',
+                },
+              }}
+            >
+              Submit
+            </Button>
           </Grid>
         </Grid>
       </Box>
