@@ -1,4 +1,4 @@
-import './WhoAreWe.css';
+import './WhoWeAre.css';
 import { useEffect, useRef } from 'react';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
