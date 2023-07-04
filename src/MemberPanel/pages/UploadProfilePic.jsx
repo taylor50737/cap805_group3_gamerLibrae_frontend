@@ -18,7 +18,7 @@ const UploadProfilePic = () => {
   const uploadPicSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
-    setSuccessSubmission('You have successfully changed your password!');
+    setSuccessSubmission('You have successfully uploaded your image!');
   };
 
   return (
