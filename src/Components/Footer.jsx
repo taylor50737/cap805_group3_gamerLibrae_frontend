@@ -16,10 +16,10 @@ const footerColumns = [
   {
     title: 'Games',
     pages: [
-      { name: 'Top 10 Games', url: '/game/1' },
-      { name: 'Open World', url: '/game/1' },
-      { name: 'Action', url: '/game/1' },
-      { name: 'RPG', url: '/game/1' },
+      { name: 'Top 10 Games', url: '/search' },
+      { name: 'Open World', url: '/search' },
+      { name: 'Action', url: '/search' },
+      { name: 'RPG', url: '/search' },
     ],
   },
   {
