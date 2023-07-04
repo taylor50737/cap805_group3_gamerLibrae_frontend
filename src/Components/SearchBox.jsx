@@ -140,7 +140,7 @@ export const SearchBox = () => {
 
 const games = [
   {
-    image: '/src/assets/searchBoxMockImage/zelda.jpg',
+    image: '/images/searchBoxMockImage/zelda.jpg',
     name: 'The Legend of Zelda: Tears of the Kingdom',
     releaseYear: '2023',
     platform: 'Switch',
@@ -148,7 +148,7 @@ const games = [
     score: 95,
   },
   {
-    image: '/src/assets/searchBoxMockImage/gollum.jpg',
+    image: '/images/searchBoxMockImage/gollum.jpg',
     name: 'The Lord of the Rings: Gollum',
     releaseYear: '2023',
     platform: 'PS5',
@@ -156,7 +156,7 @@ const games = [
     score: 30,
   },
   {
-    image: '/src/assets/searchBoxMockImage/diablo.jpg',
+    image: '/images/searchBoxMockImage/diablo.jpg',
     name: 'Diablo IV',
     releaseYear: '2023',
     platform: 'Xbox One',
