@@ -27,6 +27,7 @@ import PublicProfileLayout from './PublicProfile/pages/PublicProfileLayout';
 import AddGamePage from './AdminPanel/AddGamePage';
 import { AuthContext } from './shared/context/auth_context';
 import { AffRegContext } from './shared/context/AffRegContext';
+import GamePage from './Game/GamePage';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -66,9 +67,9 @@ const App = () => {
 
           {/* Game Route */}
           <Route path='/game'>
-            <Route index element={<h1>All Game Page</h1>} />
+            <Route index element={<GameSearchResult />} />
             <Route path=':id'>
-              <Route index element={<h1>Individual game page here</h1>} />
+              <Route index element={<GamePage />} />
               <Route path='review-edit' element={<ReviewEditPage />} />
             </Route>
           </Route>
@@ -113,9 +114,9 @@ const App = () => {
 
           {/* Game Route */}
           <Route path='/game'>
-            <Route index element={<h1>All Game Page</h1>} />
+            <Route index element={<GameSearchResult />} />
             <Route path=':id'>
-              <Route index element={<h1>Individual game page here</h1>} />
+              <Route index element={<GamePage />} />
               <Route path='review-edit' element={<ReviewEditPage />} />
             </Route>
           </Route>
@@ -167,9 +168,9 @@ const App = () => {
 
           {/* Game Route */}
           <Route path='/game'>
-            <Route index element={<h1>All Game Page</h1>} />
+            <Route index element={<GameSearchResult />} />
             <Route path=':id'>
-              <Route index element={<h1>Individual game page here</h1>} />
+              <Route index element={<GamePage />} />
               <Route path='review-edit' element={<ReviewEditPage />} />
             </Route>
           </Route>
