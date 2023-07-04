@@ -106,12 +106,17 @@ export const Navbar = () => {
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
-                    mx: 2,
+                    mx: 0.5,
                     color: 'white',
                     flex: 'none',
-                    fontSize: 18,
-                    fontWeight: 800,
+                    fontSize: 15,
+                    fontWeight: 500,
+                    letterSpacing: 0.1,
+                    fontFamily: 'DM Sans',
                     textTransform: 'none',
+                    ':hover': {
+                      color: '#8386f5',
+                    },
                   }}
                 >
                   {page.name}
