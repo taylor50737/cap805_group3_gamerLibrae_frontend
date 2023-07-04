@@ -31,7 +31,6 @@
   background-size: 200% auto;
   color: #fff;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0px 4px 15px rgba(255, 42, 217, 0.7);
@@ -40,7 +39,7 @@
 }
 
 .aboutus--brandname:hover {
-  animation: textclip 0.5s linear infinite;
+  animation: textclip 0.5s linear 1;
 }
 
 @keyframes textclip {

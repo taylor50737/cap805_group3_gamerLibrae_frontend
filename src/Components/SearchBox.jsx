@@ -45,7 +45,7 @@ export const SearchBox = () => {
       //     }
       //   }
       // }}
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '45%'}}
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '45%' }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -65,20 +65,23 @@ export const SearchBox = () => {
             ),
           }}
           sx={{
+            marginLeft: '2rem',
             input: {
               '&::placeholder': {
                 opacity: 1,
                 fontSize: 12,
                 color: '#565656',
+                fontFamily: 'DM Sans',
               },
             },
             '.MuiInputBase-input': {
-              height: 8,
+              height: 20,
             },
             '& .MuiOutlinedInput-root': {
               borderRadius: 5,
               color: 'white',
               fontSize: 12,
+              fontFamily: 'DM Sans',
               '& fieldset': {
                 borderColor: '#b7b7b7',
                 borderWidth: 1.5,
@@ -126,7 +129,7 @@ export const SearchBox = () => {
               md={2}
               sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
-              <Score score={game.score} size={50}/>
+              <Score score={game.score} size={50} />
             </Grid>
           </Grid>
         </li>
