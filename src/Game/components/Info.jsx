@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Box, Typography, Button, Chip } from '@mui/material';
 import Score from '../../Components/Score';
 
-import zelda from 'src/assets/carousel/zelda.jpg';
+import zelda from '/src/assets/carousel/zelda.jpg';
 
 const game = {
   id: 3,
