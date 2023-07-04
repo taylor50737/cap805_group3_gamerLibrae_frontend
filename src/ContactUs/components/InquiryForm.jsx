@@ -28,6 +28,9 @@ const InquiryForm = () => {
         </div>
         <div className='affreg--button'>
           <Button
+            onClick={() => {
+              alert('You have submitted the form, we will contact you ASAP!');
+            }}
             variant='contained'
             sx={{
               color: '#0D0C11',
