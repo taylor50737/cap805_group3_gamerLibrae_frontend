@@ -16,18 +16,18 @@ const footerColumns = [
   {
     title: 'Games',
     pages: [
-      { name: 'Top 10 Games', url: '' },
-      { name: 'Open World', url: '' },
-      { name: 'Action', url: '' },
-      { name: 'RPG', url: '' },
+      { name: 'Top 10 Games', url: '/game/1' },
+      { name: 'Open World', url: '/game/1' },
+      { name: 'Action', url: '/game/1' },
+      { name: 'RPG', url: '/game/1' },
     ],
   },
   {
     title: 'Member',
     pages: [
-      { name: 'Register', url: '' },
-      { name: 'Profile', url: '/member/:uid' },
-      { name: 'Account', url: '' },
+      { name: 'Register', url: '/auth' },
+      { name: 'Profile', url: '/profile/u1' },
+      { name: 'Account', url: '/member/:uid' },
     ],
   },
   {

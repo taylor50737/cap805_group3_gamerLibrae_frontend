@@ -12,18 +12,18 @@ const ReviewItem = (props) => {
           <div className='px-8 py-5'>
             <NavLink
               to={`/game/${props.gid}`}
-              className='text-sm font-semibold uppercase tracking-wide text-indigo-500 line-clamp-2 hover:underline'
+              className='line-clamp-2 text-sm font-semibold uppercase tracking-wide text-indigo-500 hover:underline'
             >
               {props.game}
             </NavLink>
             <NavLink
-              to={`/review/${props.rid}`}
-              className='mt-1 text-lg font-medium leading-tight text-white line-clamp-1 hover:underline'
+              to={`/game/${props.rid}`}
+              className='mt-1 line-clamp-1 text-lg font-medium leading-tight text-white hover:underline'
             >
               {props.reviewTitle}
             </NavLink>
-            <p className='mt-2 text-slate-400 line-clamp-1'>{props.date}</p>
-            <p className=' text-slate-500 line-clamp-3'>{props.reviewContext}</p>
+            <p className='mt-2 line-clamp-1 text-slate-400'>{props.date}</p>
+            <p className=' line-clamp-3 text-slate-500'>{props.reviewContext}</p>
           </div>
           <div className='shrink-0 px-6 py-14'>
             <Score score={props.score} size={100} />

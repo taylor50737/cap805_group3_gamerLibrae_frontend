@@ -10,7 +10,7 @@ const CommentItem = (props) => {
               <div className='text-sm'>User: &nbsp;</div>
               <NavLink
                 to={`/profile/${props.reviewCreatorId}`}
-                className='text-sm font-semibold tracking-wide text-indigo-200 line-clamp-1 hover:underline'
+                className='line-clamp-1 text-sm font-semibold tracking-wide text-indigo-200 hover:underline'
               >
                 {props.reviewCreator}
               </NavLink>
@@ -20,7 +20,7 @@ const CommentItem = (props) => {
               <div className='text-sm'>Game: &nbsp;</div>
               <NavLink
                 to={`/game/${props.gid}`}
-                className='text-sm font-semibold tracking-wide text-indigo-500 line-clamp-2 hover:underline'
+                className='line-clamp-2 text-sm font-semibold tracking-wide text-indigo-500 hover:underline'
               >
                 {props.game}
               </NavLink>
@@ -29,17 +29,17 @@ const CommentItem = (props) => {
             <div className='mt-1 flex flex-row'>
               <div className='text-sm'>Review: &nbsp;</div>
               <NavLink
-                to={`/review/${props.reviewId}`}
-                className='text-sm font-medium tracking-wide text-white line-clamp-1 hover:underline'
+                to={`/game/${props.reviewId}`}
+                className='line-clamp-1 text-sm font-medium tracking-wide text-white hover:underline'
               >
                 {props.reviewTitle}
               </NavLink>
             </div>
           </div>
           <div className='w-1/2 px-4 py-4'>
-            <p className='mt-2 text-sm text-slate-400 line-clamp-1'>{props.date}</p>
+            <p className='mt-2 line-clamp-1 text-sm text-slate-400'>{props.date}</p>
             <p className='text-sm'>Comment:</p>
-            <p className=' text-slate-500 line-clamp-3'>{props.commentContext}</p>
+            <p className=' line-clamp-3 text-slate-500'>{props.commentContext}</p>
           </div>
         </div>
       </div>
