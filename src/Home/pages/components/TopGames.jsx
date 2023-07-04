@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Paper } from '@mui/material';
 
 import { Score } from '/src/Components/Score';
@@ -16,6 +17,7 @@ const topGamesItems = [
 ];
 
 const TopGames = () => {
+  const navigate = useNavigate();
   return (
     <Box sx={{ position: 'relative', height: '100%', mt: '4px' }}>
       <Typography
@@ -45,7 +47,7 @@ const TopGames = () => {
           <Paper
             key={i}
             elevation={10}
-            onClick={() => alert(game.title)}
+            onClick={() => navigate('/game/123')}
             sx={{
               position: 'relative',
               width: 160,
@@ -53,6 +55,10 @@ const TopGames = () => {
               bgcolor: '#b7b7b7',
               backgroundImage: `url(${game.imgSrc})`,
               backgroundSize: '100% 100%',
+              '&:hover': {
+                opacity: [0.9, 0.8, 0.7],
+                cursor: 'pointer',
+              },
             }}
           >
             <Box sx={{ position: 'absolute', top: '75%', left: '70%' }}>
