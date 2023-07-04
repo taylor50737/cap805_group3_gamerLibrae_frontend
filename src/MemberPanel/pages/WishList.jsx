@@ -15,7 +15,7 @@ const DUMMY_WISHLIST = [
     mode: 'Multi-Player',
     tags: ['Adventure', 'Fight', 'Funny'],
     score: 94,
-    imgSrc: '/src/assets/topGames/streetFighter6.jpg',
+    imgSrc: '/images/topGames/streetFighter6.jpg',
     uid: 'u1',
   },
   {
@@ -27,7 +27,7 @@ const DUMMY_WISHLIST = [
     mode: 'Single-Player',
     tags: ['Adventure', 'Fight', 'Funny'],
     score: 93,
-    imgSrc: '/src/assets/topGames/residentEvil4.jpg',
+    imgSrc: '/images/topGames/residentEvil4.jpg',
     uid: 'u1',
   },
   {
@@ -39,7 +39,7 @@ const DUMMY_WISHLIST = [
     mode: 'Single-Player',
     tags: ['Adventure', 'Fight', 'Funny'],
     score: 92,
-    imgSrc: '/src/assets/topGames/deadSpace.jpg',
+    imgSrc: '/images/topGames/deadSpace.jpg',
     uid: 'u1',
   },
   {
@@ -51,7 +51,7 @@ const DUMMY_WISHLIST = [
     mode: 'Single-Player',
     tags: ['Adventure', 'Fight', 'Funny'],
     score: 90,
-    imgSrc: '/src/assets/topGames/hifiRush.jpg',
+    imgSrc: '/images/topGames/hifiRush.jpg',
     uid: 'u2',
   },
   {
@@ -63,7 +63,7 @@ const DUMMY_WISHLIST = [
     mode: 'Single-Player',
     tags: ['Adventure', 'Fight', 'Funny'],
     score: 89,
-    imgSrc: '/src/assets/topGames/p4g.jpg',
+    imgSrc: '/images/topGames/p4g.jpg',
     uid: 'u2',
   },
   {
@@ -75,7 +75,7 @@ const DUMMY_WISHLIST = [
     mode: 'Single-Player',
     tags: ['Adventure', 'Fight', 'Funny'],
     score: 88,
-    imgSrc: '/src/assets/topGames/deadCell.jpg',
+    imgSrc: '/images/topGames/deadCell.jpg',
     uid: 'u2',
   },
 ];
