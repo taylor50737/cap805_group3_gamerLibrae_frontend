@@ -1,6 +1,7 @@
 import React from 'react';
 import './AffSuc.css';
 import Button from '@mui/material/Button';
+import CustomButton from '../shared/components/FormElements/CustomButton';
 
 const AffSuc = () => {
   return (
@@ -28,7 +29,7 @@ const AffSuc = () => {
         </ol>
       </div>
       <div className='affsuc--back--home--button'>
-        <Button
+        {/* <Button
           variant='contained'
           sx={{
             color: '#0D0C11',
@@ -47,7 +48,8 @@ const AffSuc = () => {
           }}
         >
           Back to homepage
-        </Button>
+        </Button> */}
+        <CustomButton to={'/'}>Back to homepage</CustomButton>
       </div>
     </div>
   );

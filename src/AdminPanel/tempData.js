@@ -1,6 +1,6 @@
 export const games = [
   {
-    _id: '648fb8ce2a35a03f1bb075c2',
+    _id: 'g1',
     name: 'Kentucky Route Zero',
     developer: '343 Industries',
     publisher: 'Bandai Namco',
@@ -11,7 +11,7 @@ export const games = [
     __v: 0,
   },
   {
-    _id: '648fb8ce2a35a03f1bb075c4',
+    _id: 'g2',
     name: 'Guild Wars 2',
     developer: 'Square Enix',
     publisher: 'Activision',
@@ -22,7 +22,7 @@ export const games = [
     __v: 0,
   },
   {
-    _id: '648fb8ce2a35a03f1bb075c9',
+    _id: 'g3',
     name: 'Hades',
     developer: 'CD Projekt Red',
     publisher: 'Capcom',
@@ -223,7 +223,7 @@ export const games = [
 
 export const users = [
   {
-    _id: { $oid: '648fb8ce2a35a03f1bb074fa' },
+    _id: 'u1',
     userName: 'bdearden0',
     email: 'aflynn0@bluehost.com',
     password: '$2a$04$a4179HhWb9fEdIPEvEAW.uVBcdPCHHoRq7X0.HD0kd/Mwbl3losaS',
@@ -237,7 +237,7 @@ export const users = [
     __v: { $numberInt: '0' },
   },
   {
-    _id: { $oid: '648fb8ce2a35a03f1bb074fd' },
+    _id: 'u2',
     userName: 'mwinscom3',
     email: 'equinnet3@unblog.fr',
     password: '$2a$04$VqQtMHF5No4bSgywcuaiZOd9PgYECyc1//HX9KfbNJZINgFnoob1q',
@@ -251,7 +251,7 @@ export const users = [
     __v: { $numberInt: '0' },
   },
   {
-    _id: { $oid: '648fb8ce2a35a03f1bb074fe' },
+    _id: 'u3',
     userName: 'gesel4',
     email: 'rsherborne4@tamu.edu',
     password: '$2a$04$HDVcNO4pg3zKapE7iSZms.gEPBG4i.Tdnrft5zsn54iilXGVDLN/m',
@@ -506,7 +506,7 @@ export const users = [
 
 export const reviews = [
   {
-    _id: { $oid: '648fb8ce2a35a03f1bb0768d' },
+    _id: 'r1',
     userId: '5805',
     gameId: '6812',
     rating: '55',
@@ -516,8 +516,8 @@ export const reviews = [
     postDate: '1670821200000',
     comments: [
       {
-        commentId: '4',
-        commentUserId: '117',
+        commentId: 'c1',
+        commentUserId: 'u1',
         comment:
           'In congue. Etiam justo. Etiam pretium iaculis justo.\n\nIn hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.\n\nNulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.',
         commentReportCount: '0',
@@ -544,7 +544,7 @@ export const reviews = [
     __v: '0',
   },
   {
-    _id: { $oid: '72f3e6a91c9823a6b5d29f4c' },
+    _id: 'r2',
     userId: '1248',
     gameId: '2796',
     rating: '80',
@@ -554,8 +554,8 @@ export const reviews = [
     postDate: '1698056400000',
     comments: [
       {
-        commentId: '12',
-        commentUserId: '381',
+        commentId: 'c2',
+        commentUserId: 'u2',
         comment:
           'Ut egestas, nisi id lacinia sollicitudin, lorem neque ultricies risus, eu scelerisque mi orci non nulla. Phasellus vitae leo a est tincidunt lacinia. Sed vitae nisl vitae ante vulputate sollicitudin.',
         commentReportCount: '2',
@@ -575,8 +575,8 @@ export const reviews = [
         ],
       },
       {
-        commentId: '18',
-        commentUserId: '572',
+        commentId: 'c3',
+        commentUserId: 'u3',
         comment:
           'Suspendisse lobortis leo non sapien rhoncus, ut placerat nulla facilisis. Integer vehicula urna id luctus pulvinar. Integer ut vestibulum erat, a dictum neque. Nullam ac facilisis lacus.',
         commentReportCount: '0',
@@ -590,7 +590,7 @@ export const reviews = [
     __v: '0',
   },
   {
-    _id: { $oid: '91a8b2f7e6c2d3f4a5e6b7c8' },
+    _id: 'r3',
     userId: '9876',
     gameId: '5432',
     rating: '90',

@@ -1,8 +1,8 @@
-import { NavLink } from 'react-router-dom';
-import { Typography, Breadcrumbs } from '@mui/material';
+import { NavLink, Link } from 'react-router-dom';
+import { Breadcrumbs } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-const CustomBreadcrumbs = () => {
+const CustomBreadcrumbs = (props) => {
   return (
     <div className='px-3 py-4'>
       <Breadcrumbs
@@ -12,10 +12,10 @@ const CustomBreadcrumbs = () => {
           color: 'white',
         }}
       >
-        <a href='/' underline='hover' color='inherit'>
+        <NavLink to='/' underline='hover' color='inherit'>
           Home Page
-        </a>
-        <NavLink underline='hover' color='inherit' href='/'>
+        </NavLink>
+        <NavLink to={`/member/${props.uid}`} underline='hover' color='inherit'>
           Member Panel
         </NavLink>
       </Breadcrumbs>

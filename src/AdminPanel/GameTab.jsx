@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function GameTab({ games }) {
   const fields = ['ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
@@ -59,12 +60,14 @@ export default function GameTab({ games }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>{index}</td>
-                <td>{game.name}</td>
+                <td>{indexOfFirstItem + index + 1}</td>
+                <td>
+                  <Link to={`/game/${game._id}/reviewEdit`}>{game.name}</Link>
+                </td>
                 <td>{game.developer}</td>
                 <td>{game.publisher}</td>
                 <td>{game.releaseDate}</td>
-                <td>{game.status}</td>
+                <td>{game.status}Public</td>
               </tr>
             ))}
           </tbody>

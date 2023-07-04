@@ -1,0 +1,63 @@
+@media screen and (max-width: 600px) {
+  .section {
+    height: 100vh !important;
+    width: 100%;
+  }
+
+  .aboutus--brandname {
+    font-size: 2rem !important;
+  }
+}
+
+.section {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  scroll-snap-align: center;
+}
+
+.aboutus--brandname {
+  font-size: 5rem;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+  text-transform: uppercase;
+  background-image: linear-gradient(-225deg, #d1f7ff 0%, #05d9e8 29%, #005678 67%, #01012b 100%);
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 4px 15px rgba(255, 42, 217, 0.7);
+  padding: 0 1rem;
+  z-index: 1;
+}
+
+.aboutus--brandname:hover {
+  animation: textclip 0.5s linear 1;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.aboutus--downarrow {
+  position: absolute;
+  bottom: 15vh;
+  left: 0;
+  right: 0;
+  background-image: url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+}

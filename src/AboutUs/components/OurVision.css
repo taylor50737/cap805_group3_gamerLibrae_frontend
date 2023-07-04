@@ -1,0 +1,20 @@
+.section {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  scroll-snap-align: center;
+}
+
+.aboutus--ourvision {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.aboutus--ourvision--para p {
+  margin: 2rem 0;
+}

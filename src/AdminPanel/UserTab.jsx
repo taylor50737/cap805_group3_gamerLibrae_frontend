@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function UserTab({ users }) {
   const fields = ['ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
@@ -59,11 +60,13 @@ export default function UserTab({ users }) {
                     <input type='checkbox' className='checkbox' />
                   </label>
                 </th>
-                <td>
-                  <img src={user.avatar} />
+                <td>{indexOfFirstItem + index + 1}</td>
+                <td className='avatar'>
+                  <div className='w-8'>
+                    <img src={user.avatar} />
+                  </div>
                 </td>
-                {/* <td>{user._id}</td> */}
-                <td>{user.userName}</td>
+                <Link to={`/profile/${user._id}`}>{user.userName}</Link>
                 <td>{user.email}</td>
                 <td>{user.isAdmin === true ? 'Admin' : 'Member'}</td>
                 <td>{user.joinedAffiliation === true ? 'Yes' : 'No'}</td>

@@ -1,0 +1,14 @@
+@media screen and (max-width: 600px) {
+  .contactus {
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 3rem 0 !important;
+  }
+}
+
+.contactus {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 3rem 0;
+}
