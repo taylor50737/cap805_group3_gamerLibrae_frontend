@@ -70,6 +70,7 @@ export const Score = ({ score, size }) => {
     transform: translate(-50%, -50%);
     font-family: 'Chakra Petch';
     font-size: ${size / 2.5}px;
+    font-weight: 800;
     color: white;
   `;
 

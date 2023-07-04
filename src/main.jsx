@@ -15,7 +15,8 @@ import ChangeInfo from './MemberPanel/pages/ChangeInfo';
 import ResetPassword from './MemberPanel/pages/ResetPassword';
 import UploadProfilePic from './MemberPanel/pages/UploadProfilePic';
 import WishList from './MemberPanel/pages/WishList';
-import GameSearchResult from './GameSearchResult/GameSearchResultPage';
+import GameSearchResultPage from './GameSearchResult/GameSearchResultPage';
+import GamePage from './Game/GamePage';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>Insert game page here</h1>,
+            element: <GamePage />,
           },
           {
             path: 'reviewEdit',
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <GameSearchResult />,
+            element: <GameSearchResultPage />,
           },
         ],
       },
