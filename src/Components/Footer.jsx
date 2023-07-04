@@ -10,32 +10,68 @@ import {
   Unstable_Grid2 as Grid,
 } from '@mui/material';
 
+import { NavLink } from 'react-router-dom';
+
 const footerColumns = [
-  { name: 'Games', pages: ['Top 10 Games', 'Open World', 'Action', 'RPG'] },
-  { name: 'Member', pages: ['Register', 'Profile', 'Account'] },
-  { name: 'Contact', pages: ['About us', 'Contact'] },
-  { name: 'Social Media', pages: ['Facebook', 'Instagram', 'Youtube'] },
+  {
+    title: 'Games',
+    pages: [
+      { name: 'Top 10 Games', url: '' },
+      { name: 'Open World', url: '' },
+      { name: 'Action', url: '' },
+      { name: 'RPG', url: '' },
+    ],
+  },
+  {
+    title: 'Member',
+    pages: [
+      { name: 'Register', url: '' },
+      { name: 'Profile', url: '/member/:uid' },
+      { name: 'Account', url: '' },
+    ],
+  },
+  {
+    title: 'Contact',
+    pages: [
+      { name: 'About us', url: '/about-us' },
+      { name: 'Contact', url: '/contact-us' },
+    ],
+  },
+  {
+    title: 'Social Media',
+    pages: [
+      { name: 'Facebook', url: '' },
+      { name: 'Instagram', url: '' },
+      { name: 'Youtube', url: '' },
+    ],
+  },
 ];
 
 export const Footer = () => {
   return (
-    <Box sx={{
-      mt: 'auto'
-    }}>
+    <Box
+      sx={{
+        mt: 'auto',
+      }}
+    >
       <Container>
         <Divider sx={{ borderColor: '#81838c', borderBottomWidth: 2 }} />
         <Grid container columns={{ xs: 12, md: 15 }}>
           {/* Site icon and copyright */}
           <Grid xs={12} md={3}>
-            <Stack direction={{ xs: 'row', md: 'column' }} spacing={{ xs: 1, md: 0 }} sx={{ pt: 2 }}>
-              <Typography sx={{ fontFamily: 'Lobster', fontSize: 24, fontWeight: 800}}>
+            <Stack
+              direction={{ xs: 'row', md: 'column' }}
+              spacing={{ xs: 1, md: 0 }}
+              sx={{ pt: 2 }}
+            >
+              <Typography sx={{ fontFamily: 'Lobster', fontSize: 24, fontWeight: 800 }}>
                 GamerLibrae
               </Typography>
-              
+
               <Typography sx={{ fontSize: 12, pt: 1.5, fontWeight: 400 }}>
                 ©2023 GamerLibrae
               </Typography>
-              <Typography sx={{ fontSize: 12, pt: 1.5, fontWeight: 400}}>
+              <Typography sx={{ fontSize: 12, pt: 1.5, fontWeight: 400 }}>
                 All Rights Reserved
               </Typography>
             </Stack>
@@ -44,22 +80,35 @@ export const Footer = () => {
           {/* All footer column */}
 
           {footerColumns.map((col) => (
-            <Grid key={col.name} xs={6} md={3}>
+            <Grid key={col.title} xs={6} md={3}>
               <List disablePadding>
                 <ListItem disablePadding disableGutters sx={{ mt: 2 }}>
                   <ListItemText
                     primary={
-                      <Typography sx={{ fontWeight: 800, fontSize: 18 }}>{col.name}</Typography>
+                      <Typography sx={{ fontFamily: 'DM Sans', fontWeight: 500, fontSize: 22 }}>
+                        {col.title}
+                      </Typography>
                     }
                   />
                 </ListItem>
 
                 {/* Items in individual column */}
                 {col.pages.map((page) => (
-                  <ListItem key={page} disablePadding disableGutters>
+                  <ListItem key={page.name} disablePadding disableGutters>
                     <ListItemText
                       primary={
-                        <Typography sx={{ color: '#96979e', fontSize: 10 }}>{page}</Typography>
+                        <NavLink to={page.url}>
+                          <Typography
+                            sx={{
+                              fontFamily: 'DM Sans',
+                              color: '#96979e',
+                              fontSize: 16,
+                              ':hover': { color: '#8386f5' },
+                            }}
+                          >
+                            {page.name}
+                          </Typography>
+                        </NavLink>
                       }
                     />
                   </ListItem>
