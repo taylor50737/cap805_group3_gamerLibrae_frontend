@@ -10,13 +10,13 @@ import { faAnglesLeft, faAnglesRight, faCircle } from '@fortawesome/free-solid-s
 const displayItems = [
   {
     title: 'The Legend of Zelda: Tears of the Kingdom',
-    imgUrl: 'src/assets/carousel/zelda.jpg',
+    imgUrl: '/images/carousel/zelda.jpg',
     pageUrl: 'game/123',
   },
-  { title: 'Elden ring', imgUrl: 'src/assets/carousel/eldenRing.jpg', pageUrl: 'game/123' },
-  { title: 'Diablo IV', imgUrl: 'src/assets/carousel/diablo4.jpg', pageUrl: 'game/123' },
-  { title: 'Final Fantasy XVI', imgUrl: 'src/assets/carousel/ff16.jpg', pageUrl: 'game/123' },
-  { title: 'Starfield', imgUrl: 'src/assets/carousel/starfield.jpg', pageUrl: 'game/123' },
+  { title: 'Elden ring', imgUrl: '/images/carousel/eldenRing.jpg', pageUrl: 'game/123' },
+  { title: 'Diablo IV', imgUrl: '/images/carousel/diablo4.jpg', pageUrl: 'game/123' },
+  { title: 'Final Fantasy XVI', imgUrl: '/images/carousel/ff16.jpg', pageUrl: 'game/123' },
+  { title: 'Starfield', imgUrl: '/images/carousel/starfield.jpg', pageUrl: 'game/123' },
 ];
 
 const autoSwipeTimerMs = 5000;

@@ -27,6 +27,14 @@ const formReducer = (state, action) => {
         inputs: action.inputs,
         isValid: action.formIsValid,
       };
+    // case 'CLEAR_INPUT':
+    //   return {
+    //     ...state,
+    //     inputs: {
+    //       ...state.inputs,
+    //       [action.inputId]: { value: '', isValid: false },
+    //     },
+    //   };
     default:
       return state;
   }
@@ -55,5 +63,11 @@ export const CustomUseForm = (initialInputs, initialFormValidity) => {
     });
   }, []);
 
+  // const clearInput = useCallback((id) => {
+  //   dispatch({
+  //     type: 'CLEAR_INPUT',
+  //     inputId: id,
+  //   });
+  // }, []);
   return [formState, inputHandler, setFormData];
 };

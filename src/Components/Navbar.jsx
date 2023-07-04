@@ -25,7 +25,7 @@ import { AuthContext } from '../shared/context/auth_context';
 const pages = [
   { id: 1, name: 'About Us', url: '/about-us' },
   { id: 2, name: 'Contact Us', url: '/contact-us' },
-  { id: 3, name: 'Affiliation', url: '/affiliation' },
+  { id: 3, name: 'Affiliation', url: '/affiliation-rule' },
 ];
 
 const publicSettings = [
@@ -106,12 +106,17 @@ export const Navbar = () => {
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
-                    mx: 2,
+                    mx: 0.5,
                     color: 'white',
                     flex: 'none',
-                    fontSize: 18,
-                    fontWeight: 800,
+                    fontSize: 15,
+                    fontWeight: 500,
+                    letterSpacing: 0.1,
+                    fontFamily: 'DM Sans',
                     textTransform: 'none',
+                    ':hover': {
+                      color: '#8386f5',
+                    },
                   }}
                 >
                   {page.name}
@@ -247,13 +252,13 @@ export const Navbar = () => {
           {auth.isLoggedIn && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Notification */}
-              <Tooltip title='View notification'>
+              {/* <Tooltip title='View notification'>
                 <IconButton sx={{ pr: 2 }}>
                   <Badge variant='dot' color='secondary'>
                     <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
                   </Badge>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
 
               {/* Avatar */}
               <Tooltip title='Open settings'>
@@ -301,13 +306,13 @@ export const Navbar = () => {
           {auth.isAdminLoggedIn && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Notification */}
-              <Tooltip title='View notification'>
+              {/* <Tooltip title='View notification'>
                 <IconButton sx={{ pr: 2 }}>
                   <Badge variant='dot' color='secondary'>
                     <FontAwesomeIcon icon={faBell} size='xs' style={{ color: '#FFFFFF' }} />
                   </Badge>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
 
               {/* Avatar */}
               <Tooltip title='Open settings'>

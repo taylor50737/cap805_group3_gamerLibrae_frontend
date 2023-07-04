@@ -7,7 +7,7 @@
 .form-control {
   margin: 0.5rem 0;
   font-family: 'DM Sans', sans-serif;
-  min-width: 50vw;
+  min-width: 44vw;
 }
 
 .form-control label,
@@ -61,7 +61,7 @@
 .form-control textarea:focus {
   border: 0;
   outline: 2px solid #8386f5;
-  background: #000003;
+  background: rgba(0, 0, 3, 0.3);
 }
 
 .form-control--invalid label,

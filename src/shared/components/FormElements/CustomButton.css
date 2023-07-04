@@ -1,14 +1,31 @@
+@media screen and (max-width: 600px) {
+  .button {
+    min-width: 90vw !important;
+  }
+}
+
 .button {
-  font: inherit;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid #ff0055;
-  border-radius: 4px;
-  background: #ff0055;
-  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02857em;
+  line-height: 1.75;
+  text-transform: uppercase;
+  padding: 0.375rem 1rem;
+  min-width: 64px;
+  border: 1px solid #f2f3ee;
+  border-radius: 3.2px;
+  background: #f2f3ee;
+  color: #0d0c11;
   cursor: pointer;
-  margin-right: 1rem;
   text-decoration: none;
   display: inline-block;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 
 .button:focus {
@@ -17,19 +34,30 @@
 
 .button:hover,
 .button:active {
-  background: #ff4382;
-  border-color: #ff4382;
+  background: transparent;
+  border-color: #f2f3ee;
+  color: #f2f3ee;
+}
+
+.button:hover {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.button:active {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .button--inverse {
   background: transparent;
-  color: #ff0055;
+  color: #f2f3ee;
 }
 
 .button--inverse:hover,
 .button--inverse:active {
-  color: white;
-  background: #ff0055;
+  color: #f2f3ee;
+  background: rgba(183, 183, 183, 0.5);
 }
 
 .button--danger {
@@ -46,10 +74,11 @@
 .button:disabled,
 .button:hover:disabled,
 .button:active:disabled {
-  background: #ccc;
+  background: #f2f3ee;
   color: #979797;
-  border-color: #ccc;
+  border-color: #f2f3ee;
   cursor: not-allowed;
+  font-weight: 500;
 }
 
 .button--small {

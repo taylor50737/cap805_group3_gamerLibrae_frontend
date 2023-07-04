@@ -1,95 +1,100 @@
 import './AffReg.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import CustomInput from '../shared/components/FormElements/CustomInput';
+import CustomButton from '../shared/components/FormElements/CustomButton';
+import { CustomUseForm } from '../shared/hooks/form-hook';
+import { VALIDATOR_EMAIL, VALIDATOR_YOUTUBETWITCH } from '../shared/util/validators';
 import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui/material';
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
 import AffRegTNCCheckbox from './components/AffRegTNCCheckbox';
+import { AffRegContext } from '../shared/context/AffRegContext';
 
 const AffReg = () => {
-  const [affRegFormData, setAffRegFormData] = useState({
-    channelUrl: 'https://',
-    email: '',
-  });
+  const affReg = useContext(AffRegContext);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setAffRegFormData((prevState) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
-    // console.log(affRegFormData);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // console.log(affRegFormData);
-  };
+  const [formState, inputHandler, setFormData, clearInput] = CustomUseForm(
+    {
+      channelUrl: {
+        value: '',
+        isValid: false,
+      },
+      email: {
+        value: '',
+        isValid: false,
+      },
+    },
+    false,
+  );
 
   const AffRegTextFieldList = AffRegTextFieldProps.map((data) => {
     return (
-      <TextField
-        required
-        id='outlined-basic'
-        name={data.name}
+      <CustomInput
+        key={data.key}
+        element='input'
+        id={data.id}
+        type={data.type}
         label={data.label}
-        variant='filled'
-        value={data.value == 'channelUrl' ? affRegFormData.channelUrl : affRegFormData.email}
-        defaultValue={data.defaultValue}
-        onChange={handleChange}
-        InputLabelProps={{
-          style: { color: 'rgba(183,183,183,0.5)' },
-        }}
-        sx={{
-          maxWidth: { xs: '100vw', sm: '50vw' },
-          paddingBottom: 4,
-          '& .MuiInputLabel-root': {
-            color: '#B7B7B7',
-            fontFamily: '"DM Sans", sans-serif',
-            fontSize: '1rem',
-          },
-          '& .MuiFilledInput-root': {
-            border: 2,
-            borderColor: '#F2F3EE',
-            borderRadius: 0.8,
-            '::before, ::after': {
-              borderBottom: '0 !important',
-            },
-            ':hover': {
-              borderBottom: 2,
-              borderColor: '#F2F3EE',
-              borderRadius: 0.8,
-              bgcolor: 'rgba(183, 183, 183, 0.2)',
-            },
-          },
-          '& .MuiFilledInput-input': {
-            color: '#F2F3EE',
-            fontFamily: '"DM Sans", sans-serif',
-            fontSize: '1rem',
-            ':hover': {
-              color: '#F2F3EE',
-            },
-          },
-        }}
+        validators={data.type === 'email' ? [VALIDATOR_EMAIL()] : [VALIDATOR_YOUTUBETWITCH()]}
+        errorText={data.errorText}
+        onInput={inputHandler}
       />
     );
   });
+
+  // const clearFormData = () => {
+  //   clearInput({
+  //     channelUrl: {
+  //       value: '',
+  //       isValid: false,
+  //     },
+  //     email: {
+  //       value: '',
+  //       isValid: false,
+  //     },
+  //   });
+  //   console.log(formState.inputs.channelUrl.value);
+  //   console.log(formState.inputs.email.value);
+  // };
+
+  const submitAffRegForm = (event) => {
+    event.preventDefault();
+    if (
+      formState.inputs.channelUrl.value != '' &&
+      formState.inputs.email.value != '' &&
+      formState.inputs.channelUrl.isValid == true &&
+      formState.inputs.email.isValid == true
+    ) {
+      affReg.affregister();
+      console.log(formState.inputs.channelUrl.value);
+      console.log(formState.inputs.email.value);
+      console.log(formState.inputs.channelUrl.isValid);
+      console.log(formState.inputs.email.isValid);
+      console.log(affReg.isAffRegistered);
+    }
+  };
+
   return (
     <div className='affreg font-dmsans'>
-      <FormControl fullWidth>
+      <form className='affreg--form' onSubmit={submitAffRegForm}>
         <div className='affreg--block'>
           <h4 className='text-lg'>
             Please fill in the below form to register for the affiliation program.
           </h4>
           <div className='affreg--textfield'>{AffRegTextFieldList}</div>
+          <AffTNC />
+          <AffRegTNCCheckbox />
         </div>
-        <AffTNC />
-        <AffRegTNCCheckbox />
         <div className='affreg--button'>
-          <Button
+          <CustomButton type='submit' disabled={!formState.isValid}>
+            SUBMIT
+          </CustomButton>
+          <CustomButton type='reset' inverse>
+            RESET
+          </CustomButton>
+          {/* <Button
             variant='contained'
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
             type='submit'
             sx={{
               color: '#0D0C11',
@@ -110,8 +115,8 @@ const AffReg = () => {
             }}
           >
             Submit
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             variant='contained'
             sx={{
               color: '#F2F3EE',
@@ -129,15 +134,15 @@ const AffReg = () => {
                 color: '#F2F3EE',
                 border: 1,
               },
-            }}
+            }} 
             onClick={() => {
               setAffRegFormData({ channelUrl: 'https://', email: '' });
             }}
           >
             Reset
-          </Button>
+          </Button> */}
         </div>
-      </FormControl>
+      </form>
     </div>
   );
 };
