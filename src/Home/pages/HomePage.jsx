@@ -38,19 +38,6 @@ export const HomePage = () => {
           </Box>
         </Grid>
       </Grid>
-
-      {/* Quick test for router */}
-      <Link to={'game/123'}>game/123</Link>
-      <br />
-      <Link to={'game/123/review-edit'}>game/123/review-edit</Link>
-      <br />
-      <Link to={'admin-panel'}>admin-panel</Link>
-      <br />
-      <Link to={'search'}>search</Link>
-      <br />
-      <Link to={'profile/u1'}>Admin Profile</Link>
-      <br />
-      <Link to={'profile/u2'}>Member Profile</Link>
     </>
   );
 };
