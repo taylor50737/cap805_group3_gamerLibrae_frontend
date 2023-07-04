@@ -3,12 +3,16 @@ import { Box, Typography, Paper } from '@mui/material';
 import { Score } from '/src/Components/Score';
 
 const topGamesItems = [
-  { title: 'Street Fighter 6', score: 94, imgSrc: 'src/assets/topGames/streetFighter6.jpg' },
-  { title: 'Resident Evil 4', score: 93, imgSrc: 'src/assets/topGames/residentEvil4.jpg' },
-  { title: 'Dead Space', score: 92, imgSrc: 'src/assets/topGames/deadSpace.jpg' },
-  { title: 'Hi-Fi RUSH', score: 90, imgSrc: 'src/assets/topGames/hifiRush.jpg' },
-  { title: 'Persona 4 Golden', score: 89, imgSrc: 'src/assets/topGames/p4g.jpg' },
-  { title: 'Dead Cells: Return to Castlevania', score: 88, imgSrc: 'src/assets/topGames/deadCell.jpg'}
+  { title: 'Street Fighter 6', score: 94, imgSrc: '/images/topGames/streetFighter6.jpg' },
+  { title: 'Resident Evil 4', score: 93, imgSrc: '/images/topGames/residentEvil4.jpg' },
+  { title: 'Dead Space', score: 92, imgSrc: '/images/topGames/deadSpace.jpg' },
+  { title: 'Hi-Fi RUSH', score: 90, imgSrc: '/images/topGames/hifiRush.jpg' },
+  { title: 'Persona 4 Golden', score: 89, imgSrc: '/images/topGames/p4g.jpg' },
+  {
+    title: 'Dead Cells: Return to Castlevania',
+    score: 88,
+    imgSrc: '/images/topGames/deadCell.jpg',
+  },
 ];
 
 const TopGames = () => {
@@ -51,7 +55,7 @@ const TopGames = () => {
               backgroundSize: '100% 100%',
             }}
           >
-            <Box sx={{ position: 'absolute', top: '75%', left: '70%', }}>
+            <Box sx={{ position: 'absolute', top: '75%', left: '70%' }}>
               <Score score={game.score} size={50} />
             </Box>
           </Paper>
