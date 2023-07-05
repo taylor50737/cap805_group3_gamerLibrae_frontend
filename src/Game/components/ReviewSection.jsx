@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 
-import penguin from '/src/assets/avatar/penguin.png';
-import rabbit from '/src/assets/avatar/rabbit.png';
-import dog from '/src/assets/avatar/dog.png';
+import penguin from '/images/avatar/penguin.png';
+import rabbit from '/images/avatar/rabbit.png';
+import dog from '/images/avatar/dog.png';
 
 import ReviewPreview from './ReviewPreview';
 

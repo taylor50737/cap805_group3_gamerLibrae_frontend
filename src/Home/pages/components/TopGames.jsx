@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Paper } from '@mui/material';
 
-import { Score } from '/src/Components/Score';
+import Score from '../../../shared/components/Score';
 
 const topGamesItems = [
   { title: 'Street Fighter 6', score: 94, imgSrc: '/images/topGames/streetFighter6.jpg' },

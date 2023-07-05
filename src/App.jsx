@@ -1,9 +1,11 @@
 import React, { useState, useCallback } from 'react';
+
+import { Container } from '@mui/material';
+
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
-import { Navbar } from './Components/Navbar';
-import { Footer } from './Components/Footer';
-import { Container } from '@mui/material';
+import Navbar from './shared/components/layout/Navbar';
+import Footer from './shared/components/layout/Footer';
 import Auth from './Auth/pages/auth';
 import ForgetPassword from './Auth/pages/ForgetPassword';
 import ResetPassword from './Auth/pages/ResetPassword';
@@ -25,10 +27,11 @@ import AffSuc from './Affiliation/AffSuc';
 import AffRule from './Affiliation/AffRule';
 import PublicProfileLayout from './PublicProfile/pages/PublicProfileLayout';
 import AddGamePage from './AdminPanel/AddGamePage';
-import { AuthContext } from './shared/context/auth_context';
-import { AffRegContext } from './shared/context/AffRegContext';
 import GamePage from './Game/GamePage';
 import ReviewPage from './Review/ReviewPage';
+
+import { AuthContext } from './shared/context/auth_context';
+import { AffRegContext } from './shared/context/AffRegContext';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

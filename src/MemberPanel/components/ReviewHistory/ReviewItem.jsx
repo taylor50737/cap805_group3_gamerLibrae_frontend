@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import Score from '../../../Components/Score';
+import Score from '../../../shared/components/Score';
 
 const ReviewItem = (props) => {
   return (

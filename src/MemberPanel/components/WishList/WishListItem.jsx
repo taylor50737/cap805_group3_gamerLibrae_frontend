@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Grid, Typography, Box, Paper, Chip } from '@mui/material';
 
-import Score from '../../../Components/Score';
+import Score from '../../../shared/components/Score';
 
 const WishListItem = ({ games }) => {
   return (
