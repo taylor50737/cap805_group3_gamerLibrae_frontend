@@ -117,7 +117,7 @@ const Info = () => {
         <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
           Add to wishlist
         </Button>
-        <NavLink to='/game/1/review-edit'>
+        <NavLink to='/game/g1/review-edit'>
           <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
             Post review
           </Button>
