@@ -1,4 +1,6 @@
-import { Box, TextField, IconButton } from '@mui/material';
+import { useState } from 'react';
+
+import { Box, TextField, IconButton, Avatar } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
@@ -6,24 +8,26 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import penguin from '/src/assets/avatar/penguin.png';
 
 const CommentEditor = () => {
+  const [text, setText] = useState('');
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <img
-        src={penguin}
-        height={36}
-        width={36}
-        style={{ display: 'inline-block', marginLeft: 20 }}
-      />
+      <Avatar src={penguin} style={{ height: 36, width: 36, marginLeft: 20 }} />
       <TextField
         multiline
         maxRows={3}
         variant='outlined'
+        value={text}
+        onChange={(event) => {
+          setText(event.target.value);
+        }}
         inputProps={{ maxLength: 320 }}
         InputProps={{
           endAdornment: (
             <IconButton
               onClick={() => {
-                alert('submit');
+                setText('');
+                alert(text);
               }}
             >
               <FontAwesomeIcon icon={faPaperPlane} size='sm' style={{ color: '#ffffff' }} />

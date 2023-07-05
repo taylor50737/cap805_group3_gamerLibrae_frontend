@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { Box, IconButton, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpLong, faDownLong } from '@fortawesome/free-solid-svg-icons';
+import { faCircleArrowUp, faCircleArrowDown } from '@fortawesome/free-solid-svg-icons';
 
-const Vote = ({ originalVote, sx }) => {
+const Vote = ({ originalVote, size, sx }) => {
   const [count, setCount] = useState(originalVote);
   const [voteType, setVoteType] = useState('');
 
@@ -31,8 +31,8 @@ const Vote = ({ originalVote, sx }) => {
       {/* Downvote */}
       <IconButton onClick={handleDownvote}>
         <FontAwesomeIcon
-          icon={faDownLong}
-          style={{ color: voteType === 'downvote' ? '#fc686a' : '#bbc0c7' }}
+          icon={faCircleArrowDown}
+          style={{ fontSize: size, color: voteType === 'downvote' ? '#fc686a' : '#bbc0c7' }}
         />
       </IconButton>
 
@@ -40,7 +40,7 @@ const Vote = ({ originalVote, sx }) => {
         sx={{
           fontWeight: 800,
           color: voteType === 'downvote' ? '#fc686a' : voteType === 'upvote' ? '#2eff8f' : 'white',
-          fontSize: '20px',
+          fontSize: size,
         }}
       >
         {count}
@@ -49,8 +49,8 @@ const Vote = ({ originalVote, sx }) => {
       {/* Upvote */}
       <IconButton onClick={handleUpvote}>
         <FontAwesomeIcon
-          icon={faUpLong}
-          style={{ color: voteType === 'upvote' ? '#2eff8f' : '#bbc0c7' }}
+          icon={faCircleArrowUp}
+          style={{ fontSize: size, color: voteType === 'upvote' ? '#2eff8f' : '#bbc0c7' }}
         />
       </IconButton>
     </Box>
