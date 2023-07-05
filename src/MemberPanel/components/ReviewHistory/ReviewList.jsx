@@ -17,7 +17,7 @@ const ReviewList = (props) => {
         <ReviewItem
           key={review.rid}
           id={review.rid}
-          rid={review.gid}
+          rid={review.rid}
           gid={review.gid}
           imageUrl={review.imageUrl}
           game={review.game}

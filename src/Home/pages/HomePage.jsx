@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { Grid, Box } from '@mui/material';
 
-import AdvanceGameSearchBox from '../../Components/AdvanceGameSearchBox';
+import AdvanceGameSearchBox from '../../shared/components/AdvanceGameSearchBox';
 import Carousel from './components/Carousel';
 import TopGames from './components/TopGames';
 

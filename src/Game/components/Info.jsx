@@ -3,9 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { Box, Typography, Button, Chip } from '@mui/material';
-import Score from '../../Components/Score';
-
-import zelda from '/src/assets/carousel/zelda.jpg';
+import Score from '../../shared/components/Score';
 
 const game = {
   id: 3,
@@ -17,7 +15,7 @@ const game = {
   mode: 'Single-Player',
   tags: ['Adventure', 'Zelda', 'Open World', 'Touching'],
   score: 98,
-  imgSrc: zelda,
+  imgSrc: '/images/carousel/zelda.jpg',
 };
 
 const Category = styled.span`
@@ -122,7 +120,6 @@ const Info = () => {
         >
           Add to wishlist
         </Button>
-
         <NavLink to='/game/g1/review-edit'>
           <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
             Post review

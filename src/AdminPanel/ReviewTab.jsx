@@ -61,7 +61,11 @@ export default function ReviewTab({ reviews }) {
                   </label>
                 </th>
                 <td>{indexOfFirstItem + index + 1}</td>
-                <td>{review.content.split('. ')[0]}...</td>
+                <td>
+                  <Link to={`/game/${review.gameId}/review/${review._id}`}>
+                    {review.content.split('. ')[0]}...
+                  </Link>
+                </td>
                 <td>Get user {review.userId}</td>
                 <td>Get game {review.gameId}</td>
                 <td>{review.comments.length}</td>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box, Grid, Slider } from '@mui/material';
-import { Score } from '../../Components/Score';
+import { Score } from '../../shared/components/Score';
 
 const green = 'rgba(0, 255, 159, 1)';
 const yellow = 'rgba(255, 245, 0, 1)';
@@ -8,7 +8,7 @@ const red = 'rgba(231, 77, 77, 1)';
 const greenScore = 70;
 const yellowScore = 40;
 
-export const ScoreSelector = ({onScoreChange}) => {
+export const ScoreSelector = ({ onScoreChange }) => {
   const [value, setValue] = useState(yellowScore);
 
   // Inform parent the default score when ScoreSelector initially loaded
@@ -53,7 +53,7 @@ export const ScoreSelector = ({onScoreChange}) => {
               },
               '.MuiSlider-rail': {
                 height: 25,
-                bgcolor: 'black'
+                bgcolor: 'black',
               },
             }}
           />
