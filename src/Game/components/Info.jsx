@@ -114,7 +114,12 @@ const Info = () => {
           width: '30%',
         }}
       >
-        <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
+        <Button
+          onClick={() => {
+            alert(`${game.title} have been added to your wishlist`);
+          }}
+          sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}
+        >
           Add to wishlist
         </Button>
         <NavLink to='/game/g1/review-edit'>
