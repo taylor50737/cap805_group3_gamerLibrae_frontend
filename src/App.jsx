@@ -28,6 +28,7 @@ import AddGamePage from './AdminPanel/AddGamePage';
 import { AuthContext } from './shared/context/auth_context';
 import { AffRegContext } from './shared/context/AffRegContext';
 import GamePage from './Game/GamePage';
+import ReviewPage from './Review/ReviewPage';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -71,6 +72,7 @@ const App = () => {
             <Route path=':id'>
               <Route index element={<GamePage />} />
               <Route path='review-edit' element={<ReviewEditPage />} />
+              <Route path='review/:rid' element={<ReviewPage />} />
             </Route>
           </Route>
 
@@ -118,6 +120,7 @@ const App = () => {
             <Route path=':id'>
               <Route index element={<GamePage />} />
               <Route path='review-edit' element={<ReviewEditPage />} />
+              <Route path='review/:rid' element={<ReviewPage />} />
             </Route>
           </Route>
 
@@ -172,6 +175,7 @@ const App = () => {
             <Route path=':id'>
               <Route index element={<GamePage />} />
               <Route path='review-edit' element={<ReviewEditPage />} />
+              <Route path='review/:rid' element={<ReviewPage />} />
             </Route>
           </Route>
 
