@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Grid, Box } from '@mui/material';
 
-import AdvanceGameSearchBox from '../Components/AdvanceGameSearchBox';
+import AdvanceGameSearchBox from '../shared/components/AdvanceGameSearchBox';
 import SortSelector from './components/SortSelector';
 import GameResultList from './components/GameResultList';
 

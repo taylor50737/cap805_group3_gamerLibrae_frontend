@@ -5,7 +5,7 @@ import { Box, TextField, IconButton, Avatar } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-import penguin from '/src/assets/avatar/penguin.png';
+import penguin from '/images/avatar/penguin.png';
 
 const CommentEditor = () => {
   const [text, setText] = useState('');

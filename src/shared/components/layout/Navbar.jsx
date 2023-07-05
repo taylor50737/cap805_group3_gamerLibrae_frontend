@@ -17,10 +17,10 @@ import {
 } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 import SearchBox from './SearchBox';
-import { AuthContext } from '../shared/context/auth_context';
+import { AuthContext } from '../../context/auth_context';
 
 const pages = [
   { id: 1, name: 'About Us', url: '/about-us' },
@@ -193,7 +193,7 @@ export const Navbar = () => {
               flexGrow: 6,
             }}
           >
-            <SearchBox></SearchBox>
+            <SearchBox />
             {/* {isSearch ? (
                 <SearchBox />
               ) : (

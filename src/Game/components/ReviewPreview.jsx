@@ -2,7 +2,7 @@ import { Grid, Typography, Box, Avatar } from '@mui/material';
 
 import { Link } from 'react-router-dom';
 
-import Score from '../../Components/Score';
+import Score from '../../shared/components/Score';
 import CommentCount from '../../Review/components/CommentCount';
 import Vote from '../../Review/components/Vote';
 import ReviewContent from './ReviewContent';

@@ -2,7 +2,7 @@ import { EditorContent } from '@tiptap/react';
 
 import { Paper, Typography, Box } from '@mui/material';
 
-import Score from '../../Components/Score';
+import Score from '../../shared/components/Score';
 import CommentCount from './CommentCount';
 import Vote from './Vote';
 import useViewOnlyEditor from '../hooks/useViewOnlyEditor';
