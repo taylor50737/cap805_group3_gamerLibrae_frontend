@@ -17,6 +17,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const genreChoosable = [
   'Action',
@@ -259,6 +260,7 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
   const [playModes, setPlayModes] = useState([]);
   const [timePeriod, setTimePeriod] = useState([earliestYear, currentYear]);
   const [scoreRange, setScoreRange] = useState([0, 100]);
+  const navigate = useNavigate();
 
   const handleReset = () => {
     setGenres([]);
@@ -277,6 +279,7 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
       scoreRange: ${scoreRange}
     `;
     console.log(values);
+    navigate('/search');
   };
 
   return (

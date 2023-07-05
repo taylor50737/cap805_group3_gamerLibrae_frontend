@@ -29,7 +29,7 @@ const CommentItem = (props) => {
             <div className='mt-1 flex flex-row'>
               <div className='text-sm'>Review: &nbsp;</div>
               <NavLink
-                to={`/game/${props.reviewId}`}
+                to={`/game/${props.gid}/review/${props.reviewId}`}
                 className='line-clamp-1 text-sm font-medium tracking-wide text-white hover:underline'
               >
                 {props.reviewTitle}

@@ -33,7 +33,7 @@ const publicSettings = [
   { id: 2, name: 'Forget Password', url: '/auth/forget-password' },
 ];
 const memberSettings = [
-  { id: 1, name: 'My Profile', url: '/member/u2' },
+  { id: 1, name: 'Member Panel', url: '/member/u2' },
   { id: 2, name: 'Wishlist', url: '/member/u2/wishlist' },
   { id: 3, name: 'Change Password', url: '/member/u2/change-password' },
   { id: 4, name: 'Upload Profile Picture', url: '/member/u2/upload-profile-pic' },
@@ -41,7 +41,7 @@ const memberSettings = [
 ];
 const adminSettings = [
   { id: 1, name: 'Admin Panel', url: '/admin-panel' },
-  { id: 2, name: 'My Profile', url: '/member/u1' },
+  { id: 2, name: 'Member Panel', url: '/member/u1' },
   { id: 3, name: 'Wishlist', url: '/member/u1/wishlist' },
   { id: 4, name: 'Change Password', url: '/member/u1/change-password' },
   { id: 5, name: 'Upload Profile Picture', url: '/member/u1/upload-profile-pic' },

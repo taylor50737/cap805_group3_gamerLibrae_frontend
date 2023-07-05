@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom';
+
 import styled from '@emotion/styled';
 
 import { Box, Typography, Button, Chip } from '@mui/material';
@@ -115,9 +117,11 @@ const Info = () => {
         <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
           Add to wishlist
         </Button>
-        <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
-          Post review
-        </Button>
+        <NavLink to='/game/1/review-edit'>
+          <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
+            Post review
+          </Button>
+        </NavLink>
       </Box>
     </Box>
   );

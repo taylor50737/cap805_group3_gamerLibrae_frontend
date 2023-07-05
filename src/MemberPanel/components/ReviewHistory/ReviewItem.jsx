@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Score from '../../../Components/Score';
 
 const ReviewItem = (props) => {
@@ -16,12 +16,12 @@ const ReviewItem = (props) => {
             >
               {props.game}
             </NavLink>
-            <NavLink
-              to={`/game/${props.rid}`}
+            <Link
+              to={`/game/${props.gid}/review/${props.rid}`}
               className='mt-1 line-clamp-1 text-lg font-medium leading-tight text-white hover:underline'
             >
               {props.reviewTitle}
-            </NavLink>
+            </Link>
             <p className='mt-2 line-clamp-1 text-slate-400'>{props.date}</p>
             <p className=' line-clamp-3 text-slate-500'>{props.reviewContext}</p>
           </div>
