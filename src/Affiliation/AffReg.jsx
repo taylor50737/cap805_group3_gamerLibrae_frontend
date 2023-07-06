@@ -7,11 +7,17 @@ import { VALIDATOR_EMAIL, VALIDATOR_YOUTUBETWITCH } from '../shared/util/validat
 import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui/material';
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
-import AffRegTNCCheckbox from './components/AffRegTNCCheckbox';
 import { AffRegContext } from '../shared/context/AffRegContext';
+import CustomCheckbox from '../shared/components/FormElements/CustomCheckbox';
 
 const AffReg = () => {
   const affReg = useContext(AffRegContext);
+
+  const [isTncChecked, setIsTncChecked] = useState(false);
+
+  const handleTncCheckbox = () => {
+    setIsTncChecked((prevState) => !prevState);
+  };
 
   const [formState, inputHandler, setFormData, clearInput] = CustomUseForm(
     {
@@ -63,7 +69,8 @@ const AffReg = () => {
       formState.inputs.channelUrl.value != '' &&
       formState.inputs.email.value != '' &&
       formState.inputs.channelUrl.isValid == true &&
-      formState.inputs.email.isValid == true
+      formState.inputs.email.isValid == true &&
+      isTncChecked
     ) {
       affReg.affregister();
       console.log(formState.inputs.channelUrl.value);
@@ -83,10 +90,14 @@ const AffReg = () => {
           </h4>
           <div className='affreg--textfield'>{AffRegTextFieldList}</div>
           <AffTNC />
-          <AffRegTNCCheckbox />
+          <CustomCheckbox
+            id='tncCheckbox'
+            label='By clicking on the below Register button, I agree on the Terms and Conditions.'
+            handleClicked={handleTncCheckbox}
+          />
         </div>
         <div className='affreg--button'>
-          <CustomButton type='submit' disabled={!formState.isValid}>
+          <CustomButton type='submit' disabled={!formState.isValid || !isTncChecked}>
             SUBMIT
           </CustomButton>
           <CustomButton type='reset' inverse>
