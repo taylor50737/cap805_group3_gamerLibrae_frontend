@@ -34,7 +34,7 @@ import { AuthContext } from './shared/context/auth_context';
 import { AffRegContext } from './shared/context/AffRegContext';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [isAffRegistered, setIsAffRegistered] = useState(false);
 
