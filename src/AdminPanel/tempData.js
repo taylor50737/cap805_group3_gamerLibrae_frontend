@@ -525,7 +525,7 @@ export const reviews = [
         reports: [
           {
             reportID: '6585',
-            reportUserID: '463',
+            reportUserID: 'u1',
             report:
               'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.',
           },
@@ -537,7 +537,7 @@ export const reviews = [
     reports: [
       {
         reportId: '898',
-        report_userId: '799',
+        report_userId: 'u1',
         report: 'Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.',
       },
     ],
@@ -629,12 +629,12 @@ export const reviews = [
     reports: [
       {
         reportId: '763',
-        report_userId: '642',
+        report_userId: 'u2',
         report: 'Nunc lacinia consequat magna, id efficitur lacus aliquam a.',
       },
       {
         reportId: '897',
-        report_userId: '879',
+        report_userId: 'u1',
         report: 'Curabitur sed ipsum ullamcorper, pharetra sem vitae, tincidunt metus.',
       },
     ],
@@ -692,7 +692,7 @@ export const reviews = [
     reports: [
       {
         reportId: '234',
-        report_userId: '543',
+        report_userId: 'u3',
         report: 'Sed eu risus eu metus iaculis pharetra nec at nisl.',
       },
     ],
