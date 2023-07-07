@@ -82,7 +82,9 @@ export default function ReportTab({ reviews }) {
                   </label>
                 </th>
                 <td>{indexOfFirstItem + index + 1}</td>
-                <td>{report.report}</td>
+                <Link to={`/profile/${report.report_userId}`}>
+                  <td>{report.report}</td>
+                </Link>
                 <td>{report.report_userId}</td>
                 <td>{report.status}Reviewed</td>
               </tr>
