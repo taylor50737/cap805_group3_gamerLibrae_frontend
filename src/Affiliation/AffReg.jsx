@@ -92,7 +92,7 @@ const AffReg = () => {
           <AffTNC />
           <CustomCheckbox
             id='tncCheckbox'
-            label='By clicking on the below Register button, I agree on the Terms and Conditions.'
+            label='By clicking on the below Register button, I agree on the above Terms and Conditions.'
             handleClicked={handleTncCheckbox}
           />
         </div>
