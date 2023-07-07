@@ -82,7 +82,9 @@ export default function CommentTab({ reviews }) {
                   </label>
                 </th>
                 <td>{indexOfFirstItem + index + 1}</td>
-                <td>{comment.comment.split('. ')[0]}...</td>
+                <Link to={`/profile/${comment.commentUserId}`}>
+                  <td>{comment.comment.split('. ')[0]}...</td>
+                </Link>
                 <td>{comment.commentUserId}</td>
                 <td>{comment.commentReportCount}</td>
                 <td>{comment.status}</td>
