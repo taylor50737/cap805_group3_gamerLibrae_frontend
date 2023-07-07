@@ -68,6 +68,7 @@ const App = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/about-us' element={<AboutUs />} />
           <Route path='/contact-us' element={<ContactUs />} />
+          <Route path='/search' element={<GameSearchResult />} />
 
           {/* Game Route */}
           <Route path='/game'>
@@ -160,7 +161,6 @@ const App = () => {
         <Routes>
           <Route path='*' element={<ErrorPage />} />
           <Route path='/' element={<HomePage />} />
-
           <Route path='/search' element={<GameSearchResult />} />
           <Route path='/about-us' element={<AboutUs />} />
           <Route path='/contact-us' element={<ContactUs />} />
