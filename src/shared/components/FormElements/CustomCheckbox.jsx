@@ -4,8 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { validate } from '../../util/validators';
 import './CustomCheckbox.css';
 
-const CustomCheckbox = ({ handleClicked, checked, ...props }) => {
+const CustomCheckbox = ({ handleClicked, ownClass, checked, ...props }) => {
   const hasOnChecked = handleClicked != (undefined && '') ? true : false;
+  const labelClassName = ownClass != (undefined && '') ? '' : 'customCheckboxLabel';
   const defaultChecked = checked ? true : false;
   const [isChecked, setIsChecked] = useState(defaultChecked);
 
@@ -15,9 +16,10 @@ const CustomCheckbox = ({ handleClicked, checked, ...props }) => {
         type='checkbox'
         id={props.id}
         onChange={hasOnChecked ? () => handleClicked() : () => setIsChecked((prev) => !prev)}
-        {...props}
       />
-      <label htmlFor={props.id}>{props.label}</label>
+      <label htmlFor={props.id} className={labelClassName} {...props}>
+        {props.label}
+      </label>
     </div>
   );
 };
