@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useReducer, useEffect } from 'react';
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -27,14 +27,11 @@ const formReducer = (state, action) => {
         inputs: action.inputs,
         isValid: action.formIsValid,
       };
-    // case 'CLEAR_INPUT':
-    //   return {
-    //     ...state,
-    //     inputs: {
-    //       ...state.inputs,
-    //       [action.inputId]: { value: '', isValid: false },
-    //     },
-    //   };
+    case 'RESET':
+      return {
+        ...state,
+        reset: !state.reset,
+      };
     default:
       return state;
   }
@@ -44,6 +41,7 @@ export const CustomUseForm = (initialInputs, initialFormValidity) => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: initialInputs,
     isValid: initialFormValidity,
+    reset: false,
   });
 
   const inputHandler = useCallback((id, value, isValid) => {
@@ -63,11 +61,17 @@ export const CustomUseForm = (initialInputs, initialFormValidity) => {
     });
   }, []);
 
-  // const clearInput = useCallback((id) => {
-  //   dispatch({
-  //     type: 'CLEAR_INPUT',
-  //     inputId: id,
-  //   });
-  // }, []);
-  return [formState, inputHandler, setFormData];
+  const resetForm = () => {
+    dispatch({
+      type: 'RESET',
+    });
+  };
+
+  useEffect(() => {
+    if (formState.reset) {
+      resetForm();
+    }
+  }, [formState.reset]);
+
+  return [formState, inputHandler, setFormData, resetForm];
 };
