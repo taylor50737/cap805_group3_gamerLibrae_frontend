@@ -73,11 +73,11 @@ const AffReg = () => {
       isTncChecked
     ) {
       affReg.affregister();
-      console.log(formState.inputs.channelUrl.value);
-      console.log(formState.inputs.email.value);
-      console.log(formState.inputs.channelUrl.isValid);
-      console.log(formState.inputs.email.isValid);
-      console.log(affReg.isAffRegistered);
+      // console.log(formState.inputs.channelUrl.value);
+      // console.log(formState.inputs.email.value);
+      // console.log(formState.inputs.channelUrl.isValid);
+      // console.log(formState.inputs.email.isValid);
+      // console.log(affReg.isAffRegistered);
     }
   };
 
