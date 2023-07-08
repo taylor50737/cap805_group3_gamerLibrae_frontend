@@ -4,7 +4,6 @@ import CustomInput from '../shared/components/FormElements/CustomInput';
 import CustomButton from '../shared/components/FormElements/CustomButton';
 import { CustomUseForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_EMAIL, VALIDATOR_YOUTUBETWITCH } from '../shared/util/validators';
-import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui/material';
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
 import { AffRegContext } from '../shared/context/AffRegContext';
@@ -19,7 +18,7 @@ const AffReg = () => {
     setIsTncChecked((prevState) => !prevState);
   };
 
-  const [formState, inputHandler, setFormData, clearInput] = CustomUseForm(
+  const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
     {
       channelUrl: {
         value: '',
@@ -44,24 +43,10 @@ const AffReg = () => {
         validators={data.type === 'email' ? [VALIDATOR_EMAIL()] : [VALIDATOR_YOUTUBETWITCH()]}
         errorText={data.errorText}
         onInput={inputHandler}
+        reset={formState.reset}
       />
     );
   });
-
-  // const clearFormData = () => {
-  //   clearInput({
-  //     channelUrl: {
-  //       value: '',
-  //       isValid: false,
-  //     },
-  //     email: {
-  //       value: '',
-  //       isValid: false,
-  //     },
-  //   });
-  //   console.log(formState.inputs.channelUrl.value);
-  //   console.log(formState.inputs.email.value);
-  // };
 
   const submitAffRegForm = (event) => {
     event.preventDefault();
@@ -73,11 +58,6 @@ const AffReg = () => {
       isTncChecked
     ) {
       affReg.affregister();
-      // console.log(formState.inputs.channelUrl.value);
-      // console.log(formState.inputs.email.value);
-      // console.log(formState.inputs.channelUrl.isValid);
-      // console.log(formState.inputs.email.isValid);
-      // console.log(affReg.isAffRegistered);
     }
   };
 
@@ -100,7 +80,7 @@ const AffReg = () => {
           <CustomButton type='submit' disabled={!formState.isValid || !isTncChecked}>
             SUBMIT
           </CustomButton>
-          <CustomButton type='reset' inverse>
+          <CustomButton type='reset' inverse onClick={resetForm}>
             RESET
           </CustomButton>
           {/* <Button

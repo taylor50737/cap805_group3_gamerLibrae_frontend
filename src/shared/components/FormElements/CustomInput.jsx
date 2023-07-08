@@ -18,6 +18,12 @@ const inputReducer = (state, action) => {
         isTouched: true,
       };
     }
+    case 'RESET':
+      return {
+        value: action.val,
+        isTouched: false,
+        isValid: action.isValid,
+      };
     default:
       return state;
   }
@@ -30,12 +36,18 @@ const CustomInput = (props) => {
     isValid: props.initialValid || false,
   });
 
-  const { id, onInput } = props;
+  const { id, onInput, reset } = props;
   const { value, isValid } = inputState;
 
   useEffect(() => {
     onInput(id, value, isValid);
   }, [id, value, isValid, onInput]);
+
+  useEffect(() => {
+    if (reset) {
+      dispatch({ type: 'RESET', val: '', isValid: false });
+    }
+  }, [reset]);
 
   const changeHandler = (event) => {
     dispatch({
