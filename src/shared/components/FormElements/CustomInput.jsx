@@ -83,10 +83,10 @@ const CustomInput = (props) => {
       />
     );
 
-  const forgetPasswordButton =
-    props.forgetpassword === false ? (
-      <NavLink to='forget-password'>
-        <p className='forgetpassword'>Forget password?</p>
+  const sideButton =
+    props.sideButton === true ? (
+      <NavLink to={props.sideButtonLink}>
+        <p className='side--button'>{props.sideButtonText}</p>
       </NavLink>
     ) : (
       <></>
@@ -100,7 +100,7 @@ const CustomInput = (props) => {
     >
       <div>
         <label htmlFor={props.id}>{props.label}</label>
-        {forgetPasswordButton}
+        {sideButton}
       </div>
       {element}
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
