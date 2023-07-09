@@ -1,0 +1,57 @@
+@media screen and (max-width: 600px) {
+  .form-control-dropdown-dropdown {
+  }
+}
+
+.form-control-dropdown {
+  margin: 0.5rem 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.form-control-dropdown label,
+.form-control-dropdown select {
+  display: block;
+}
+
+.form-control-dropdown label {
+  margin-bottom: 0.5rem;
+  display: inline;
+}
+
+.form-control-dropdown select {
+  width: 100%;
+  font: inherit;
+  border: 2px solid #f2f3ee;
+  border-radius: 3.2px;
+  background: rgba(0, 0, 0, 0.06);
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  padding: 0.15rem 0.75rem;
+  height: 3.5rem;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #3c3c3d
+    url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><g><path d='M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10s10-4.48,10-10C22,6.48,17.52,2,12,2z M12,15.5L7.5,11l1.42-1.41L12,12.67 l3.08-3.08L16.5,11L12,15.5z' fill='white'/></g></svg>")
+    no-repeat;
+  background-position: right 5px top 50%;
+}
+
+.form-control-dropdown select:hover {
+  background: rgba(183, 183, 183, 0.2)
+    url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><g><path d='M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10s10-4.48,10-10C22,6.48,17.52,2,12,2z M12,15.5L7.5,11l1.42-1.41L12,12.67 l3.08-3.08L16.5,11L12,15.5z' fill='white'/></g></svg>")
+    no-repeat;
+  background-position: right 5px top 50%;
+}
+
+.form-control-dropdown select:focus {
+  border: 0;
+  outline: 2px solid #8386f5;
+  background: rgba(0, 0, 3, 0.3)
+    url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><g><path d='M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10s10-4.48,10-10C22,6.48,17.52,2,12,2z M12,15.5L7.5,11l1.42-1.41L12,12.67 l3.08-3.08L16.5,11L12,15.5z' fill='white'/></g></svg>")
+    no-repeat;
+  background-position: right 5px top 50%;
+}
+
+.form-control-dropdown select option {
+  font-family: 'DM Sans', sans-serif;
+}

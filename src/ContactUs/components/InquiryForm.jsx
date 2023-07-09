@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import CustomDropdownList from '../../shared/components/FormElements/CustomDropdownList';
 import './InquiryForm.css';
 import InquiryFormAreaTextField from './InquiryFormAreaTextField';
 import InquiryFormTextField from './InquiryFormTextField';
@@ -16,13 +18,36 @@ const InquiryFormTextFieldMap = InquiryFormTextFieldProps.map((data) => {
 });
 
 const InquiryForm = () => {
+  const inquiryAreas = [
+    { title: 'General Inquiry', value: 'General Inquiry' },
+    { title: 'Affiliation Program', value: 'Affiliation Program' },
+    { title: 'Technical Support', value: 'Technical Support' },
+    { title: 'Marketing/Partnership', value: 'Marketing/Partnership' },
+    { title: 'Complaint', value: 'Complaint' },
+    { title: 'Others', value: 'Others' },
+  ];
+
+  const [inquiryAreasSelected, setInquiryAreasSelected] = useState('');
+
+  const handleinquiryAreasSelect = (event) => {
+    event.preventDefault();
+    setInquiryAreasSelected(event.target.value);
+  };
+
   return (
     <div className='inquiryform'>
       <FormControl fullWidth>
         <div className=''>
           <h4 className='inquiryform--header text-2xl'>Drop Us A Line</h4>
           <div className='inquiryform--textfield'>
-            <InquiryFormAreaTextField />
+            <CustomDropdownList
+              optionList={inquiryAreas}
+              label='Area of Inquiries'
+              name='Area of Inquiries'
+              value={inquiryAreasSelected}
+              handleSelect={handleinquiryAreasSelect}
+            />
+            {/* <InquiryFormAreaTextField /> */}
             {InquiryFormTextFieldMap}
           </div>
         </div>
