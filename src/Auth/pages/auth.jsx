@@ -112,8 +112,7 @@ const Auth = () => {
           id='password'
           type='password'
           label='Password'
-          sideButton={isLoginMode ? true : false}
-          sideButtonText='Forgot password?'
+          sideButton={isLoginMode ? 'Forgot password?' : ''}
           sideButtonLink='forget-password'
           placeholder={
             isLoginMode ? 'Enter your password' : 'Enter a password with at least 5 characters'
