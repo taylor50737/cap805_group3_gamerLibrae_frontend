@@ -9,10 +9,10 @@ const AuthProvider = ({ children }) => {
     affiliated: false,
   });
 
-  const handleLogin = async () => {
+  const handleLogin = (isAdmin = false) => {
     // fetch API
-    const accountInfo = { sessionId: '123', admin: false, affiliated: false };
-    setAccountInfo(accountInfo);
+    const ac = { sessionId: '123', admin: isAdmin, affiliated: false };
+    setAccountInfo(ac);
   };
 
   const handleLogout = () => {
@@ -21,8 +21,8 @@ const AuthProvider = ({ children }) => {
 
   const value = {
     ...accountInfo,
-    onLogin: handleLogin,
-    onLogout: handleLogout,
+    handleLogin: handleLogin,
+    handleLogout: handleLogout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
