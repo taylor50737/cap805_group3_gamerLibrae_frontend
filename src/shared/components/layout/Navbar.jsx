@@ -129,18 +129,16 @@ export const Navbar = () => {
 
           {/* Site drop down menu for mobile device */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'flex', md: 'none' } }}>
-            <NavLink to='/'>
-              <IconButton
-                size='large'
-                aria-label='account of current user'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                onClick={handleOpenNavMenu}
-                color='inherit'
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </IconButton>
-            </NavLink>
+            <IconButton
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleOpenNavMenu}
+              color='inherit'
+            >
+              <FontAwesomeIcon icon={faBars} />
+            </IconButton>
             <Menu
               id='menu-appbar'
               anchorEl={anchorElNav}
