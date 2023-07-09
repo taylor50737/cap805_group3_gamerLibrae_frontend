@@ -83,14 +83,11 @@ const CustomInput = (props) => {
       />
     );
 
-  const sideButton =
-    props.sideButton === true ? (
-      <NavLink to={props.sideButtonLink}>
-        <p className='side--button'>{props.sideButtonText}</p>
-      </NavLink>
-    ) : (
-      <></>
-    );
+  const sideButton = props.sideButton != '' && props.sideButton != undefined && (
+    <NavLink to={props.sideButtonLink}>
+      <p className='side--button'>{props.sideButton}</p>
+    </NavLink>
+  );
 
   return (
     <div

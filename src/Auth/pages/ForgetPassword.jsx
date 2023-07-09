@@ -28,9 +28,9 @@ const ForgetPassword = () => {
       <h2 className='forgetPW--greeting'>Forget Password</h2>
       <br />
       <p className='forgetPW--instruction'>
-        Have you forgotten your password to log in to GamerLibrae.com? Just fill in the email
-        address you registered with in the form below and we will send you an email to reset your
-        password. For details, please follow the instructions in the email.
+        Have you forgotten your password to log in to GamerLibrae? Just fill in the email address
+        you registered with in the form below and we will send you an email to reset your password.
+        For details, please follow the instructions in the email.
       </p>
       <form className='forgetPW--form' onSubmit={forgetPWSubmitHandler}>
         <CustomInput
@@ -40,6 +40,8 @@ const ForgetPassword = () => {
           label='Email'
           placeholder='Enter your email address'
           validators={[VALIDATOR_EMAIL()]}
+          sideButton='Back to log in'
+          sideButtonLink='/auth'
           errorText='Please enter a valid email address.'
           onInput={inputHandler}
         />
