@@ -12,6 +12,7 @@ import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth_context';
 
 import './auth.css';
+import useAuth from '../../shared/hooks/useAuth';
 
 const DUMMY_ADMIN = {
   email: 'admin@test.com',
@@ -21,7 +22,7 @@ const DUMMY_ADMIN = {
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-
+  const { handleLogin } = useAuth();
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
       email: {
@@ -73,8 +74,10 @@ const Auth = () => {
       formState.inputs.password.value === DUMMY_ADMIN.password
     ) {
       auth.adminLogin();
+      handleLogin(true);
     } else {
       auth.login();
+      handleLogin(false);
     }
   };
 

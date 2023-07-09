@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import {
@@ -12,7 +12,6 @@ import {
   Avatar,
   Button,
   Tooltip,
-  Badge,
   IconButton,
 } from '@mui/material';
 
@@ -20,7 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 import SearchBox from './SearchBox';
-import { AuthContext } from '../../context/auth_context';
+import useAuth from '../../hooks/useAuth';
 
 const pages = [
   { id: 1, name: 'About Us', url: '/about-us' },
@@ -32,6 +31,7 @@ const publicSettings = [
   { id: 1, name: 'Authenticate', url: '/auth' },
   { id: 2, name: 'Forget Password', url: '/auth/forget-password' },
 ];
+
 const memberSettings = [
   { id: 1, name: 'Member Panel', url: '/member/u2' },
   { id: 2, name: 'Wishlist', url: '/member/u2/wishlist' },
@@ -39,6 +39,7 @@ const memberSettings = [
   { id: 4, name: 'Upload Profile Picture', url: '/member/u2/upload-profile-pic' },
   { id: 5, name: 'Change Info', url: '/member/u2/change-info' },
 ];
+
 const adminSettings = [
   { id: 1, name: 'Admin Panel', url: '/admin-panel' },
   { id: 2, name: 'Member Panel', url: '/member/u1' },
@@ -49,6 +50,8 @@ const adminSettings = [
 ];
 
 export const Navbar = () => {
+  const { sessionId, admin } = useAuth();
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -67,8 +70,6 @@ export const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const auth = useContext(AuthContext);
 
   return (
     <AppBar position='static' style={{ backgroundColor: 'transparent' }}>
@@ -208,7 +209,7 @@ export const Navbar = () => {
           </Box>
 
           {/* Public */}
-          {!auth.isLoggedIn && !auth.isAdminLoggedIn && (
+          {!sessionId && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Avatar */}
               <Tooltip title='Open settings'>
@@ -249,7 +250,7 @@ export const Navbar = () => {
           )}
 
           {/* Member */}
-          {auth.isLoggedIn && (
+          {sessionId && !admin && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Notification */}
               {/* <Tooltip title='View notification'>
@@ -303,7 +304,7 @@ export const Navbar = () => {
           )}
 
           {/* Admin */}
-          {auth.isAdminLoggedIn && (
+          {admin && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Notification */}
               {/* <Tooltip title='View notification'>
