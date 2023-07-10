@@ -16,7 +16,6 @@ export const SearchBox = () => {
   return (
     <Autocomplete
       disablePortal
-      id='search-game'
       size='small'
       forcePopupIcon={false}
       freeSolo

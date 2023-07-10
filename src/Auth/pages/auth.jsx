@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
@@ -9,20 +9,13 @@ import {
   VALIDATOR_CONFIRMPASSWORD,
 } from '../../shared/util/validators';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
-import { AuthContext } from '../../shared/context/auth_context';
 
 import './auth.css';
 import useAuth from '../../shared/hooks/useAuth';
 
-const DUMMY_ADMIN = {
-  email: 'admin@test.com',
-  password: 'admin123',
-};
-
 const Auth = () => {
-  const auth = useContext(AuthContext);
+  const { handleLogin, handleRegister } = useAuth();
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { handleLogin } = useAuth();
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
       email: {
@@ -68,16 +61,18 @@ const Auth = () => {
 
   const authSubmitHandler = (event) => {
     event.preventDefault();
-    if (
-      isLoginMode &&
-      formState.inputs.email.value === DUMMY_ADMIN.email &&
-      formState.inputs.password.value === DUMMY_ADMIN.password
-    ) {
-      auth.adminLogin();
-      handleLogin(true);
+    if (isLoginMode) {
+      handleLogin({
+        email: formState.inputs.email.value,
+        password: formState.inputs.password.value,
+      });
     } else {
-      auth.login();
-      handleLogin(false);
+      handleRegister({
+        userName: formState.inputs.username.value,
+        email: formState.inputs.email.value,
+        password: formState.inputs.password.value,
+      });
+      setIsLoginMode(true);
     }
   };
 
@@ -105,8 +100,8 @@ const Auth = () => {
             type='text'
             label='Username'
             placeholder='Enter your username'
-            validators={[VALIDATOR_MINLENGTH(8)]}
-            errorText='Please enter a valid username, at least 8 characters.'
+            validators={[VALIDATOR_MINLENGTH(3)]}
+            errorText='Please enter a valid username, at least 3 characters.'
             onInput={inputHandler}
           />
         )}
@@ -118,10 +113,10 @@ const Auth = () => {
           sideButton={isLoginMode ? 'Forgot password?' : ''}
           sideButtonLink='forget-password'
           placeholder={
-            isLoginMode ? 'Enter your password' : 'Enter a password with at least 5 characters'
+            isLoginMode ? 'Enter your password' : 'Enter a password with at least 1 characters'
           }
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText='Please enter a valid password, at least 5 characters.'
+          validators={[VALIDATOR_MINLENGTH(1)]}
+          errorText='Please enter a valid password, at least 1 characters.'
           onInput={inputHandler}
         />
         {!isLoginMode && (

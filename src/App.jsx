@@ -48,7 +48,7 @@ const App = () => {
             {/* Authentication */}
             <Route
               path='/auth'
-              element={<ProtectedRoute required={{ login: false }} redirectPath='/' />}
+              element={<ProtectedRoute required={{ loggedIn: false }} redirectPath='/' />}
             >
               <Route index element={<Auth />} />
               <Route path='forget-password' element={<ForgetPassword />} />
@@ -64,7 +64,7 @@ const App = () => {
                 <Route
                   path='review-edit'
                   element={
-                    <ProtectedRoute required={{ login: true }}>
+                    <ProtectedRoute required={{ loggedIn: true }}>
                       <ReviewEditPage />
                     </ProtectedRoute>
                   }
@@ -82,7 +82,7 @@ const App = () => {
             <Route
               path='/member/:uid'
               element={
-                <ProtectedRoute required={{ login: true }}>
+                <ProtectedRoute required={{ loggedIn: true }}>
                   <MemberPanelLayout />
                 </ProtectedRoute>
               }
@@ -99,7 +99,7 @@ const App = () => {
             <Route
               path='/affiliation-registration'
               element={
-                <ProtectedRoute required={{ login: true }}>
+                <ProtectedRoute required={{ loggedIn: true }}>
                   <AffReg />
                 </ProtectedRoute>
               }
@@ -107,7 +107,7 @@ const App = () => {
             <Route
               path='/affiliation-suc'
               element={
-                <ProtectedRoute required={{ login: true, affiliated: false }}>
+                <ProtectedRoute required={{ loggedIn: true, affiliated: false }}>
                   <AffSuc />
                 </ProtectedRoute>
               }
@@ -117,7 +117,7 @@ const App = () => {
             <Route
               path='/admin-panel'
               element={
-                <ProtectedRoute required={{ login: true, admin: true }}>
+                <ProtectedRoute required={{ loggedIn: true, admin: true }}>
                   <AdminPanel />
                 </ProtectedRoute>
               }
@@ -125,7 +125,7 @@ const App = () => {
             <Route
               path='/add-game'
               element={
-                <ProtectedRoute required={{ login: true, admin: true }}>
+                <ProtectedRoute required={{ loggedIn: true, admin: true }}>
                   <AddGamePage />
                 </ProtectedRoute>
               }
