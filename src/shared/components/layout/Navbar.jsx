@@ -50,7 +50,7 @@ const adminSettings = [
 ];
 
 export const Navbar = () => {
-  const { sessionId, admin } = useAuth();
+  const { userName, loggedIn, admin, handleLogout } = useAuth();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -207,7 +207,7 @@ export const Navbar = () => {
           </Box>
 
           {/* Public */}
-          {!sessionId && (
+          {!loggedIn && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Avatar */}
               <Tooltip title='Open settings'>
@@ -248,7 +248,7 @@ export const Navbar = () => {
           )}
 
           {/* Member */}
-          {sessionId && !admin && (
+          {loggedIn && !admin && (
             <Box sx={{ flexGrow: 0 }}>
               {/* Notification */}
               {/* <Tooltip title='View notification'>
@@ -259,15 +259,25 @@ export const Navbar = () => {
                 </IconButton>
               </Tooltip> */}
 
-              {/* Avatar */}
-              <Tooltip title='Open settings'>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    src='https://robohash.org/nisiiustoomnis.png?size=50x50&set=set1'
-                    alt='mwinsom3'
-                  />
-                </IconButton>
-              </Tooltip>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography sx={{ textAlign: 'center' }}>welcome, {userName}</Typography>
+                {/* Avatar */}
+                <Tooltip title='Open settings'>
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      src='https://robohash.org/nisiiustoomnis.png?size=50x50&set=set1'
+                      alt={userName}
+                    />
+                  </IconButton>
+                </Tooltip>
+              </Box>
 
               {/* Avatar drop down menu */}
               <Menu
@@ -294,9 +304,14 @@ export const Navbar = () => {
                     </MenuItem>
                   </NavLink>
                 ))}
-                <a href='/'>
-                  <MenuItem>Logout</MenuItem>
-                </a>
+                <MenuItem
+                  onClick={() => {
+                    handleLogout();
+                    handleCloseUserMenu();
+                  }}
+                >
+                  Logout
+                </MenuItem>
               </Menu>
             </Box>
           )}
@@ -313,15 +328,25 @@ export const Navbar = () => {
                 </IconButton>
               </Tooltip> */}
 
-              {/* Avatar */}
-              <Tooltip title='Open settings'>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt='Admin'
-                    src='https://robohash.org/etimpeditcorporis.png?size=50x50&set=set1'
-                  />
-                </IconButton>
-              </Tooltip>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography sx={{ textAlign: 'center' }}>welcome, {userName}</Typography>
+                {/* Avatar */}
+                <Tooltip title='Open settings'>
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt='Admin'
+                      src='https://robohash.org/etimpeditcorporis.png?size=50x50&set=set1'
+                    />
+                  </IconButton>
+                </Tooltip>
+              </Box>
 
               {/* Avatar drop down menu */}
               <Menu
@@ -348,9 +373,14 @@ export const Navbar = () => {
                     </MenuItem>
                   </NavLink>
                 ))}
-                <a href='/'>
-                  <MenuItem>Logout</MenuItem>
-                </a>
+                <MenuItem
+                  onClick={() => {
+                    handleLogout();
+                    handleCloseUserMenu();
+                  }}
+                >
+                  Logout
+                </MenuItem>
               </Menu>
             </Box>
           )}
