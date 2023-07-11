@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import CustomDropdownList from '../../shared/components/FormElements/CustomDropdownList';
+import CustomInput from '../../shared/components/FormElements/CustomInput';
+import CustomButton from '../../shared/components/FormElements/CustomButton';
+import { CustomUseForm } from '../../shared/hooks/form-hook';
+import {
+  VALIDATOR_EMAIL,
+  VALIDATOR_REQUIRE,
+  VALIDATOR_MAXLENGTH,
+} from '../../shared/util/validators';
 import './InquiryForm.css';
 import InquiryFormAreaTextField from './InquiryFormAreaTextField';
 import InquiryFormTextField from './InquiryFormTextField';
 import InquiryFormTextFieldProps from './InquiryFormTextFieldProps';
 import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui/material';
 
-const InquiryFormTextFieldMap = InquiryFormTextFieldProps.map((data) => {
-  return (
-    <InquiryFormTextField
-      key={data.key}
-      label={data.label}
-      multiline={data.multiline}
-      maxRows={data.maxRow}
-    />
-  );
-});
-
 const InquiryForm = () => {
   const inquiryAreas = [
+    { title: 'Select the area that you would like to inquire', value: 'Select The Inquiry Area' },
     { title: 'General Inquiry', value: 'General Inquiry' },
     { title: 'Affiliation Program', value: 'Affiliation Program' },
     { title: 'Technical Support', value: 'Technical Support' },
@@ -27,16 +25,82 @@ const InquiryForm = () => {
     { title: 'Others', value: 'Others' },
   ];
 
-  const [inquiryAreasSelected, setInquiryAreasSelected] = useState('');
+  const [inquiryAreasSelected, setInquiryAreasSelected] = useState(0);
 
   const handleinquiryAreasSelect = (event) => {
     event.preventDefault();
     setInquiryAreasSelected(event.target.value);
   };
 
+  const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
+    {
+      name: {
+        value: '',
+        isValid: false,
+      },
+      email: {
+        value: '',
+        isValid: false,
+      },
+      subjectLine: {
+        value: '',
+        isValid: false,
+      },
+      message: {
+        value: '',
+        isValid: false,
+      },
+    },
+    false,
+  );
+
+  const handleInquiryAreasReset = () => {
+    setInquiryAreasSelected(0);
+  };
+
+  const validatorDeterminator = (type) => {
+    let validator;
+    switch (type) {
+      case 'email':
+        validator = [VALIDATOR_EMAIL()];
+        break;
+      case 'max':
+        validator = [VALIDATOR_MAXLENGTH(100)];
+        break;
+      default:
+        validator = [VALIDATOR_REQUIRE()];
+    }
+    return validator;
+  };
+
+  const InquiryFormTextFieldMap = InquiryFormTextFieldProps.map((data) => {
+    return (
+      <CustomInput
+        key={data.key}
+        element={data.element}
+        id={data.id}
+        type={data.type}
+        label={data.label}
+        validators={validatorDeterminator(data.type)}
+        errorText={data.errorText}
+        onInput={inputHandler}
+        reset={formState.reset}
+      />
+    );
+  });
+
+  const submitInquiryForm = (event) => {
+    event.preventDefault();
+    console.log(inquiryAreasSelected);
+    console.log(formState.inputs.name.value);
+    console.log(formState.inputs.email.value);
+    console.log(formState.inputs.subjectLine.value);
+    console.log(formState.inputs.message.value);
+  };
+
   return (
     <div className='inquiryform'>
-      <FormControl fullWidth>
+      <form className='inquiryform--form' onSubmit={submitInquiryForm}>
         <div className=''>
           <h4 className='inquiryform--header text-2xl'>Drop Us A Line</h4>
           <div className='inquiryform--textfield'>
@@ -47,36 +111,18 @@ const InquiryForm = () => {
               value={inquiryAreasSelected}
               handleSelect={handleinquiryAreasSelect}
             />
-            {/* <InquiryFormAreaTextField /> */}
             {InquiryFormTextFieldMap}
           </div>
         </div>
-        <div className='affreg--button'>
-          <Button
-            onClick={() => {
-              alert('You have submitted the form, we will contact you ASAP!');
-            }}
-            variant='contained'
-            sx={{
-              color: '#0D0C11',
-              bgcolor: '#F2F3EE',
-              borderRadius: 0.8,
-              border: 1,
-              borderColor: '#F2F3EE',
-              fontFamily: '"DM Sans", sans-serif',
-              ':hover': {
-                borderColor: '#F2F3EE !important',
-                borderRadius: 0.8,
-                bgcolor: 'transparent',
-                color: '#F2F3EE',
-                border: 1,
-              },
-            }}
-          >
-            Submit
-          </Button>
+        <div className='inquiryform--button'>
+          <CustomButton type='submit' disabled={!formState.isValid || inquiryAreasSelected == 0}>
+            SUBMIT
+          </CustomButton>
+          <CustomButton type='reset' inverse onClick={resetForm}>
+            RESET
+          </CustomButton>
         </div>
-      </FormControl>
+      </form>
     </div>
   );
 };
