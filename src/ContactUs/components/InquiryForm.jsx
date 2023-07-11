@@ -16,7 +16,6 @@ import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui
 
 const InquiryForm = () => {
   const inquiryAreas = [
-    { title: 'Select the area that you would like to inquire', value: 'Select The Inquiry Area' },
     { title: 'General Inquiry', value: 'General Inquiry' },
     { title: 'Affiliation Program', value: 'Affiliation Program' },
     { title: 'Technical Support', value: 'Technical Support' },
@@ -34,6 +33,9 @@ const InquiryForm = () => {
 
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
     {
+      inquiryAreas: {
+        value: 0,
+      },
       name: {
         value: '',
         isValid: false,
@@ -54,9 +56,9 @@ const InquiryForm = () => {
     false,
   );
 
-  const handleInquiryAreasReset = () => {
-    setInquiryAreasSelected(0);
-  };
+  // const handleInquiryAreasReset = () => {
+  //   setInquiryAreasSelected(0);
+  // };
 
   const validatorDeterminator = (type) => {
     let validator;
@@ -109,8 +111,10 @@ const InquiryForm = () => {
               optionList={inquiryAreas}
               label='Area of Inquiries'
               name='Area of Inquiries'
-              value={inquiryAreasSelected}
-              handleSelect={handleinquiryAreasSelect}
+              // value={inquiryAreasSelected}
+              // handleSelect={handleinquiryAreasSelect}
+              onInput={inputHandler}
+              reset={formState.reset}
             />
             {InquiryFormTextFieldMap}
           </div>
