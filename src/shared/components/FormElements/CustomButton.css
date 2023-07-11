@@ -1,6 +1,7 @@
 @media screen and (max-width: 600px) {
   .button {
-    min-width: 90vw !important;
+    min-width: 100% !important;
+    text-align: center !important;
   }
 }
 

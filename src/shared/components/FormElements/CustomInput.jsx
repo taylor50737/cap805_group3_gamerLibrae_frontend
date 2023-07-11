@@ -29,7 +29,7 @@ const inputReducer = (state, action) => {
   }
 };
 
-const CustomInput = (props) => {
+const CustomInput = ({ ownClass, ...props }) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue || '',
     isTouched: false,
@@ -83,6 +83,13 @@ const CustomInput = (props) => {
       />
     );
 
+  const ownClassName =
+    ownClass != (undefined && '')
+      ? `form-control ${
+          !inputState.isValid && inputState.isTouched && 'form-control--invalid'
+        } ${ownClass}`
+      : `form-control ${!inputState.isValid && inputState.isTouched && 'form-control--invalid'}`;
+
   const sideButton = props.sideButton != '' && props.sideButton != undefined && (
     <NavLink to={props.sideButtonLink}>
       <p className='side--button'>{props.sideButton}</p>
@@ -90,11 +97,7 @@ const CustomInput = (props) => {
   );
 
   return (
-    <div
-      className={`form-control ${
-        !inputState.isValid && inputState.isTouched && 'form-control--invalid'
-      }`}
-    >
+    <div className={ownClassName}>
       <div>
         <label htmlFor={props.id}>{props.label}</label>
         {sideButton}

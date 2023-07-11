@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import './CustomButton.css';
 
-const CustomButton = (props) => {
+const CustomButton = ({ ownClass, ...props }) => {
   if (props.href) {
     return (
       <a
@@ -28,11 +28,19 @@ const CustomButton = (props) => {
       </Link>
     );
   }
+
+  const ownClassName =
+    ownClass != (undefined && '')
+      ? `button button--${props.size || 'default'} ${props.inverse && 'button--inverse'} ${
+          props.danger && 'button--danger'
+        } ${ownClass}`
+      : `button button--${props.size || 'default'} ${props.inverse && 'button--inverse'} ${
+          props.danger && 'button--danger'
+        }`;
+
   return (
     <button
-      className={`button button--${props.size || 'default'} ${props.inverse && 'button--inverse'} ${
-        props.danger && 'button--danger'
-      }`}
+      className={ownClassName}
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}
