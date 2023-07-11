@@ -85,6 +85,7 @@ const InquiryForm = () => {
         errorText={data.errorText}
         onInput={inputHandler}
         reset={formState.reset}
+        ownClass='inquiryform--textfield'
       />
     );
   });
@@ -114,11 +115,21 @@ const InquiryForm = () => {
             {InquiryFormTextFieldMap}
           </div>
         </div>
-        <div className='inquiryform--button'>
-          <CustomButton type='submit' disabled={!formState.isValid || inquiryAreasSelected == 0}>
+        <div className='inquiryform--button--div'>
+          <CustomButton
+            type='submit'
+            disabled={!formState.isValid || inquiryAreasSelected == 0}
+            ownClass='inquiryform--button'
+          >
             SUBMIT
           </CustomButton>
-          <CustomButton type='reset' inverse onClick={resetForm}>
+          <CustomButton
+            type='reset'
+            inverse
+            onClick={resetForm}
+            ownClass='inquiryform--button'
+            className='button--big'
+          >
             RESET
           </CustomButton>
         </div>
