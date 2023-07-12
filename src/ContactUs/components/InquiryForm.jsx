@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomDropdownList from '../../shared/components/FormElements/CustomDropdownList';
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
@@ -90,7 +90,7 @@ const InquiryForm = () => {
   return (
     <div className='inquiryform'>
       <form className='inquiryform--form' onSubmit={submitInquiryForm}>
-        <div className=''>
+        <div>
           <h4 className='inquiryform--header text-2xl'>Drop Us A Line</h4>
           <div className='inquiryform--textfield'>
             <CustomDropdownList
@@ -106,7 +106,12 @@ const InquiryForm = () => {
         <div className='inquiryform--button--div'>
           <CustomButton
             type='submit'
-            disabled={!formState.isValid || inquiryAreasSelected == 0}
+            disabled={
+              !formState.inputs.name.isValid ||
+              !formState.inputs.email.isValid ||
+              !formState.inputs.subjectLine.isValid ||
+              !formState.inputs.message.isValid
+            }
             ownClass='inquiryform--button'
           >
             SUBMIT

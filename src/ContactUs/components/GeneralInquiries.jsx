@@ -82,7 +82,7 @@ const GeneralInquiries = () => {
       <iframe
         className='contact--us--map'
         loading='lazy'
-        allowfullscreen=''
+        allowFullScreen=''
         src='https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ51y_qxvT1IkREpn72SWqElg&key=AIzaSyBLkwSozrG0PguA3j3tIECYrmReVzq2wGk'
       ></iframe>
     </div>
