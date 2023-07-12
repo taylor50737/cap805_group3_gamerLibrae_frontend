@@ -28,7 +28,7 @@
   --b: 0.2rem; /* the border thickness*/
   --g: 2rem; /* the gap on hover */
 
-  padding: calc(var(--g) + var(--b));
+  /* padding: calc(var(--g) + var(--b)); */
   --_g: #0000 25%, var(--c) 0;
   background: conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) var(--_i, 200%)
       0 /200% var(--_i, var(--b)) no-repeat,
@@ -40,6 +40,10 @@
 .inquiryform:hover {
   --_i: 100%;
   transition: 0.3s, background-size 0.3s 0.3s;
+}
+
+.inquiryform--header {
+  text-align: center;
 }
 
 .inquiryform--textfield {

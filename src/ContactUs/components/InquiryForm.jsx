@@ -9,10 +9,7 @@ import {
   VALIDATOR_MAXLENGTH,
 } from '../../shared/util/validators';
 import './InquiryForm.css';
-import InquiryFormAreaTextField from './InquiryFormAreaTextField';
-import InquiryFormTextField from './InquiryFormTextField';
 import InquiryFormTextFieldProps from './InquiryFormTextFieldProps';
-import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui/material';
 
 const InquiryForm = () => {
   const inquiryAreas = [
