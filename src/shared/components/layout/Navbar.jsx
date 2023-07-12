@@ -21,6 +21,9 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Modal,
+  Paper,
+  Grid,
 } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,6 +83,7 @@ const adminSettings = [
 export const Navbar = () => {
   const { userName, loggedIn, admin, handleLogout } = useAuth();
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -236,8 +240,9 @@ export const Navbar = () => {
               width: '100%',
             }}
           >
-            {/* Drop down menu icon */}
+            {/* Left side */}
             <Box sx={{ display: 'flex', gap: '8px' }}>
+              {/* Drop down menu icon */}
               <IconButton onClick={toggleDrawer(true)} color='inherit'>
                 <FontAwesomeIcon icon={faBars} />
               </IconButton>
@@ -246,10 +251,15 @@ export const Navbar = () => {
               {gameSiteIcon({ display: 'flex' }, { fontSize: '24px' })}
             </Box>
 
-            {/* Member UI */}
+            {/* Right side */}
             <Box sx={{ display: 'flex', gap: '8px' }}>
               {/* Search Button */}
-              <IconButton sx={{ alignSelf: 'center' }}>
+              <IconButton
+                sx={{ alignSelf: 'center' }}
+                onClick={() => {
+                  setMobileSearchOpen(true);
+                }}
+              >
                 <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: '#b8bab9' }} />
               </IconButton>
               {memberUI}
@@ -310,6 +320,29 @@ export const Navbar = () => {
           >
             {navDrawerList}
           </Drawer>
+
+          <Modal
+            open={mobileSearchOpen}
+            onClose={() => {
+              setMobileSearchOpen(false);
+            }}
+          >
+            <Paper
+              sx={{
+                position: 'absolute',
+                top: '10%',
+                left: '50%',
+                transform: 'translate(-50%, -5%)',
+                height: '555px',
+                width: '90%',
+                bgcolor: '#262729',
+                boxShadow: 24,
+                p: '8px',
+              }}
+            >
+              <SearchBox fullWidth={true} resultBoxHeight={'500px'} />
+            </Paper>
+          </Modal>
         </Toolbar>
       </Container>
     </AppBar>
