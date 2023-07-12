@@ -32,11 +32,11 @@ export default [
   {
     key: 5,
     id: 'message',
-    label: 'Message',
-    type: 'max',
+    label: 'Message (Maximum 200 characters)',
+    type: 'max--text',
     value: 'message',
     defaultValue: '',
-    errorText: 'Please enter a message',
+    errorText: 'Please enter a message within 200 characters',
     element: 'textarea',
   },
 ];
