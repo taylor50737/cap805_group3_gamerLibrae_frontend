@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const fetchAuthMe = async () => {
-    const authMeResponse = await fetch('http://localhost:8080/api/users/me', {
+    const authMeResponse = await fetch('http://localhost:8080/api/auth/users/me', {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = async ({ email, password }) => {
     // login
-    const logInResponse = await fetch('http://localhost:8080/api/session', {
+    const logInResponse = await fetch('http://localhost:8080/api/auth/session', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = async () => {
-    const logOutResponse = await fetch('http://localhost:8080/api/session', {
+    const logOutResponse = await fetch('http://localhost:8080/api/auth/session', {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -84,7 +84,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleRegister = async ({ userName, email, password }) => {
-    const registerResponse = await fetch('http://localhost:8080/api/users', {
+    const registerResponse = await fetch('http://localhost:8080/api/auth/signup', {
       method: 'POST',
       credentials: 'include',
       headers: {
