@@ -232,7 +232,7 @@ export const ReviewEditor = ({ onReviewContentChange }) => {
       </ol>
 
       <p>
-        I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
+        I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forgot to check the other examples too.
       </p>
 
       <blockquote>

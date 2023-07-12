@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './shared/components/layout/Navbar';
 import Footer from './shared/components/layout/Footer';
 import Auth from './Auth/pages/auth';
-import ForgetPassword from './Auth/pages/ForgetPassword';
+import ForgotPassword from './Auth/pages/ForgotPassword';
 import ResetPassword from './Auth/pages/ResetPassword';
 import AdminPanel from './AdminPanel/AdminPanel';
 import ReviewEditPage from './ReviewEdit/pages/ReviewEditPage';
@@ -51,7 +51,7 @@ const App = () => {
               element={<ProtectedRoute required={{ loggedIn: false }} redirectPath='/' />}
             >
               <Route index element={<Auth />} />
-              <Route path='forget-password' element={<ForgetPassword />} />
+              <Route path='forgot-password' element={<ForgotPassword />} />
               <Route path='reset-password' element={<ResetPassword />} />
             </Route>
 

@@ -12,15 +12,46 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import Score from '../Score';
 
-export const SearchBox = () => {
+const games = [
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/gollum.jpg',
+    name: 'The Lord of the Rings: Gollum',
+    releaseYear: '2023',
+    platform: 'PS5',
+    developer: 'Daedalic Entertainment',
+    score: 30,
+  },
+  {
+    image: '/images/searchBoxMockImage/diablo.jpg',
+    name: 'Diablo IV',
+    releaseYear: '2023',
+    platform: 'Xbox One',
+    developer: 'Activision Blizzard',
+    score: 65,
+  },
+];
+
+// TODO: Long options for testing
+// const moreGames = Array(10).fill(games).flat();
+
+export const SearchBox = ({ fullWidth, marginLeft }) => {
   return (
     <Autocomplete
+      autoHighlight
       disablePortal
       size='small'
       forcePopupIcon={false}
       freeSolo
       options={games}
-      getOptionLabel={(game) => game.name}
+      getOptionLabel={(game) => (typeof game === 'string' ? game : game.name)}
       filterOptions={(games, state) => {
         if (state.inputValue === '') {
           return [];
@@ -44,7 +75,12 @@ export const SearchBox = () => {
       //     }
       //   }
       // }}
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '45%' }}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: fullWidth ? '100%' : '45%',
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -64,7 +100,7 @@ export const SearchBox = () => {
             ),
           }}
           sx={{
-            marginLeft: '2rem',
+            marginLeft: marginLeft,
             input: {
               '&::placeholder': {
                 opacity: 1,
@@ -136,35 +172,5 @@ export const SearchBox = () => {
     />
   );
 };
-
-const games = [
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/gollum.jpg',
-    name: 'The Lord of the Rings: Gollum',
-    releaseYear: '2023',
-    platform: 'PS5',
-    developer: 'Daedalic Entertainment',
-    score: 30,
-  },
-  {
-    image: '/images/searchBoxMockImage/diablo.jpg',
-    name: 'Diablo IV',
-    releaseYear: '2023',
-    platform: 'Xbox One',
-    developer: 'Activision Blizzard',
-    score: 65,
-  },
-];
-
-// TODO: Long options for testing
-// const moreGames = Array(10).fill(games).flat();
 
 export default SearchBox;
