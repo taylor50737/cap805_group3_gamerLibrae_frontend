@@ -49,6 +49,10 @@
   flex-direction: column;
 }
 
+.inquiryform--textfield:nth-of-type(5) textarea {
+  height: 7rem !important;
+}
+
 .inquiryform--button--div {
   display: flex;
   justify-content: space-evenly;

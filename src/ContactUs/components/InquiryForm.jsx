@@ -24,13 +24,6 @@ const InquiryForm = () => {
     { title: 'Others', value: 'Others' },
   ];
 
-  const [inquiryAreasSelected, setInquiryAreasSelected] = useState(0);
-
-  const handleinquiryAreasSelect = (event) => {
-    event.preventDefault();
-    setInquiryAreasSelected(event.target.value);
-  };
-
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
     {
       inquiryAreas: {
@@ -56,18 +49,14 @@ const InquiryForm = () => {
     false,
   );
 
-  // const handleInquiryAreasReset = () => {
-  //   setInquiryAreasSelected(0);
-  // };
-
   const validatorDeterminator = (type) => {
     let validator;
     switch (type) {
       case 'email':
         validator = [VALIDATOR_EMAIL()];
         break;
-      case 'max':
-        validator = [VALIDATOR_MAXLENGTH(100)];
+      case 'max--text':
+        validator = [VALIDATOR_MAXLENGTH(200)] || [VALIDATOR_REQUIRE()];
         break;
       default:
         validator = [VALIDATOR_REQUIRE()];
@@ -111,8 +100,6 @@ const InquiryForm = () => {
               optionList={inquiryAreas}
               label='Area of Inquiries'
               name='Area of Inquiries'
-              // value={inquiryAreasSelected}
-              // handleSelect={handleinquiryAreasSelect}
               onInput={inputHandler}
               reset={formState.reset}
             />
