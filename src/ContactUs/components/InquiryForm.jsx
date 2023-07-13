@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CustomDropdownList from '../../shared/components/FormElements/CustomDropdownList';
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
@@ -12,14 +12,11 @@ import './InquiryForm.css';
 import InquiryFormTextFieldProps from './InquiryFormTextFieldProps';
 
 const InquiryForm = () => {
-  const inquiryAreas = [
-    { title: 'General Inquiry', value: 'General Inquiry' },
-    { title: 'Affiliation Program', value: 'Affiliation Program' },
-    { title: 'Technical Support', value: 'Technical Support' },
-    { title: 'Marketing/Partnership', value: 'Marketing/Partnership' },
-    { title: 'Complaint', value: 'Complaint' },
-    { title: 'Others', value: 'Others' },
-  ];
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+  const submitInquiryForm = (prev) => {
+    setIsFormSubmitted(prev);
+  };
 
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
     {
@@ -61,6 +58,15 @@ const InquiryForm = () => {
     return validator;
   };
 
+  const inquiryAreas = [
+    { title: 'General Inquiry', value: 'General Inquiry' },
+    { title: 'Affiliation Program', value: 'Affiliation Program' },
+    { title: 'Technical Support', value: 'Technical Support' },
+    { title: 'Marketing/Partnership', value: 'Marketing/Partnership' },
+    { title: 'Complaint', value: 'Complaint' },
+    { title: 'Others', value: 'Others' },
+  ];
+
   const InquiryFormTextFieldMap = InquiryFormTextFieldProps.map((data) => {
     return (
       <CustomInput
@@ -78,55 +84,66 @@ const InquiryForm = () => {
     );
   });
 
-  const submitInquiryForm = (event) => {
-    event.preventDefault();
-    console.log(inquiryAreasSelected);
-    console.log(formState.inputs.name.value);
-    console.log(formState.inputs.email.value);
-    console.log(formState.inputs.subjectLine.value);
-    console.log(formState.inputs.message.value);
-  };
-
   return (
     <div className='inquiryform'>
-      <form className='inquiryform--form' onSubmit={submitInquiryForm}>
-        <div>
-          <h4 className='inquiryform--header text-2xl'>Drop Us A Line</h4>
-          <div className='inquiryform--textfield'>
-            <CustomDropdownList
-              optionList={inquiryAreas}
-              label='Area of Inquiries'
-              name='Area of Inquiries'
-              onInput={inputHandler}
-              reset={formState.reset}
-            />
-            {InquiryFormTextFieldMap}
+      {!isFormSubmitted && (
+        <form className='inquiryform--form' onSubmit={() => submitInquiryForm(true)}>
+          <div>
+            <h4 className='inquiryform--header text-2xl'>Drop Us A Line</h4>
+            <div className='inquiryform--textfield'>
+              <CustomDropdownList
+                optionList={inquiryAreas}
+                label='Area of Inquiries'
+                name='Area of Inquiries'
+                onInput={inputHandler}
+                reset={formState.reset}
+              />
+              {InquiryFormTextFieldMap}
+            </div>
+          </div>
+          <div className='inquiryform--button--div'>
+            <CustomButton
+              type='submit'
+              disabled={
+                !formState.inputs.name.isValid ||
+                !formState.inputs.email.isValid ||
+                !formState.inputs.subjectLine.isValid ||
+                !formState.inputs.message.isValid
+              }
+              ownClass='inquiryform--button'
+            >
+              SUBMIT
+            </CustomButton>
+            <CustomButton
+              type='reset'
+              inverse
+              onClick={resetForm}
+              ownClass='inquiryform--button'
+              className='button--big'
+            >
+              RESET
+            </CustomButton>
+          </div>
+        </form>
+      )}
+      {isFormSubmitted && (
+        <div className='inquiryform--postsubmit'>
+          <div>
+            <h4>
+              Your message has been successfully sent. Please check your email inbox to hear back
+              from us. Thank You.
+            </h4>
+          </div>
+          <div>
+            <CustomButton
+              ownClass='inquiryform--postsubmit--button'
+              onClick={() => setIsFormSubmitted(false)}
+            >
+              BACK TO CONTACT US
+            </CustomButton>
           </div>
         </div>
-        <div className='inquiryform--button--div'>
-          <CustomButton
-            type='submit'
-            disabled={
-              !formState.inputs.name.isValid ||
-              !formState.inputs.email.isValid ||
-              !formState.inputs.subjectLine.isValid ||
-              !formState.inputs.message.isValid
-            }
-            ownClass='inquiryform--button'
-          >
-            SUBMIT
-          </CustomButton>
-          <CustomButton
-            type='reset'
-            inverse
-            onClick={resetForm}
-            ownClass='inquiryform--button'
-            className='button--big'
-          >
-            RESET
-          </CustomButton>
-        </div>
-      </form>
+      )}
     </div>
   );
 };
