@@ -5,9 +5,9 @@ import CustomButton from '../../shared/components/FormElements/CustomButton';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { VALIDATOR_EMAIL } from '../../shared/util/validators';
 
-import './ForgetPassword.css';
+import './ForgotPassword.css';
 
-const ForgetPassword = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
@@ -18,21 +18,21 @@ const ForgetPassword = () => {
     },
     false,
   );
-  const forgetPWSubmitHandler = (event) => {
+  const forgotPWSubmitHandler = (event) => {
     event.preventDefault();
     navigate('/auth/reset-password');
   };
 
   return (
-    <div className='forgetPW'>
-      <h2 className='forgetPW--greeting'>Forget Password</h2>
+    <div className='forgotPW'>
+      <h2 className='forgotPW--greeting'>Forgot Password</h2>
       <br />
-      <p className='forgetPW--instruction'>
+      <p className='forgotPW--instruction'>
         Have you forgotten your password to log in to GamerLibrae? Just fill in the email address
         you registered with in the form below and we will send you an email to reset your password.
         For details, please follow the instructions in the email.
       </p>
-      <form className='forgetPW--form' onSubmit={forgetPWSubmitHandler}>
+      <form className='forgotPW--form' onSubmit={forgotPWSubmitHandler}>
         <CustomInput
           element='input'
           id='email'
@@ -45,7 +45,7 @@ const ForgetPassword = () => {
           errorText='Please enter a valid email address.'
           onInput={inputHandler}
         />
-        <div className='forgetPW--form--submit'>
+        <div className='forgotPW--form--submit'>
           <CustomButton type='submit' disabled={!formState.isValid}>
             SUBMIT
           </CustomButton>
@@ -55,4 +55,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default ForgotPassword;
