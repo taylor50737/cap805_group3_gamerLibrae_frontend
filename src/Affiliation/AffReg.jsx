@@ -6,12 +6,9 @@ import { CustomUseForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_EMAIL, VALIDATOR_YOUTUBETWITCH } from '../shared/util/validators';
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
-import { AffRegContext } from '../shared/context/AffRegContext';
 import CustomCheckbox from '../shared/components/FormElements/CustomCheckbox';
 
 const AffReg = () => {
-  const affReg = useContext(AffRegContext);
-
   const [isTncChecked, setIsTncChecked] = useState(false);
 
   const handleTncCheckbox = () => {
@@ -57,7 +54,7 @@ const AffReg = () => {
       formState.inputs.email.isValid == true &&
       isTncChecked
     ) {
-      affReg.affregister();
+      // handle affiliation register here
     }
   };
 

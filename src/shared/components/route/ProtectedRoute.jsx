@@ -1,18 +1,33 @@
 import { Navigate, Outlet } from 'react-router';
+
+import { CircularProgress, Box } from '@mui/material';
+
 import useAuth from '../../hooks/useAuth';
 
 const ProtectedRoute = ({ required = {}, redirectPath = '/auth', children }) => {
-  const { loading, loggedIn, admin, affiliated } = useAuth();
+  const { loading, loggedIn, admin, affiliation } = useAuth();
   if (loading) {
-    return <h1>loading, authenticating your session</h1>;
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <CircularProgress sx={{ color: 'gray' }} />
+      </Box>
+    );
   }
   console.log(
-    `protected route: loading: ${loading} loggedIn: ${loggedIn}, admin: ${admin}, affiliated: ${affiliated}`,
+    `protected route: loading: ${loading} loggedIn: ${loggedIn}, admin: ${admin}, affiliation: ${affiliation}`,
   );
   if (
     (required.hasOwnProperty('loggedIn') && required.loggedIn != loggedIn) ||
     (required.hasOwnProperty('admin') && required.admin != admin) ||
-    (required.hasOwnProperty('affiliated') && required.affiliated != affiliated)
+    (required.hasOwnProperty('affiliation') && required.affiliation != affiliation)
   ) {
     console.log('protected route redirect to ' + redirectPath);
     return <Navigate to={redirectPath} replace />;

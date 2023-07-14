@@ -107,7 +107,7 @@ const App = () => {
             <Route
               path='/affiliation-suc'
               element={
-                <ProtectedRoute required={{ loggedIn: true, affiliated: false }}>
+                <ProtectedRoute required={{ loggedIn: true, affiliation: false }}>
                   <AffSuc />
                 </ProtectedRoute>
               }

@@ -1,19 +1,20 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 import AuthContext from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const AuthProvider = ({ children }) => {
   const [accountInfo, setAccountInfo] = useState({
-    userName: 'ff',
+    userName: '',
     loggedIn: false,
     admin: false,
-    affiliated: false,
+    affiliation: false,
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const fetchAuthMe = async () => {
+    console.log('fetch auth me called');
     const authMeResponse = await fetch('http://localhost:8080/api/auth/users/me', {
       method: 'GET',
       credentials: 'include',
@@ -25,10 +26,10 @@ const AuthProvider = ({ children }) => {
     let ac;
     if (authMeResponse.status != 200) {
       ac = {
-        userName: '',
         loggedIn: false,
+        userName: '',
         admin: false,
-        affiliated: false,
+        affiliation: false,
       };
     } else {
       ac = await authMeResponse.json();
@@ -36,7 +37,7 @@ const AuthProvider = ({ children }) => {
     console.log(ac);
     // TODO: delete this! delay for test purpose only
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-    await delay(2000);
+    await delay(1500);
 
     setAccountInfo(ac);
     setLoading(false);
@@ -63,6 +64,8 @@ const AuthProvider = ({ children }) => {
 
     // auth me
     const ac = await fetchAuthMe();
+    // convert the object to boolean because we don't need the detail
+    ac.affiliation = !!ac.affiliation;
     console.log(ac);
     if (ac.loggedIn) {
       navigate('/');
@@ -79,7 +82,7 @@ const AuthProvider = ({ children }) => {
       },
     });
     console.log(logOutResponse);
-    setAccountInfo({ loggedIn: false, admin: false, affiliated: false });
+    setAccountInfo({ loggedIn: false, admin: false, affiliation: false });
     navigate(0);
   };
 
@@ -94,7 +97,6 @@ const AuthProvider = ({ children }) => {
       body: JSON.stringify({ userName: userName, email: email, password: password }),
     });
     console.log(registerResponse);
-    // setAccountInfo({ loggedIn: false, admin: false, affiliated: false });
   };
 
   const value = {
