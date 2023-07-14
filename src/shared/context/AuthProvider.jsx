@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
 import AuthContext from './AuthContext';
 
@@ -11,7 +11,6 @@ const AuthProvider = ({ children }) => {
     affiliation: false,
   });
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   const fetchAuthMe = async () => {
     setLoading(true);
@@ -75,7 +74,7 @@ const AuthProvider = ({ children }) => {
     if (loginResponse.status === 200) {
       console.log('log in success');
       fetchAuthMe();
-      navigate('/');
+      redirect('/');
     }
   };
 
