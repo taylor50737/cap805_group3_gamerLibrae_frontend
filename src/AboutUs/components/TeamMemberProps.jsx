@@ -13,4 +13,11 @@ export default [
     favPart: 'CSS, Fancy And Useless Visual Effect',
     favGame: 'Football Manager Series',
   },
+  {
+    key: 3,
+    id: 'Kenneth',
+    name: 'Kenneth',
+    favPart: 'CSS, Fancy And Useless Visual Effect',
+    favGame: 'Football Manager Series',
+  },
 ];
