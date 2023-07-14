@@ -5,7 +5,11 @@
   }
 
   .aboutus--brandname {
-    font-size: 2rem !important;
+    font-size: 2.5rem !important;
+  }
+
+  .aboutus--downarrow {
+    bottom: 20vh !important;
   }
 }
 
@@ -60,4 +64,8 @@
   width: 40px;
   height: 40px;
   z-index: 2;
+}
+
+svg:hover {
+  fill: #05d9e8;
 }
