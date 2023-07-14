@@ -6,7 +6,7 @@ import {
   RouterProvider,
   Outlet,
   Route,
-  json,
+  defer,
 } from 'react-router-dom';
 
 import Navbar from './shared/components/layout/Navbar';
@@ -38,6 +38,7 @@ import ReviewPage from './Review/ReviewPage';
 import AuthProvider from './shared/context/AuthProvider';
 import ProtectedRoute from './shared/components/route/ProtectedRoute';
 import LoaderTest from './Loader/LoaderTest';
+import DeferredLoaderTest from './Loader/DeferredLoaderTest';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -147,23 +148,48 @@ const App = () => {
           }
         />
 
-        {/* */}
+        {/* Test loader API */}
         <Route
-          path='test'
+          path='loader-test'
           element={<LoaderTest />}
-          // loader={async () => {
-          //   const res = await fetch('http://localhost:8080/api/users', {
-          //     method: 'GET',
-          //     headers: {
-          //       Accept: 'application/json',
-          //       'Content-Type': 'application/json',
-          //     },
-          //   });
-          //   const data = await res.json();
+          loader={async () => {
+            const res = await fetch('http://localhost:8080/api/users', {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            });
+            const data = await res.json();
 
-          //   // artificial delay
-          //   return { data };
-          // }}
+            // artificial delay
+            const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+            await delay(1500);
+
+            return { data };
+          }}
+        />
+
+        <Route
+          path='deferred-loader-test'
+          element={<DeferredLoaderTest />}
+          loader={async () => {
+            const promise = fetch('http://localhost:8080/api/users', {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            }).then(
+              (res) =>
+                new Promise((resolve) => {
+                  setTimeout(() => resolve(res.json()), 2000); // fake delay
+                }),
+            );
+            return defer({
+              promise: promise,
+            });
+          }}
         />
       </Route>,
     ),
