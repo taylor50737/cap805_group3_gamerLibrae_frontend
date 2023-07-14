@@ -81,11 +81,10 @@ const adminSettings = [
 ];
 
 export const Navbar = () => {
-  const { userName, loggedIn, admin, loading, fetchAuthMe } = useAuth();
+  const { userName, loggedIn, admin, loading, handleLogout } = useAuth();
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -93,19 +92,6 @@ export const Navbar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const handleLogout = async () => {
-    const logOutResponse = await fetch('http://localhost:8080/api/auth/session', {
-      method: 'DELETE',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log(logOutResponse);
-    fetchAuthMe();
   };
 
   const toggleDrawer = (open) => (event) => {

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
@@ -15,7 +14,7 @@ import './auth.css';
 import useAuth from '../../shared/hooks/useAuth';
 
 const Auth = () => {
-  const { fetchAuthMe } = useAuth();
+  const { handleLogin, handleRegister } = useAuth();
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
@@ -30,7 +29,6 @@ const Auth = () => {
     },
     false,
   );
-  const navigate = useNavigate();
 
   const switchModeHandler = () => {
     if (!isLoginMode) {
@@ -59,39 +57,6 @@ const Auth = () => {
       );
     }
     setIsLoginMode((prevMode) => !prevMode);
-  };
-
-  const handleLogin = async ({ email, password }) => {
-    const loginResponse = await fetch('http://localhost:8080/api/auth/session', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: email, password: password }),
-    });
-    console.log(loginResponse);
-    if (loginResponse.status === 200) {
-      console.log('log in success');
-      fetchAuthMe();
-      navigate('/');
-    }
-  };
-
-  const handleRegister = async ({ userName, email, password }) => {
-    const registerResponse = await fetch('http://localhost:8080/api/auth/signup', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userName: userName, email: email, password: password }),
-    });
-    if (registerResponse.status === 200) {
-      console.log('register in success');
-    }
   };
 
   const authSubmitHandler = (event) => {
