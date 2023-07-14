@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 
 const ProtectedRoute = ({ required = {}, redirectPath = '/auth', children }) => {
   const { loading, loggedIn, admin, affiliation } = useAuth();
+
   if (loading) {
     return (
       <Box

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import {
   AppBar,
@@ -23,7 +23,7 @@ import {
   Divider,
   Modal,
   Paper,
-  Grid,
+  CircularProgress,
 } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -81,10 +81,11 @@ const adminSettings = [
 ];
 
 export const Navbar = () => {
-  const { userName, loggedIn, admin, handleLogout } = useAuth();
+  const { userName, loggedIn, admin, loading, fetchAuthMe } = useAuth();
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -92,6 +93,19 @@ export const Navbar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = async () => {
+    const logOutResponse = await fetch('http://localhost:8080/api/auth/session', {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(logOutResponse);
+    fetchAuthMe();
   };
 
   const toggleDrawer = (open) => (event) => {
@@ -141,7 +155,9 @@ export const Navbar = () => {
       {/* Avatar */}
       <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          {loggedIn ? (
+          {loading ? (
+            <CircularProgress sx={{ color: 'gray' }} />
+          ) : loggedIn ? (
             <Avatar
               src={
                 admin
