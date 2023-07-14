@@ -18,9 +18,6 @@ function OurVision({ scrollTo, goToSectionRef }) {
             mollit anim id est laborum.
           </p>
         </div>
-        <button className='aboutus--downarrow' onClick={() => scrollTo(goToSectionRef)}>
-          <KeyboardDoubleArrowDownIcon fontSize='large' sx={{ color: '#ff00a0' }} />
-        </button>
       </div>
     </div>
   );
