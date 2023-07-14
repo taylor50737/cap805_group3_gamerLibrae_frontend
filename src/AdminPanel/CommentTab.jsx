@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function CommentTab({ reviews }) {
-  const fields = ['Index', 'Comment', 'User', '#Reports', 'Status'];
+  const fields = ['Index', 'Comment', 'Creator', '#Reports', 'Status'];
+
+  const [comments, setComments] = useState([]);
 
   const fetchComments = async () => {
     try {
       const res = await fetch('http://localhost:8080/api/comments/');
       const data = await res.json();
-      console.log(data);
+      setComments(data.comments);
     } catch (error) {
       alert(error);
     }
@@ -18,25 +20,6 @@ export default function CommentTab({ reviews }) {
   const itemsPerPage = 7;
 
   // Filter out all comments
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    const extractedComments = [];
-
-    for (let i = 0; i < reviews.length; i++) {
-      const review = reviews[i];
-      const reviewComments = review.comments;
-
-      if (reviewComments) {
-        for (let j = 0; j < reviewComments.length; j++) {
-          const comment = reviewComments[j];
-          extractedComments.push(comment);
-        }
-      }
-    }
-
-    setComments(extractedComments);
-  }, [reviews]);
 
   useEffect(() => {
     fetchComments();
@@ -99,8 +82,8 @@ export default function CommentTab({ reviews }) {
                 <Link to={`/profile/${comment.commentUserId}`}>
                   <td>{comment.comment.split('. ')[0]}...</td>
                 </Link>
-                <td>{comment.commentUserId}</td>
-                <td>{comment.commentReportCount}</td>
+                <td>{comment.creator}</td>
+                <td>{comment.reports.length}</td>
                 <td>{comment.status}</td>
               </tr>
             ))}
