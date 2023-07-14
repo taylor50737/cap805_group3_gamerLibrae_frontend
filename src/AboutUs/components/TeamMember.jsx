@@ -31,24 +31,24 @@ const TeamMember = ({ scrollTo, goToSectionRef }) => {
           <div>
             <div className='team--member--player--row'>
               <img
-                src='public/images/AboutUs/TeamMember_1_2.png'
+                src='/images/AboutUs/TeamMember_1.png'
                 alt=''
                 onClick={() => handlePlayerClick(1)}
               />
               <img
-                src='public/images/AboutUs/TeamMember_1_2.png'
+                src='public/images/AboutUs/TeamMember_2.png'
                 alt=''
                 onClick={() => handlePlayerClick(2)}
               />
             </div>
             <div className='team--member--player--row'>
               <img
-                src='public/images/AboutUs/TeamMember_1_2.png'
+                src='public/images/AboutUs/TeamMember_3.png'
                 alt=''
                 onClick={() => handlePlayerClick(3)}
               />
               <img
-                src='public/images/AboutUs/TeamMember_1_2.png'
+                src='public/images/AboutUs/TeamMember_3.png'
                 alt=''
                 onClick={() => handlePlayerClick(4)}
               />
