@@ -6,6 +6,7 @@ import {
   RouterProvider,
   Outlet,
   Route,
+  json,
 } from 'react-router-dom';
 
 import Navbar from './shared/components/layout/Navbar';
@@ -36,6 +37,7 @@ import ReviewPage from './Review/ReviewPage';
 
 import AuthProvider from './shared/context/AuthProvider';
 import ProtectedRoute from './shared/components/route/ProtectedRoute';
+import LoaderTest from './Loader/LoaderTest';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -52,99 +54,117 @@ const App = () => {
           </AuthProvider>
         }
       >
-        <Route path='/' errorElement={<ErrorPage />}>
-          <Route index element={<HomePage />} />
-          {/* General */}
-          <Route path='search' element={<GameSearchResult />} />
-          <Route path='about-us' element={<AboutUs />} />
-          <Route path='contact-us' element={<ContactUs />} />
+        {/* General */}
+        <Route path='/' element={<HomePage />} />
+        <Route path='*' element={<ErrorPage />} />
+        <Route path='search' element={<GameSearchResult />} />
+        <Route path='about-us' element={<AboutUs />} />
+        <Route path='contact-us' element={<ContactUs />} />
 
-          {/* Authentication */}
-          <Route
-            path='auth'
-            element={<ProtectedRoute required={{ loggedIn: false }} redirectPath='/' />}
-          >
-            <Route index element={<Auth />} />
-            <Route path='forgot-password' element={<ForgotPassword />} />
-            <Route path='reset-password' element={<ResetPassword />} />
-          </Route>
-
-          {/* Game Route */}
-          <Route path='game'>
-            <Route index element={<GameSearchResult />} />
-            <Route path=':id'>
-              <Route index element={<GamePage />} />
-              <Route path='review/:rid' element={<ReviewPage />} />
-              <Route
-                path='review-edit'
-                element={
-                  <ProtectedRoute required={{ loggedIn: true }}>
-                    <ReviewEditPage />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-          </Route>
-
-          {/* Member Profile Route */}
-          <Route path='profile/:uid' element={<PublicProfileLayout />}>
-            <Route index element={<ReviewCommentHistory />} />
-            <Route path='wishlist' element={<WishList />} />
-          </Route>
-
-          {/* Member Route */}
-          <Route
-            path='member/:uid'
-            element={
-              <ProtectedRoute required={{ loggedIn: true }}>
-                <MemberPanelLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<ReviewCommentHistory />} />
-            <Route path='wishlist' element={<WishList />} />
-            <Route path='change-info' element={<ChangeInfo />} />
-            <Route path='change-password' element={<ChangePassword />} />
-            <Route path='upload-profile-pic' element={<UploadProfilePic />} />
-          </Route>
-
-          {/* Affiliation */}
-          <Route path='affiliation-rule' element={<AffRule />} />
-          <Route
-            path='affiliation-registration'
-            element={
-              <ProtectedRoute required={{ loggedIn: true }}>
-                <AffReg />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='affiliation-suc'
-            element={
-              <ProtectedRoute required={{ loggedIn: true, affiliation: false }}>
-                <AffSuc />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* Admin Route */}
-          <Route
-            path='admin-panel'
-            element={
-              <ProtectedRoute required={{ loggedIn: true, admin: true }}>
-                <AdminPanel />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='add-game'
-            element={
-              <ProtectedRoute required={{ loggedIn: true, admin: true }}>
-                <AddGamePage />
-              </ProtectedRoute>
-            }
-          />
+        {/* Authentication */}
+        <Route
+          path='auth'
+          element={<ProtectedRoute required={{ loggedIn: false }} redirectPath='/' />}
+        >
+          <Route index element={<Auth />} />
+          <Route path='forgot-password' element={<ForgotPassword />} />
+          <Route path='reset-password' element={<ResetPassword />} />
         </Route>
+
+        {/* Game Route */}
+        <Route path='game'>
+          <Route index element={<GameSearchResult />} />
+          <Route path=':id'>
+            <Route index element={<GamePage />} />
+            <Route path='review/:rid' element={<ReviewPage />} />
+            <Route
+              path='review-edit'
+              element={
+                <ProtectedRoute required={{ loggedIn: true }}>
+                  <ReviewEditPage />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Route>
+
+        {/* Member Profile Route */}
+        <Route path='profile/:uid' element={<PublicProfileLayout />}>
+          <Route index element={<ReviewCommentHistory />} />
+          <Route path='wishlist' element={<WishList />} />
+        </Route>
+
+        {/* Member Route */}
+        <Route
+          path='member/:uid'
+          element={
+            <ProtectedRoute required={{ loggedIn: true }}>
+              <MemberPanelLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<ReviewCommentHistory />} />
+          <Route path='wishlist' element={<WishList />} />
+          <Route path='change-info' element={<ChangeInfo />} />
+          <Route path='change-password' element={<ChangePassword />} />
+          <Route path='upload-profile-pic' element={<UploadProfilePic />} />
+        </Route>
+
+        {/* Affiliation */}
+        <Route path='affiliation-rule' element={<AffRule />} />
+        <Route
+          path='affiliation-registration'
+          element={
+            <ProtectedRoute required={{ loggedIn: true }}>
+              <AffReg />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='affiliation-suc'
+          element={
+            <ProtectedRoute required={{ loggedIn: true, affiliation: false }}>
+              <AffSuc />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Route */}
+        <Route
+          path='admin-panel'
+          element={
+            <ProtectedRoute required={{ loggedIn: true, admin: true }}>
+              <AdminPanel />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='add-game'
+          element={
+            <ProtectedRoute required={{ loggedIn: true, admin: true }}>
+              <AddGamePage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* */}
+        <Route
+          path='test'
+          element={<LoaderTest />}
+          // loader={async () => {
+          //   const res = await fetch('http://localhost:8080/api/users', {
+          //     method: 'GET',
+          //     headers: {
+          //       Accept: 'application/json',
+          //       'Content-Type': 'application/json',
+          //     },
+          //   });
+          //   const data = await res.json();
+
+          //   // artificial delay
+          //   return { data };
+          // }}
+        />
       </Route>,
     ),
   );
