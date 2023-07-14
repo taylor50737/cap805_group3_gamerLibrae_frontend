@@ -4,6 +4,16 @@ import { Link } from 'react-router-dom';
 export default function CommentTab({ reviews }) {
   const fields = ['Index', 'Comment', 'User', '#Reports', 'Status'];
 
+  const fetchComments = async () => {
+    try {
+      const res = await fetch('http://localhost:8080/api/comments/');
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
@@ -27,6 +37,10 @@ export default function CommentTab({ reviews }) {
 
     setComments(extractedComments);
   }, [reviews]);
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
 
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
