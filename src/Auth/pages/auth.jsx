@@ -35,7 +35,7 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          username: undefined,
+          userName: undefined,
           confirmPassword: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid,
@@ -44,7 +44,7 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          username: {
+          userName: {
             value: '',
             isValid: false,
           },
@@ -68,7 +68,7 @@ const Auth = () => {
       });
     } else {
       handleRegister({
-        userName: formState.inputs.username.value,
+        userName: formState.inputs.userName.value,
         email: formState.inputs.email.value,
         password: formState.inputs.password.value,
       });
@@ -96,7 +96,7 @@ const Auth = () => {
         {!isLoginMode && (
           <CustomInput
             element='input'
-            id='username'
+            id='userName'
             type='text'
             label='Username'
             placeholder='Enter your username'
@@ -113,10 +113,10 @@ const Auth = () => {
           sideButton={isLoginMode ? 'Forgot password?' : ''}
           sideButtonLink='forgot-password'
           placeholder={
-            isLoginMode ? 'Enter your password' : 'Enter a password with at least 1 characters'
+            isLoginMode ? 'Enter your password' : 'Enter a password with at least 8 characters'
           }
-          validators={[VALIDATOR_MINLENGTH(1)]}
-          errorText='Please enter a valid password, at least 1 characters.'
+          validators={[VALIDATOR_MINLENGTH(3)]}
+          errorText='Please enter a valid password, at least 3 characters.'
           onInput={inputHandler}
         />
         {!isLoginMode && (
