@@ -19,16 +19,34 @@ export default function CommentTab({ reviews }) {
 
   const deleteComment = async () => {
     let cid;
-    if (selectedComments.length === 1) {
+    if (selectedComments.length === 0) {
+      return 'no comment selected';
+    } else if (selectedComments.length === 1) {
       cid = selectedComments[0];
-    }
-    try {
-      const res = await fetch(`http://localhost:8080/api/comments/${cid}`, { method: 'DELETE' });
-      const data = await res.json();
-      console.log(data);
-      fetchComments();
-    } catch (error) {
-      console.log(error);
+      try {
+        const res = await fetch(`http://localhost:8080/api/comments/${cid}`, { method: 'DELETE' });
+        const data = await res.json();
+        console.log(data);
+        fetchComments();
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (selectedComments.length > 1) {
+      const cids = { cids: selectedComments };
+      try {
+        const res = await fetch('http://localhost:8080/api/comments/delete', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(cids),
+        });
+        const data = await res.json();
+        console.log(data);
+        fetchComments();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
