@@ -17,6 +17,9 @@ import CustomButton from '../../shared/components/FormElements/CustomButton';
 import CustomImageUpload from '../../shared/components/FormElements/CustomImageUpload';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 
+const cloud_name = 'dpfvhna2t';
+const api_key = '133115664541957';
+
 const genreChoosable = [
   'Action',
   'Adventure',
@@ -205,9 +208,29 @@ const UploadPic = () => {
     false,
   );
 
-  const uploadPicSubmitHandler = (event) => {
+  const uploadPicSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
+
+    const signatureResponse = await fetch('http://localhost:8080/api/cloudinary/signature');
+    const signatureJson = await signatureResponse.json();
+
+    const formData = new FormData();
+    formData.append('file', formState.inputs.image.value);
+    formData.append('api_key', api_key);
+    formData.append('signature', signatureJson.signature);
+    formData.append('timestamp', signatureJson.timestamp);
+
+    const cloudinaryResponse = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
+      {
+        method: 'POST',
+        body: formData,
+      },
+    );
+    const cloudinaryJson = await cloudinaryResponse.json();
+    console.log(signatureJson.signature);
+    console.log(cloudinaryJson);
+
     setSuccessSubmission('You have successfully uploaded your picture!');
   };
 
