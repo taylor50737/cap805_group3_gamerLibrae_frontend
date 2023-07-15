@@ -1,17 +1,4 @@
-import {
-  Autocomplete,
-  Box,
-  TextField,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
-  Slider,
-  Chip,
-  Grid,
-  Button,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, TextField, Checkbox, Chip, Grid, Button, Paper } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -167,48 +154,6 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
   );
 };
 
-const MultiCheckboxSelector = ({ options, searchOption, setSearchOption }) => {
-  return (
-    <FormGroup sx={{ borderWidth: '2px', borderColor: '#B7B7B7', borderRadius: '18px' }}>
-      <Grid container>
-        {options.map((option, i) => (
-          <Grid key={i} item md={6}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={searchOption.includes(option)}
-                  onChange={(event) => {
-                    if (searchOption.includes(option)) {
-                      // Remove from list
-                      setSearchOption(searchOption.filter((o) => o !== option));
-                    } else {
-                      setSearchOption([...searchOption, option]);
-                    }
-                  }}
-                  sx={{
-                    float: 'right',
-                    color: '#B7B7B7',
-                    '&.Mui-checked': {
-                      color: '#cfcecc',
-                    },
-                  }}
-                />
-              }
-              label={`${option}`}
-              labelPlacement='start'
-              sx={{
-                m: 0,
-                float: 'right',
-                '.MuiFormControlLabel-label': { fontSize: '12px', color: '#808080' },
-              }}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </FormGroup>
-  );
-};
-
 const InputField = ({ categoryName }) => {
   return (
     <Box
@@ -236,55 +181,6 @@ const InputField = ({ categoryName }) => {
             color: 'white',
           },
         }}
-      />
-    </Box>
-  );
-};
-
-const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) => {
-  const handleChange = (event, newRange, activeThumb) => {
-    if (!Array.isArray(newRange)) {
-      return;
-    }
-
-    if (activeThumb === 0) {
-      setRange([Math.min(newRange[0], range[1] - minDist), range[1]]);
-    } else {
-      setRange([range[0], Math.max(newRange[1], range[0] + minDist)]);
-    }
-  };
-
-  return (
-    <Box sx={{ px: '10px' }}>
-      <Typography sx={{ display: 'inline', float: 'left', color: '#808080' }}>
-        {rangeName}
-      </Typography>
-      <Typography sx={{ display: 'inline', float: 'right', fontWeight: 600 }}>
-        {range[0]} - {range[1]}
-      </Typography>
-      <Slider
-        value={range}
-        onChange={handleChange}
-        valueLabelDisplay='auto'
-        min={min}
-        max={max}
-        step={step}
-        sx={{
-          '.MuiSlider-thumb': {
-            color: '#d7dbe0',
-            height: 10,
-            width: 10,
-          },
-          '.MuiSlider-track': {
-            color: '#adadad',
-            height: 5,
-          },
-          '.MuiSlider-rail': {
-            height: 5,
-            bgcolor: 'black',
-          },
-        }}
-        disableSwap
       />
     </Box>
   );
@@ -340,17 +236,6 @@ const AddGameForm = ({ extraSx }) => {
     setPlayModes([]);
     setTimePeriod([earliestYear, currentYear]);
     setScoreRange([0, 100]);
-  };
-
-  const handleSubmit = () => {
-    const values = `
-        genres: ${genres}
-        platforms: ${platforms}
-        playModes: ${playModes}
-        timePeriod: ${timePeriod}
-        scoreRange: ${scoreRange}
-      `;
-    console.log(values);
   };
 
   return (
