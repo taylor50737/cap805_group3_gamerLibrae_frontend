@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import NewButton from './components/NewButton';
 
 export default function GameTab({ games }) {
   const fields = ['ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
@@ -36,6 +37,17 @@ export default function GameTab({ games }) {
 
   return (
     <div>
+      <div className='flex justify-end gap-5'>
+        <NewButton />
+        <div>
+          {/* <ActionButton selectedComments={selectedComments} /> */}
+          <input
+            type='text'
+            placeholder='Search'
+            className='input-bordered input w-full max-w-xs'
+          />
+        </div>
+      </div>
       <div className='m-3 overflow-x-auto'>
         <table className='table'>
           {/* head */}

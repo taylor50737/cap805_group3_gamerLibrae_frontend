@@ -5,6 +5,7 @@ export default function CommentTab({ reviews }) {
   const fields = ['Index', 'Comment', 'Creator', '#Reports', 'Status'];
 
   const [comments, setComments] = useState([]);
+  const [selectedComments, setSelectedComments] = useState([]);
 
   const fetchComments = async () => {
     try {
@@ -12,14 +13,27 @@ export default function CommentTab({ reviews }) {
       const data = await res.json();
       setComments(data.comments);
     } catch (error) {
-      alert(error);
+      console.log(error);
+    }
+  };
+
+  const deleteComment = async () => {
+    let cid;
+    if (selectedComments.length === 1) {
+      cid = selectedComments[0];
+    }
+    try {
+      const res = await fetch(`http://localhost:8080/api/comments/${cid}`, { method: 'DELETE' });
+      const data = await res.json();
+      console.log(data);
+      fetchComments();
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
-
-  // Filter out all comments
 
   useEffect(() => {
     fetchComments();
@@ -54,15 +68,43 @@ export default function CommentTab({ reviews }) {
 
   return (
     <div>
+      <div className='flex justify-end gap-5'>
+        <div className='dropdown-bottom dropdown'>
+          <label tabIndex={0} className='btn-primary btn'>
+            Action
+          </label>
+          <ul
+            tabIndex={0}
+            className='dropdown-content menu rounded-box z-[1] w-52 bg-black p-2 shadow'
+          >
+            {/* <li>
+          <a>Edit</a>
+        </li> */}
+            <li>
+              <button onClick={() => deleteComment()}>Delete</button>
+            </li>
+          </ul>
+        </div>
+        <input type='text' placeholder='Search' className='input-bordered input w-full max-w-xs' />
+      </div>
       <div className='m-3 overflow-x-auto'>
         <table className='table'>
           {/* head */}
           <thead>
             <tr>
               <th>
-                <label>
-                  <input type='checkbox' className='checkbox' />
-                </label>
+                <input
+                  type='checkbox'
+                  className='checkbox'
+                  checked={selectedComments.length === comments.length}
+                  onChange={() => {
+                    if (selectedComments.length === comments.length) {
+                      setSelectedComments([]);
+                    } else {
+                      setSelectedComments(comments.map((comment) => comment.id));
+                    }
+                  }}
+                />
               </th>
               {fields.map((column) => (
                 <th key={column}>{column}</th>
@@ -74,9 +116,23 @@ export default function CommentTab({ reviews }) {
             {currentItems.map((comment, index) => (
               <tr key={index}>
                 <th>
-                  <label>
-                    <input type='checkbox' className='checkbox' />
-                  </label>
+                  <input
+                    type='checkbox'
+                    className='checkbox'
+                    checked={selectedComments.includes(comment.id)}
+                    onChange={() => {
+                      if (selectedComments.includes(comment.id)) {
+                        setSelectedComments((prevSelectedComments) =>
+                          prevSelectedComments.filter((id) => id !== comment.id),
+                        );
+                      } else {
+                        setSelectedComments((prevSelectedComments) => [
+                          ...prevSelectedComments,
+                          comment.id,
+                        ]);
+                      }
+                    }}
+                  />
                 </th>
                 <td>{indexOfFirstItem + index + 1}</td>
                 <Link to={`/profile/${comment.commentUserId}`}>

@@ -41,19 +41,7 @@ export default function AdminPanel() {
       </div>
 
       <div className='mx-10 mt-20'>
-        <div className='flex flex-row justify-between'>
-          <div className='flex flex-row items-center gap-4'>
-            <div>{currentTab}</div>
-            {currentTab === 'Game' ? <NewButton /> : null}
-
-            <ActionButton />
-          </div>
-          <input
-            type='text'
-            placeholder='Search'
-            className='input-bordered input w-full max-w-xs'
-          />
-        </div>
+        <div className='absolute text-xl'>{currentTab}</div>
         {currentTab === 'Game' && <GameTab games={games} />}
         {currentTab === 'User' && <UserTab users={users} />}
         {currentTab === 'Review' && <ReviewTab reviews={reviews} />}
