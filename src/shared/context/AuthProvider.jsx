@@ -6,6 +6,7 @@ import AuthContext from './AuthContext';
 const AuthProvider = ({ children }) => {
   const [accountInfo, setAccountInfo] = useState({
     userName: '',
+    userId: '',
     loggedIn: false,
     admin: false,
     affiliation: false,
@@ -28,6 +29,7 @@ const AuthProvider = ({ children }) => {
       ac = {
         loggedIn: false,
         userName: '',
+        userId: '',
         admin: false,
         affiliation: false,
       };

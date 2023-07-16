@@ -1,23 +1,17 @@
-import {
-  Autocomplete,
-  Box,
-  TextField,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
-  Slider,
-  Chip,
-  Grid,
-  Button,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
+import { Autocomplete, Box, TextField, Checkbox, Chip, Grid, Button, Paper } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+import dayjs from 'dayjs';
 
 import CustomButton from '../../shared/components/FormElements/CustomButton';
 import CustomImageUpload from '../../shared/components/FormElements/CustomImageUpload';
@@ -34,8 +28,6 @@ const genreChoosable = [
 ];
 const platformChoosable = ['Switch', 'PS5', 'PC', 'Xbox Series X'];
 const playModeChoosable = ['Single-Player', 'Offline', 'Multi-Player', 'Online'];
-const earliestYear = 1990;
-const currentYear = new Date().getFullYear();
 
 const scrollBarStyle = {
   '&::-webkit-scrollbar': {
@@ -167,49 +159,7 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
   );
 };
 
-const MultiCheckboxSelector = ({ options, searchOption, setSearchOption }) => {
-  return (
-    <FormGroup sx={{ borderWidth: '2px', borderColor: '#B7B7B7', borderRadius: '18px' }}>
-      <Grid container>
-        {options.map((option, i) => (
-          <Grid key={i} item md={6}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={searchOption.includes(option)}
-                  onChange={(event) => {
-                    if (searchOption.includes(option)) {
-                      // Remove from list
-                      setSearchOption(searchOption.filter((o) => o !== option));
-                    } else {
-                      setSearchOption([...searchOption, option]);
-                    }
-                  }}
-                  sx={{
-                    float: 'right',
-                    color: '#B7B7B7',
-                    '&.Mui-checked': {
-                      color: '#cfcecc',
-                    },
-                  }}
-                />
-              }
-              label={`${option}`}
-              labelPlacement='start'
-              sx={{
-                m: 0,
-                float: 'right',
-                '.MuiFormControlLabel-label': { fontSize: '12px', color: '#808080' },
-              }}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </FormGroup>
-  );
-};
-
-const InputField = ({ categoryName }) => {
+const CustomInputField = ({ categoryName, val, onChange }) => {
   return (
     <Box
       sx={{
@@ -230,61 +180,14 @@ const InputField = ({ categoryName }) => {
         label={`${categoryName}`}
         placeholder={`${categoryName}`}
         InputLabelProps={{ sx: { color: '#808080' } }}
+        value={val}
+        onChange={onChange}
         sx={{
           minWidth: '100%',
           '& label.Mui-focused': {
             color: 'white',
           },
         }}
-      />
-    </Box>
-  );
-};
-
-const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) => {
-  const handleChange = (event, newRange, activeThumb) => {
-    if (!Array.isArray(newRange)) {
-      return;
-    }
-
-    if (activeThumb === 0) {
-      setRange([Math.min(newRange[0], range[1] - minDist), range[1]]);
-    } else {
-      setRange([range[0], Math.max(newRange[1], range[0] + minDist)]);
-    }
-  };
-
-  return (
-    <Box sx={{ px: '10px' }}>
-      <Typography sx={{ display: 'inline', float: 'left', color: '#808080' }}>
-        {rangeName}
-      </Typography>
-      <Typography sx={{ display: 'inline', float: 'right', fontWeight: 600 }}>
-        {range[0]} - {range[1]}
-      </Typography>
-      <Slider
-        value={range}
-        onChange={handleChange}
-        valueLabelDisplay='auto'
-        min={min}
-        max={max}
-        step={step}
-        sx={{
-          '.MuiSlider-thumb': {
-            color: '#d7dbe0',
-            height: 10,
-            width: 10,
-          },
-          '.MuiSlider-track': {
-            color: '#adadad',
-            height: 5,
-          },
-          '.MuiSlider-rail': {
-            height: 5,
-            bgcolor: 'black',
-          },
-        }}
-        disableSwap
       />
     </Box>
   );
@@ -305,7 +208,7 @@ const UploadPic = () => {
   const uploadPicSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
-    setSuccessSubmission('You have successfully changed your password!');
+    setSuccessSubmission('You have successfully uploaded your picture!');
   };
 
   return (
@@ -328,29 +231,31 @@ const UploadPic = () => {
 };
 
 const AddGameForm = ({ extraSx }) => {
+  const [gameName, setGameName] = useState('');
+  const [developer, setDeveloper] = useState('');
+  const [releaseDate, setReleaseDate] = useState(dayjs('2000-01-01'));
   const [genres, setGenres] = useState([]);
   const [platforms, setPlatforms] = useState([]);
   const [playModes, setPlayModes] = useState([]);
-  const [timePeriod, setTimePeriod] = useState([earliestYear, currentYear]);
-  const [scoreRange, setScoreRange] = useState([0, 100]);
 
   const handleReset = () => {
+    setGameName('');
+    setDeveloper('');
+    setReleaseDate(dayjs('2000-01-01'));
     setGenres([]);
     setPlatforms([]);
     setPlayModes([]);
-    setTimePeriod([earliestYear, currentYear]);
-    setScoreRange([0, 100]);
   };
 
   const handleSubmit = () => {
-    const values = `
-        genres: ${genres}
-        platforms: ${platforms}
-        playModes: ${playModes}
-        timePeriod: ${timePeriod}
-        scoreRange: ${scoreRange}
-      `;
-    console.log(values);
+    console.log({
+      gameName: gameName,
+      developer: developer,
+      releaseDate: releaseDate.toISOString(),
+      genres: genres,
+      platforms: platforms,
+      playModes: playModes,
+    });
   };
 
   return (
@@ -370,9 +275,49 @@ const AddGameForm = ({ extraSx }) => {
           ...scrollBarStyle,
         }}
       >
-        <InputField categoryName='Game' />
-        <InputField categoryName='Developer' />
-        <InputField categoryName='Release Date' />
+        <CustomInputField
+          categoryName='Game'
+          val={gameName}
+          onChange={(event) => setGameName(event.target.value)}
+        />
+        <CustomInputField
+          categoryName='Developer'
+          val={developer}
+          onChange={(event) => setDeveloper(event.target.value)}
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DateField']}>
+            <DateField
+              label='Release Date'
+              placeholder='Release Date'
+              value={releaseDate}
+              onChange={(newDate) => setReleaseDate(newDate)}
+              format='YYYY-MM-DD'
+              InputLabelProps={{
+                sx: {
+                  color: '#808080',
+                },
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: 'white',
+                  '& fieldset': {
+                    borderWidth: '2px',
+                    borderRadius: '18px',
+                    borderColor: '#B7B7B7',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#B7B7B7',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#B7B7B7',
+                  },
+                },
+              }}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+
         <MultiDropdownSelector
           categoryName='Genre'
           options={genreChoosable}
@@ -415,7 +360,7 @@ const AddGameForm = ({ extraSx }) => {
               <Button
                 variant='contained'
                 fullWidth
-                // onClick={handleSubmit}
+                onClick={handleSubmit}
                 sx={{
                   bgcolor: '#D9D9D9',
                   color: '#000000',
