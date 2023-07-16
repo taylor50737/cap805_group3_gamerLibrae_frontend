@@ -51,7 +51,7 @@ export default function CommentTab({ reviews }) {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7;
+  const itemsPerPage = 9;
 
   useEffect(() => {
     fetchComments();
