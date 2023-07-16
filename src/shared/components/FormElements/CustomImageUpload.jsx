@@ -25,7 +25,7 @@ const CustomImageUpload = (props) => {
     let pickedFile;
     let fileIsValid = isValid;
     if (event.target.files && event.target.files.length === 1) {
-      const pickedFile = event.target.files[0];
+      pickedFile = event.target.files[0];
       setFile(pickedFile);
       setIsValid(true);
       fileIsValid = true;
@@ -46,7 +46,7 @@ const CustomImageUpload = (props) => {
         ref={filePickerRef}
         style={{ display: 'none' }}
         type='file'
-        accept='.jpg,.png,.jpeg'
+        accept='.jpg,.png,.jpeg,.webp'
         onChange={pickedHandler}
       />
       <div className={`image-upload ${props.center && 'center'}`}>
