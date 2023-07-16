@@ -40,7 +40,7 @@ const ChangePassword = () => {
           label='Current Password'
           placeholder='Enter your current password'
           validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText='Your current password is incorrect!'
+          errorText='Please enter a valid current password, at least 5 characters.'
           onInput={inputHandler}
         />
         <CustomInput
