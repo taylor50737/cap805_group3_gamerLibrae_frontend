@@ -6,7 +6,7 @@ import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE, VALIDATOR_YOUTUBETWITCH } from '../../shared/util/validators';
 
 const ChangeInfo = () => {
-  const [successSubmission, setSuccessSubmission] = useState('');
+  const [responseMsg, setResponseMsg] = useState('');
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
       userName: {
@@ -20,9 +20,27 @@ const ChangeInfo = () => {
     },
     false,
   );
-  const changeInfoSubmitHandler = (event) => {
+  const changeInfoSubmitHandler = async (event) => {
     event.preventDefault();
-    setSuccessSubmission('You have successfully changed your info!');
+    try {
+      fetch('http://localhost:8080/api/users/change-info', {
+        method: 'PATCH',
+        credentials: 'include',
+        body: JSON.stringify({
+          userName: formState.inputs.userName.value,
+          url: formState.inputs.url.value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setResponseMsg(json.message);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -49,7 +67,11 @@ const ChangeInfo = () => {
           errorText='Please enter a valid Youtube/Twitch URL.'
           onInput={inputHandler}
         />
-        <p className='py-3'>{successSubmission}</p>
+        {responseMsg === 'You have successfully changed your info!' ? (
+          <p className='py-3'>{responseMsg}</p>
+        ) : (
+          <p className='py-3 text-red-600'>{responseMsg}</p>
+        )}
         <div>
           <CustomButton type='submit' disabled={!formState.isValid}>
             SUBMIT
