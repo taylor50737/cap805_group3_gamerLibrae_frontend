@@ -6,7 +6,7 @@ import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { VALIDATOR_MINLENGTH, VALIDATOR_CONFIRMPASSWORD } from '../../shared/util/validators';
 
 const ChangePassword = () => {
-  const [successSubmission, setSuccessSubmission] = useState('');
+  const [responseMsg, setResponseMsg] = useState('');
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
       currentPassword: {
@@ -26,7 +26,7 @@ const ChangePassword = () => {
   );
   const changePWSubmitHandler = (event) => {
     event.preventDefault();
-    setSuccessSubmission('You have successfully changed your password!');
+    setResponseMsg('You have successfully changed your password!');
   };
 
   return (
@@ -63,7 +63,11 @@ const ChangePassword = () => {
           errorText='Please check whether your password is entered correctly!'
           onInput={inputHandler}
         />
-        <p className='py-3'>{successSubmission}</p>
+        {responseMsg === 'You have successfully changed your password!' ? (
+          <p className='py-3'>{responseMsg}</p>
+        ) : (
+          <p className='py-3 text-red-600'>{responseMsg}</p>
+        )}
         <div>
           <CustomButton type='submit' disabled={!formState.isValid}>
             SUBMIT
