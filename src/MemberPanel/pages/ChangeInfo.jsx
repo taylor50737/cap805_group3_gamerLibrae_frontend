@@ -20,8 +20,22 @@ const ChangeInfo = () => {
     },
     false,
   );
-  const changeInfoSubmitHandler = (event) => {
+  const changeInfoSubmitHandler = async (event) => {
     event.preventDefault();
+    try {
+      fetch('http://localhost:8080/api/users/change-info', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          userName: formState.inputs.userName.value,
+          url: formState.inputs.url.value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+    } catch (err) {}
     setSuccessSubmission('You have successfully changed your info!');
   };
 
