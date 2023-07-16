@@ -16,6 +16,13 @@
 .affrule--reg--button {
   display: flex;
   justify-content: center;
-  margin-bottom: 3rem;
   margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.error--msg {
+  color: red;
+  font-size: 0.75rem;
+  text-align: center;
+  margin-bottom: 3rem;
 }
