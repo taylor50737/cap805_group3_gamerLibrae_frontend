@@ -2,7 +2,7 @@ import './AboutUs.css';
 import BrandnameSec from './components/BrandnameSec';
 import { useRef } from 'react';
 import WhoAreWe from './components/WhoWeAre';
-import OurVision from './components/OurVision';
+import OurMission from './components/OurMission';
 import TeamMember from './components/TeamMember';
 
 const AboutUs = () => {
@@ -25,7 +25,7 @@ const AboutUs = () => {
         <WhoAreWe scrollTo={scrollTo} goToSectionRef={section4} />
       </div>
       <div ref={section4}>
-        <OurVision />
+        <OurMission />
       </div>
     </div>
   );

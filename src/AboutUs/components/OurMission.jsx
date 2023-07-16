@@ -1,13 +1,13 @@
-import './OurVision.css';
+import './OurMission.css';
 import { useEffect, useRef } from 'react';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
-function OurVision({ scrollTo, goToSectionRef }) {
+function OurMission({ scrollTo, goToSectionRef }) {
   return (
     <div className='section font-dmsans'>
       <div className='copy'>
-        <h1 className='aboutus--ourvision'>Our Vision</h1>
+        <h1 className='aboutus--ourvision'>Our Mission</h1>
         <div className='aboutus--ourvision--para'>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -23,4 +23,4 @@ function OurVision({ scrollTo, goToSectionRef }) {
   );
 }
 
-export default OurVision;
+export default OurMission;
