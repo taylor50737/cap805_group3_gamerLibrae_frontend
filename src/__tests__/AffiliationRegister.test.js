@@ -7,6 +7,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import AffReg from '../Affiliation/AffReg';
 
 describe('Register for the affiliation program', () => {
+  //Testing Item 1, Row 8
   test('Renders all form elements', () => {
     render(<AffReg />);
 
@@ -27,6 +28,7 @@ describe('Register for the affiliation program', () => {
     expect(resetButton).toBeInTheDocument();
   });
 
+  //Testing Item 2, Row 9
   test('Updates input values on change', () => {
     render(<AffReg />);
 
@@ -42,6 +44,7 @@ describe('Register for the affiliation program', () => {
     expect(currentAffEmail.value).toBe('world');
   });
 
+  //Testing Item 3, Row 11
   test('Error message displays stating valid Email Address is required when Email Address is empty', () => {
     render(<AffReg />);
 
@@ -54,6 +57,7 @@ describe('Register for the affiliation program', () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
+  //Testing Item 4, Row 12
   test('Error message displays stating valid Channel URL is required when Channel URL is empty', () => {
     render(<AffReg />);
 
@@ -68,6 +72,7 @@ describe('Register for the affiliation program', () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
+  //Testing Item 5, Row 10
   test('Error message displays stating valid Channel URL AND valid Email Address are required when both fields are empty', () => {
     render(<AffReg />);
 
@@ -89,6 +94,7 @@ describe('Register for the affiliation program', () => {
     expect(emailErrorMessage).toBeInTheDocument();
   });
 
+  //Testing Item 6, Row 13
   test('Error message displays stating valid Channel URL AND valid Email Address are require when the Channel URL is not in URL format and Email Address is not in email address format', () => {
     render(<AffReg />);
 
@@ -110,6 +116,7 @@ describe('Register for the affiliation program', () => {
     expect(emailErrorMessage).toBeInTheDocument();
   });
 
+  //Testing Item 6, Row 14
   test('Disallow user from clicking submit button if the values of Channel URL and Email Address are invalid, and the T&C checkbox is unchecked', () => {
     render(<AffReg />);
 
@@ -131,6 +138,7 @@ describe('Register for the affiliation program', () => {
     expect(submitButton).toBeDisabled(); // Expect the button to be disabled
   });
 
+  //Testing Item 7, Row 15
   test('Allow user to click the submit button if the values of Channel URL and Email Address are valid, and the T&C checkbox is checked', () => {
     render(<AffReg />);
 
@@ -155,6 +163,7 @@ describe('Register for the affiliation program', () => {
     expect(submitButton).toBeEnabled(); // Expect the button to be clickable
   });
 
+  //Testing Item 8, Row 15
   test('By clicking on the Reset button, all the input field values will be restored to origin value', () => {
     render(<AffReg />);
 
