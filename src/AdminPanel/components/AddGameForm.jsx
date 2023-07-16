@@ -26,13 +26,12 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import dayjs from 'dayjs';
 import Cropper from 'react-easy-crop';
 
-import CustomButton from '../../shared/components/FormElements/CustomButton';
-import CustomImageUpload from '../../shared/components/FormElements/CustomImageUpload';
-import { CustomUseForm } from '../../shared/hooks/form-hook';
+// import CustomButton from '../../shared/components/FormElements/CustomButton';
+// import CustomImageUpload from '../../shared/components/FormElements/CustomImageUpload';
+// import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { cropImage } from '../../shared/util/cropImage';
-
-const cloud_name = 'dpfvhna2t';
-const api_key = '133115664541957';
+import uploadImage from '../../shared/api/cloudinary';
+import postGame from '../../shared/api/games';
 
 const genreChoosable = [
   'Action',
@@ -43,8 +42,9 @@ const genreChoosable = [
   'Simulation',
   'Puzzlers',
 ];
-const platformChoosable = ['Switch', 'PS5', 'PC', 'Xbox Series X'];
-const playModeChoosable = ['Single-Player', 'Offline', 'Multi-Player', 'Online'];
+const platformChoosable = ['Switch', 'PS4', 'PS5', 'Windows', 'Xbox One', 'Xbox Series X/S'];
+const modeChoosable = ['Single-Player', 'Offline', 'Multi-Player', 'Online'];
+const tagChoosable = ['Exciting', 'Refreshing', 'NSFW', 'Funny', 'Soulslike', 'Marvel'];
 
 const scrollBarStyle = {
   '&::-webkit-scrollbar': {
@@ -210,118 +210,101 @@ const CustomInputField = ({ categoryName, val, onChange }) => {
   );
 };
 
-const UploadPic = () => {
-  const [successSubmission, setSuccessSubmission] = useState('');
-  const [formState, inputHandler, setFormData] = CustomUseForm(
-    {
-      image: {
-        value: null,
-        isValid: false,
-      },
-    },
-    false,
-  );
+// const UploadPic = () => {
+//   const [successSubmission, setSuccessSubmission] = useState('');
+//   const [formState, inputHandler, setFormData] = CustomUseForm(
+//     {
+//       image: {
+//         value: null,
+//         isValid: false,
+//       },
+//     },
+//     false,
+//   );
 
-  const uploadPicSubmitHandler = async (event) => {
-    event.preventDefault();
+//   const uploadPicSubmitHandler = async (event) => {
+//     event.preventDefault();
+//     setSuccessSubmission('You have successfully uploaded your picture!');
+//   };
 
-    const signatureResponse = await fetch('http://localhost:8080/api/cloudinary/signature');
-    const signatureJson = await signatureResponse.json();
-
-    const formData = new FormData();
-    formData.append('file', formState.inputs.image.value);
-    formData.append('api_key', api_key);
-    formData.append('signature', signatureJson.signature);
-    formData.append('timestamp', signatureJson.timestamp);
-
-    const cloudinaryResponse = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    );
-    const cloudinaryJson = await cloudinaryResponse.json();
-    console.log(signatureJson.signature);
-    console.log(cloudinaryJson);
-
-    setSuccessSubmission('You have successfully uploaded your picture!');
-  };
-
-  return (
-    <div className='flex max-w-lg flex-col items-center rounded-lg bg-gray-700'>
-      {/* <h1 className='text-3xl'>Upload Game Picture</h1> */}
-      <form
-        className='flex flex-col items-center justify-center py-12'
-        onSubmit={uploadPicSubmitHandler}
-      >
-        <CustomImageUpload center id='image' onInput={inputHandler} />
-        <p className=''>{successSubmission}</p>
-        <div className='auth--form--submit'>
-          <CustomButton type='submit' disabled={!formState.isValid}>
-            UPLOAD IMAGE
-          </CustomButton>
-        </div>
-      </form>
-    </div>
-  );
-};
+//   return (
+//     <div className='flex max-w-lg flex-col items-center rounded-lg bg-gray-700'>
+//       {/* <h1 className='text-3xl'>Upload Game Picture</h1> */}
+//       <form
+//         className='flex flex-col items-center justify-center py-12'
+//         onSubmit={uploadPicSubmitHandler}
+//       >
+//         <CustomImageUpload center id='image' onInput={inputHandler} />
+//         <p className=''>{successSubmission}</p>
+//         <div className='auth--form--submit'>
+//           <CustomButton type='submit' disabled={!formState.isValid}>
+//             UPLOAD IMAGE
+//           </CustomButton>
+//         </div>
+//       </form>
+//     </div>
+//   );
+// };
 
 const AddGameForm = ({ extraSx }) => {
   const [name, setName] = useState('');
   const [developer, setDeveloper] = useState('');
+  const [publisher, setPublisher] = useState('');
   const [releaseDate, setReleaseDate] = useState(dayjs('2000-01-01'));
   const [genres, setGenres] = useState([]);
   const [platforms, setPlatforms] = useState([]);
-  const [playModes, setPlayModes] = useState([]);
+  const [modes, setModes] = useState([]);
+  const [tags, setTags] = useState([]);
   const [banner, setBanner] = useState(null);
   const [portrait, setPortrait] = useState(null);
 
-  const handleReset = () => {
+  const handleGameInfoReset = () => {
     setName('');
     setDeveloper('');
+    setPublisher('');
     setReleaseDate(dayjs('2000-01-01'));
     setGenres([]);
     setPlatforms([]);
-    setPlayModes([]);
+    setModes([]);
+    setTags([]);
   };
 
   const handleSubmit = async () => {
-    const signatureResponse = await fetch('http://localhost:8080/api/cloudinary/signature');
-    const signatureJson = await signatureResponse.json();
+    const bannerResBody = await uploadImage(banner, 'game/banner/');
+    console.log(bannerResBody);
+    const portraitResBody = await uploadImage(portrait, 'game/portrait/');
+    console.log(portraitResBody);
 
-    const formData = new FormData();
-    formData.append('file', banner);
-    formData.append('api_key', api_key);
-    formData.append('signature', signatureJson.signature);
-    formData.append('timestamp', signatureJson.timestamp);
-
-    const cloudinaryResponse = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    );
-    const cloudinaryJson = await cloudinaryResponse.json();
-    console.log(cloudinaryJson);
+    const postGameResBody = await postGame({
+      name,
+      developer,
+      publisher,
+      releaseDate,
+      genres,
+      platforms,
+      modes,
+      tags,
+      bannerResBody,
+      portraitResBody,
+    });
+    console.log(postGameResBody);
 
     console.log({
       name: name,
       developer: developer,
+      publisher: publisher,
       releaseDate: releaseDate.toISOString(),
       genres: genres,
       platforms: platforms,
-      playModes: playModes,
-      banner: banner,
-      portrait: portrait,
+      modes: modes,
+      tags: tags,
+      bannerPublicId: bannerResBody.public_id,
+      portraitPublicId: portraitResBody.public_id,
     });
   };
 
   return (
     <>
-      {/* <UploadPic /> */}
-
       <Box
         sx={{
           ...extraSx,
@@ -333,11 +316,10 @@ const AddGameForm = ({ extraSx }) => {
           bgcolor: '#',
           overflowX: 'auto',
           overflowY: 'auto',
-          ...scrollBarStyle,
         }}
       >
         <CustomInputField
-          categoryName='Game'
+          categoryName='Name'
           val={name}
           onChange={(event) => setName(event.target.value)}
         />
@@ -345,6 +327,11 @@ const AddGameForm = ({ extraSx }) => {
           categoryName='Developer'
           val={developer}
           onChange={(event) => setDeveloper(event.target.value)}
+        />
+        <CustomInputField
+          categoryName='Publisher'
+          val={publisher}
+          onChange={(event) => setPublisher(event.target.value)}
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DateField']}>
@@ -394,14 +381,17 @@ const AddGameForm = ({ extraSx }) => {
         />
         <MultiDropdownSelector
           categoryName='Mode'
-          options={playModeChoosable}
-          searchOption={playModes}
-          setSearchOption={setPlayModes}
+          options={modeChoosable}
+          searchOption={modes}
+          setSearchOption={setModes}
+        />
+        <MultiDropdownSelector
+          categoryName='Tags'
+          options={tagChoosable}
+          searchOption={tags}
+          setSearchOption={setTags}
         />
       </Box>
-      {/* <Typography>
-        Please use .webp format to reduce image size, there is no validation at the moment. Banner will be in 16:9, Portrait will be in 3:4.
-      </Typography> */}
       <Box
         sx={{
           display: 'flex',
@@ -412,6 +402,16 @@ const AddGameForm = ({ extraSx }) => {
           mb: '20px',
         }}
       >
+        <Button
+          sx={{
+            bgcolor: '#4e5154',
+            color: 'white',
+            '&:hover': { bgcolor: '#1a1919' },
+          }}
+          onClick={handleGameInfoReset}
+        >
+          Reset
+        </Button>
         <ImageUploaderCropper
           name='Banner'
           aspectRatio={16 / 9}
@@ -495,7 +495,7 @@ const ImageUploaderCropper = ({ name, aspectRatio, croppedImage, setCroppedImage
           id={name}
           type='file'
           onChange={onFileChange}
-          accept='image/webp'
+          accept='image/webp, image/jpeg, image/png'
           style={{ display: 'none' }}
         />
         <Button
@@ -558,8 +558,8 @@ const ImageUploaderCropper = ({ name, aspectRatio, croppedImage, setCroppedImage
         <img
           src={croppedImage}
           style={{
-            height: 200,
-            width: 200 * aspectRatio,
+            height: 300,
+            width: 300 * aspectRatio,
           }}
         />
       )}
