@@ -1,6 +1,9 @@
-import { render, screen, fireEvent, act } from '@testing-library/react';
+// Kenneth Wong
+// Test case 2
+//Testing Select Game checkbox
+
+import { render, fireEvent, act } from '@testing-library/react';
 import GameTab from '../AdminPanel/GameTab';
-import React, { useState as useStateMock } from 'react';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
