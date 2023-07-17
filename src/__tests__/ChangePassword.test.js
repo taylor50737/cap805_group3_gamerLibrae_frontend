@@ -1,5 +1,6 @@
 // Name: Pak Hei Lo
 // Student ID: 132631227
+// Test case 2
 // Testing ChangePassword form elements and validations
 
 import React from 'react';

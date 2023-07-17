@@ -1,6 +1,6 @@
 // Kenneth Wong
 // Test case 1
-//Testing goToNextPage function
+// Testing goToNextPage function
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import GameTab from '../AdminPanel/GameTab';

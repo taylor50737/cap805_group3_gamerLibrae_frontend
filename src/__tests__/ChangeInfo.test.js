@@ -1,5 +1,6 @@
 // Name: Pak Hei Lo
 // Student ID: 132631227
+// Test case 1
 // Testing ChangeInfo form elements and validations
 
 import React from 'react';
