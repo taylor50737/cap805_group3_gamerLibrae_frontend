@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NewButton from './components/NewButton';
 
@@ -6,6 +6,7 @@ export default function GameTab({ games }) {
   const fields = ['ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedGames, setselectedGames] = useState([]);
   const itemsPerPage = 7;
 
   // Calculate the index of the first and last item to display on the current page
@@ -53,11 +54,11 @@ export default function GameTab({ games }) {
           {/* head */}
           <thead>
             <tr>
-              <th>
+              {/* <th>
                 <label>
                   <input type='checkbox' className='checkbox' />
                 </label>
-              </th>
+              </th> */}
               {fields.map((column) => (
                 <th key={column}>{column}</th>
               ))}
@@ -69,10 +70,24 @@ export default function GameTab({ games }) {
               <tr key={game._id}>
                 <th>
                   <label>
-                    <input type='checkbox' className='checkbox' />
+                    <input
+                      type='checkbox'
+                      className='checkbox'
+                      data-testid={`selected-game-${game._id}`}
+                      checked={selectedGames.includes(game._id)}
+                      onChange={() => {
+                        if (selectedGames.includes(game._id)) {
+                          setselectedGames((prevSelectedGames) =>
+                            prevSelectedGames.filter((id) => id !== game._id),
+                          );
+                        } else {
+                          setselectedGames((prevSelectedGames) => [...prevSelectedGames, game._id]);
+                        }
+                      }}
+                    />
                   </label>
                 </th>
-                <td>{indexOfFirstItem + index + 1}</td>
+                <td data-testid={`selected-game-${index + 1}`}>{indexOfFirstItem + index + 1}</td>
                 <td>
                   <Link to={`/game/${game._id}`}>{game.name}</Link>
                 </td>

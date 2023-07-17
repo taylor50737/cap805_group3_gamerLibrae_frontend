@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function CommentTab({ reviews }) {
-  const fields = ['Index', 'Comment', 'Creator', '#Reports', 'Status'];
+export default function CommentTab() {
+  const fields = ['', 'Index', 'Comment', 'Creator', '#Reports', 'Status'];
 
   const [comments, setComments] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const fetchComments = async () => {
     try {
@@ -20,14 +21,14 @@ export default function CommentTab({ reviews }) {
   const deleteComment = async () => {
     let cid;
     if (selectedComments.length === 0) {
-      return 'no comment selected';
+      setSuccessMessage('No content has been selected');
     } else if (selectedComments.length === 1) {
       cid = selectedComments[0];
       try {
         const res = await fetch(`http://localhost:8080/api/comments/${cid}`, { method: 'DELETE' });
         const data = await res.json();
-        console.log(data);
         fetchComments();
+        setSuccessMessage('Comment deleted');
       } catch (error) {
         console.log(error);
       }
@@ -42,7 +43,7 @@ export default function CommentTab({ reviews }) {
           body: JSON.stringify(cids),
         });
         const data = await res.json();
-        console.log(data);
+        setSuccessMessage('Comments deleted');
         fetchComments();
       } catch (error) {
         console.log(error);
@@ -87,6 +88,7 @@ export default function CommentTab({ reviews }) {
   return (
     <div>
       <div className='flex justify-end gap-5'>
+        {successMessage && <div role='alert'>{successMessage}</div>}
         <div className='dropdown-bottom dropdown'>
           <label tabIndex={0} className='btn-primary btn'>
             Action
@@ -110,7 +112,7 @@ export default function CommentTab({ reviews }) {
           {/* head */}
           <thead>
             <tr>
-              <th>
+              {/* <th>
                 <input
                   type='checkbox'
                   className='checkbox'
@@ -123,7 +125,7 @@ export default function CommentTab({ reviews }) {
                     }
                   }}
                 />
-              </th>
+              </th> */}
               {fields.map((column) => (
                 <th key={column}>{column}</th>
               ))}
@@ -153,11 +155,13 @@ export default function CommentTab({ reviews }) {
                   />
                 </th>
                 <td>{indexOfFirstItem + index + 1}</td>
-                <Link to={`/profile/${comment.commentUserId}`}>
-                  <td>{comment.comment.split('. ')[0]}...</td>
-                </Link>
+                <td>
+                  <Link to={`/profile/${comment.commentUserId}`}>
+                    {comment.comment.split('. ')[0]}...
+                  </Link>
+                </td>
                 <td>{comment.creator}</td>
-                <td>{comment.reports.length}</td>
+                <td>{comment.reports?.length || 0}</td>
                 <td>{comment.status}</td>
               </tr>
             ))}
@@ -165,29 +169,33 @@ export default function CommentTab({ reviews }) {
         </table>
       </div>
       {/* Pagination */}
-      <div className='m-auto text-center'>
-        <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
-            «
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={
-                pageNumber === currentPage
-                  ? 'btn-ghost btn-active join-item btn'
-                  : 'btn-ghost join-item btn'
-              }
-            >
-              {pageNumber}
+      {comments.length == 0 ? (
+        <div></div>
+      ) : (
+        <div className='m-auto text-center'>
+          <div className='join flex justify-around'>
+            <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+              «
             </button>
-          ))}
-          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
-            »
-          </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={
+                  pageNumber === currentPage
+                    ? 'btn-ghost btn-active join-item btn'
+                    : 'btn-ghost join-item btn'
+                }
+              >
+                {pageNumber}
+              </button>
+            ))}
+            <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+              »
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
