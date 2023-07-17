@@ -36,6 +36,10 @@ export default function UserTab({ users }) {
 
   return (
     <div>
+      <div className='flex justify-end gap-5'>
+        {/* <ActionButton selectedComments={selectedComments} /> */}
+        <input type='text' placeholder='Search' className='input-bordered input w-full max-w-xs' />
+      </div>
       <div className='m-3 overflow-x-auto'>
         <table className='table'>
           {/* head */}
