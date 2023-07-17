@@ -1,25 +1,24 @@
 import './AffReg.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { redirect } from 'react-router-dom';
 import CustomInput from '../shared/components/FormElements/CustomInput';
 import CustomButton from '../shared/components/FormElements/CustomButton';
 import { CustomUseForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_EMAIL, VALIDATOR_YOUTUBETWITCH } from '../shared/util/validators';
-import { Button, FormControl, FormControlLabel, TextField, Checkbox } from '@mui/material';
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
-import { AffRegContext } from '../shared/context/AffRegContext';
 import CustomCheckbox from '../shared/components/FormElements/CustomCheckbox';
+import { set } from 'react-hook-form';
 
 const AffReg = () => {
-  const affReg = useContext(AffRegContext);
-
   const [isTncChecked, setIsTncChecked] = useState(false);
+  const [responseMsg, setResponseMsg] = useState('');
 
   const handleTncCheckbox = () => {
     setIsTncChecked((prevState) => !prevState);
   };
 
-  const [formState, inputHandler, setFormData, clearInput] = CustomUseForm(
+  const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
     {
       channelUrl: {
         value: '',
@@ -44,40 +43,37 @@ const AffReg = () => {
         validators={data.type === 'email' ? [VALIDATOR_EMAIL()] : [VALIDATOR_YOUTUBETWITCH()]}
         errorText={data.errorText}
         onInput={inputHandler}
+        reset={formState.reset}
       />
     );
   });
 
-  // const clearFormData = () => {
-  //   clearInput({
-  //     channelUrl: {
-  //       value: '',
-  //       isValid: false,
-  //     },
-  //     email: {
-  //       value: '',
-  //       isValid: false,
-  //     },
-  //   });
-  //   console.log(formState.inputs.channelUrl.value);
-  //   console.log(formState.inputs.email.value);
-  // };
-
-  const submitAffRegForm = (event) => {
+  const submitAffRegForm = async (event) => {
     event.preventDefault();
-    if (
-      formState.inputs.channelUrl.value != '' &&
-      formState.inputs.email.value != '' &&
-      formState.inputs.channelUrl.isValid == true &&
-      formState.inputs.email.isValid == true &&
-      isTncChecked
-    ) {
-      affReg.affregister();
-      console.log(formState.inputs.channelUrl.value);
-      console.log(formState.inputs.email.value);
-      console.log(formState.inputs.channelUrl.isValid);
-      console.log(formState.inputs.email.isValid);
-      console.log(affReg.isAffRegistered);
+    try {
+      fetch('http://localhost:8080/api/affiliations/', {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          affChannelURL: formState.inputs.channelUrl.value,
+          affEmail: formState.inputs.email.value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json.message);
+          if (json.message === 'Successful') {
+            setResponseMsg(json.message);
+            redirect('/affiliation-suc');
+          } else {
+            setResponseMsg(json.message);
+          }
+        });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -100,59 +96,11 @@ const AffReg = () => {
           <CustomButton type='submit' disabled={!formState.isValid || !isTncChecked}>
             SUBMIT
           </CustomButton>
-          <CustomButton type='reset' inverse>
+          <CustomButton type='reset' inverse onClick={resetForm}>
             RESET
           </CustomButton>
-          {/* <Button
-            variant='contained'
-            // onClick={handleSubmit}
-            type='submit'
-            sx={{
-              color: '#0D0C11',
-              bgcolor: '#F2F3EE',
-              borderRadius: 0.8,
-              border: 1,
-              borderColor: '#F2F3EE',
-              fontFamily: '"DM Sans", sans-serif',
-              marginRight: { xs: 0, sm: 2 },
-              marginBottom: { xs: 1, sm: 0 },
-              ':hover': {
-                borderColor: '#F2F3EE !important',
-                borderRadius: 0.8,
-                bgcolor: 'transparent',
-                color: '#F2F3EE',
-                border: 1,
-              },
-            }}
-          >
-            Submit
-          </Button> */}
-          {/* <Button
-            variant='contained'
-            sx={{
-              color: '#F2F3EE',
-              bgcolor: 'transparent',
-              borderRadius: 0.8,
-              border: 1,
-              borderColor: '#F2F3EE',
-              marginLeft: { xs: 0, sm: 2 },
-              marginTop: { xs: 1, sm: 0 },
-              fontFamily: '"DM Sans", sans-serif',
-              ':hover': {
-                borderColor: '#F2F3EE !important',
-                borderRadius: 0.8,
-                bgcolor: 'rgba(183,183,183,0.5)',
-                color: '#F2F3EE',
-                border: 1,
-              },
-            }} 
-            onClick={() => {
-              setAffRegFormData({ channelUrl: 'https://', email: '' });
-            }}
-          >
-            Reset
-          </Button> */}
         </div>
+        {responseMsg && <p className='error--msg'>{responseMsg}</p>}
       </form>
     </div>
   );

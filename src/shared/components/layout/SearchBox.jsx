@@ -12,16 +12,102 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import Score from '../Score';
 
-export const SearchBox = () => {
+const games = [
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/gollum.jpg',
+    name: 'The Lord of the Rings: Gollum',
+    releaseYear: '2023',
+    platform: 'PS5',
+    developer: 'Daedalic Entertainment',
+    score: 30,
+  },
+  {
+    image: '/images/searchBoxMockImage/diablo.jpg',
+    name: 'Diablo IV',
+    releaseYear: '2023',
+    platform: 'Xbox One',
+    developer: 'Activision Blizzard',
+    score: 65,
+  },
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom1',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom2',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom3',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom4',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom5',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom6',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+  {
+    image: '/images/searchBoxMockImage/zelda.jpg',
+    name: 'The Legend of Zelda: Tears of the Kingdom7',
+    releaseYear: '2023',
+    platform: 'Switch',
+    developer: 'Nintendo EPD',
+    score: 95,
+  },
+];
+
+// TODO: Long options for testing
+// const moreGames = Array(10).fill(games).flat();
+
+export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
   return (
     <Autocomplete
+      autoHighlight
       disablePortal
-      id='search-game'
       size='small'
       forcePopupIcon={false}
       freeSolo
       options={games}
-      getOptionLabel={(game) => game.name}
+      getOptionLabel={(game) => (typeof game === 'string' ? game : game.name)}
       filterOptions={(games, state) => {
         if (state.inputValue === '') {
           return [];
@@ -31,21 +117,13 @@ export const SearchBox = () => {
         );
       }}
       PaperComponent={({ children }) => <Paper sx={{ bgcolor: '#2b2725' }}>{children}</Paper>}
-      // TODO: change scroll bar
-      // ListboxProps={{
-      //   style:{
-      //     '-webkit-scrollbar' : {
-      //       width: '12px',
-      //       bgcolor: '#5f6f9c',
-      //     },
-      //     '-webkit-scrollbar-thumb' : {
-      //       borderRadius: '10px',
-      //       '-webkit-box-shadow': 'inset 0 0 6px rgba(0, 0, 0, 0.3)',
-      //       bgcolor: '#d62929',
-      //     }
-      //   }
-      // }}
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '45%' }}
+      ListboxProps={{ sx: { maxHeight: resultBoxHeight ? resultBoxHeight : '500px' } }}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: fullWidth ? '100%' : '45%',
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -65,7 +143,7 @@ export const SearchBox = () => {
             ),
           }}
           sx={{
-            marginLeft: '2rem',
+            marginLeft: marginLeft ? marginLeft : 0,
             input: {
               '&::placeholder': {
                 opacity: 1,
@@ -92,11 +170,7 @@ export const SearchBox = () => {
               '&.Mui-focused fieldset': {
                 borderColor: '#b7b7b7',
                 borderWidth: 1.5,
-                // TODO: Change border style when focused
-                // borderRadius: '20px 20px 0px 0px',
-                // borderBottomStyle: 'none',
               },
-
               '&.MuiInputBase-sizeSmall .MuiAutocomplete-input': {
                 pl: 0,
               },
@@ -111,11 +185,11 @@ export const SearchBox = () => {
       renderOption={(props, game) => (
         <li {...props} key={game.name}>
           <Grid container>
-            <Grid item md={2}>
+            <Grid item xs={2} sm={2} md={2}>
               <img src={game.image} width='40' height='30' />
             </Grid>
 
-            <Grid item md={8}>
+            <Grid item xs={8} sm={8} md={8}>
               <Typography sx={{ fontSize: 8, color: 'white' }}>
                 {game.name}
                 <br />
@@ -126,6 +200,8 @@ export const SearchBox = () => {
             </Grid>
             <Grid
               item
+              xs={2}
+              sm={2}
               md={2}
               sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
@@ -137,35 +213,5 @@ export const SearchBox = () => {
     />
   );
 };
-
-const games = [
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/gollum.jpg',
-    name: 'The Lord of the Rings: Gollum',
-    releaseYear: '2023',
-    platform: 'PS5',
-    developer: 'Daedalic Entertainment',
-    score: 30,
-  },
-  {
-    image: '/images/searchBoxMockImage/diablo.jpg',
-    name: 'Diablo IV',
-    releaseYear: '2023',
-    platform: 'Xbox One',
-    developer: 'Activision Blizzard',
-    score: 65,
-  },
-];
-
-// TODO: Long options for testing
-// const moreGames = Array(10).fill(games).flat();
 
 export default SearchBox;

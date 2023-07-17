@@ -22,7 +22,7 @@
   display: inline;
 }
 
-.form-control .forgetpassword {
+.form-control .side--button {
   display: inline;
   float: right;
   font-size: 0.875rem;
@@ -30,7 +30,7 @@
   cursor: pointer;
 }
 
-.form-control .forgetpassword:hover {
+.form-control .side--button:hover {
   color: #959595;
 }
 

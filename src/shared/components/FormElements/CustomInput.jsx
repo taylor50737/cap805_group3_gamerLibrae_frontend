@@ -18,24 +18,36 @@ const inputReducer = (state, action) => {
         isTouched: true,
       };
     }
+    case 'RESET':
+      return {
+        value: action.val,
+        isTouched: false,
+        isValid: action.isValid,
+      };
     default:
       return state;
   }
 };
 
-const CustomInput = (props) => {
+const CustomInput = ({ ownClass, ...props }) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue || '',
     isTouched: false,
     isValid: props.initialValid || false,
   });
 
-  const { id, onInput } = props;
+  const { id, onInput, reset } = props;
   const { value, isValid } = inputState;
 
   useEffect(() => {
     onInput(id, value, isValid);
   }, [id, value, isValid, onInput]);
+
+  useEffect(() => {
+    if (reset) {
+      dispatch({ type: 'RESET', val: '', isValid: false });
+    }
+  }, [reset]);
 
   const changeHandler = (event) => {
     dispatch({
@@ -71,24 +83,24 @@ const CustomInput = (props) => {
       />
     );
 
-  const forgetPasswordButton =
-    props.forgetpassword === false ? (
-      <NavLink to='forget-password'>
-        <p className='forgetpassword'>Forget password?</p>
-      </NavLink>
-    ) : (
-      <></>
-    );
+  const ownClassName =
+    ownClass != (undefined && '')
+      ? `form-control ${
+          !inputState.isValid && inputState.isTouched && 'form-control--invalid'
+        } ${ownClass}`
+      : `form-control ${!inputState.isValid && inputState.isTouched && 'form-control--invalid'}`;
+
+  const sideButton = props.sideButton != '' && props.sideButton != undefined && (
+    <NavLink to={props.sideButtonLink}>
+      <p className='side--button'>{props.sideButton}</p>
+    </NavLink>
+  );
 
   return (
-    <div
-      className={`form-control ${
-        !inputState.isValid && inputState.isTouched && 'form-control--invalid'
-      }`}
-    >
+    <div className={ownClassName}>
       <div>
         <label htmlFor={props.id}>{props.label}</label>
-        {forgetPasswordButton}
+        {sideButton}
       </div>
       {element}
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}

@@ -2,7 +2,8 @@ import './AboutUs.css';
 import BrandnameSec from './components/BrandnameSec';
 import { useRef } from 'react';
 import WhoAreWe from './components/WhoWeAre';
-import OurVision from './components/OurVision';
+import OurMission from './components/OurMission';
+import TeamMember from './components/TeamMember';
 
 const AboutUs = () => {
   const section1 = useRef();
@@ -18,12 +19,14 @@ const AboutUs = () => {
         <BrandnameSec scrollTo={scrollTo} goToSectionRef={section2} />
       </div>
       <div ref={section2}>
-        <WhoAreWe scrollTo={scrollTo} goToSectionRef={section3} />
+        <TeamMember scrollTo={scrollTo} goToSectionRef={section3} />
       </div>
       <div ref={section3}>
-        <OurVision scrollTo={scrollTo} goToSectionRef={section4} />
+        <WhoAreWe scrollTo={scrollTo} goToSectionRef={section4} />
       </div>
-      <div ref={section4}>{/* <ChooseYourCharacter /> */}</div>
+      <div ref={section4}>
+        <OurMission />
+      </div>
     </div>
   );
 };

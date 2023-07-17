@@ -1,13 +1,18 @@
-import React, { useState, useCallback } from 'react';
-
 import { Container } from '@mui/material';
 
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Outlet,
+  Route,
+  defer,
+} from 'react-router-dom';
 
 import Navbar from './shared/components/layout/Navbar';
 import Footer from './shared/components/layout/Footer';
 import Auth from './Auth/pages/auth';
-import ForgetPassword from './Auth/pages/ForgetPassword';
+import ForgotPassword from './Auth/pages/ForgotPassword';
 import ResetPassword from './Auth/pages/ResetPassword';
 import AdminPanel from './AdminPanel/AdminPanel';
 import ReviewEditPage from './ReviewEdit/pages/ReviewEditPage';
@@ -30,203 +35,167 @@ import AddGamePage from './AdminPanel/AddGamePage';
 import GamePage from './Game/GamePage';
 import ReviewPage from './Review/ReviewPage';
 
-import { AuthContext } from './shared/context/auth_context';
-import { AffRegContext } from './shared/context/AffRegContext';
+import AuthProvider from './shared/context/AuthProvider';
+import ProtectedRoute from './shared/components/route/ProtectedRoute';
+import LoaderTest from './Loader/LoaderTest';
+import DeferredLoaderTest from './Loader/DeferredLoaderTest';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  const [isAffRegistered, setIsAffRegistered] = useState(false);
-
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
-
-  const adminLogin = useCallback(() => {
-    setIsAdminLoggedIn(true);
-  }, []);
-
-  const adminLogout = useCallback(() => {
-    setIsAdminLoggedIn(false);
-  }, []);
-
-  const affregister = useCallback(() => {
-    setIsAffRegistered(true);
-  }, []);
-
-  let routes;
-
-  {
-    isAdminLoggedIn &&
-      (routes = (
-        <Routes>
-          <Route path='*' element={<ErrorPage />} />
-          <Route path='/' element={<HomePage />} />
-          <Route path='/about-us' element={<AboutUs />} />
-          <Route path='/contact-us' element={<ContactUs />} />
-          <Route path='/search' element={<GameSearchResult />} />
-
-          {/* Game Route */}
-          <Route path='/game'>
-            <Route index element={<GameSearchResult />} />
-            <Route path=':id'>
-              <Route index element={<GamePage />} />
-              <Route path='review-edit' element={<ReviewEditPage />} />
-              <Route path='review/:rid' element={<ReviewPage />} />
-            </Route>
-          </Route>
-
-          {/* Member Profile Route */}
-          <Route path='/profile/:uid' element={<PublicProfileLayout />}>
-            <Route index element={<ReviewCommentHistory />} />
-            <Route path='wishlist' element={<WishList />} />
-          </Route>
-
-          {/* Member Route */}
-          <Route path='/member/:uid' element={<MemberPanelLayout />}>
-            <Route index element={<ReviewCommentHistory />} />
-            <Route path='change-info' element={<ChangeInfo />} />
-            <Route path='wishlist' element={<WishList />} />
-            <Route path='change-password' element={<ChangePassword />} />
-            <Route path='upload-profile-pic' element={<UploadProfilePic />} />
-          </Route>
-
-          {/* Affiliation Route */}
-          <Route path='/affiliation-registration' element={<AffReg />} />
-          <Route path='/affiliation-rule' element={<AffRule />} />
-          <Route path='/affiliation-suc' element={<AffSuc />} />
-
-          {/* Admin Route */}
-          <Route path='/admin-panel' element={<AdminPanel />} />
-          <Route path='/auth' element={<Navigate to='/admin-panel' />} />
-          <Route path='/add-game' element={<AddGamePage />} />
-        </Routes>
-      ));
-  }
-  {
-    isLoggedIn &&
-      (routes = (
-        <Routes>
-          <Route path='*' element={<ErrorPage />} />
-          <Route path='/' element={<HomePage />} />
-          <Route path='/auth' element={<Navigate to='/' replace />} />
-          <Route path='/search' element={<GameSearchResult />} />
-          <Route path='/about-us' element={<AboutUs />} />
-          <Route path='/contact-us' element={<ContactUs />} />
-
-          {/* Game Route */}
-          <Route path='/game'>
-            <Route index element={<GameSearchResult />} />
-            <Route path=':id'>
-              <Route index element={<GamePage />} />
-              <Route path='review-edit' element={<ReviewEditPage />} />
-              <Route path='review/:rid' element={<ReviewPage />} />
-            </Route>
-          </Route>
-
-          {/* Member Profile Route */}
-          <Route path='/profile/:uid' element={<PublicProfileLayout />}>
-            <Route index element={<ReviewCommentHistory />} />
-            <Route path='wishlist' element={<WishList />} />
-          </Route>
-
-          {/* Member Route */}
-          <Route path='/member/:uid' element={<MemberPanelLayout />}>
-            <Route index element={<ReviewCommentHistory />} />
-            <Route path='wishlist' element={<WishList />} />
-            <Route path='change-info' element={<ChangeInfo />} />
-            <Route path='change-password' element={<ChangePassword />} />
-            <Route path='upload-profile-pic' element={<UploadProfilePic />} />
-          </Route>
-
-          {/* Affiliation Route */}
-          {isAffRegistered &&
-            (routes = <Route path='/affiliation-registration' element={<AffSuc />} />)}
-          <Route path='/affiliation-registration' element={<AffReg />} />
-          <Route path='/affiliation-rule' element={<AffRule />} />
-
-          {/* Admin Route */}
-          <Route path='/admin-panel/*' element={<Navigate to='/auth' />} />
-        </Routes>
-      ));
-  }
-  {
-    !isLoggedIn &&
-      !isAdminLoggedIn &&
-      (routes = (
-        <Routes>
-          <Route path='*' element={<ErrorPage />} />
-          <Route path='/' element={<HomePage />} />
-          <Route path='/search' element={<GameSearchResult />} />
-          <Route path='/about-us' element={<AboutUs />} />
-          <Route path='/contact-us' element={<ContactUs />} />
-
-          {/* Auth Route */}
-          <Route path='/auth'>
-            <Route index element={<Auth />} />
-            <Route path='forget-password' element={<ForgetPassword />} />
-            <Route path='reset-password' element={<ResetPassword />} />
-          </Route>
-
-          {/* Game Route */}
-          <Route path='/game'>
-            <Route index element={<GameSearchResult />} />
-            <Route path=':id'>
-              <Route index element={<GamePage />} />
-              <Route path='review-edit' element={<ReviewEditPage />} />
-              <Route path='review/:rid' element={<ReviewPage />} />
-            </Route>
-          </Route>
-
-          {/* Member Profile Route */}
-          <Route path='/profile/:uid' element={<PublicProfileLayout />}>
-            <Route index element={<ReviewCommentHistory />} />
-            <Route path='wishlist' element={<WishList />} />
-          </Route>
-
-          {/* Member Route */}
-          <Route path='/member/*' element={<Navigate to='/auth' replace />} />
-
-          {/* Affiliation Route */}
-          <Route path='/affiliation-rule' element={<AffRule />} />
-          <Route path='/affiliation-registration' element={<Navigate to='/auth' replace />} />
-          {/* Admin Route */}
-          <Route path='/admin-panel/*' element={<Navigate to='/auth' replace />} />
-        </Routes>
-      ));
-  }
-
-  return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        isAdminLoggedIn: isAdminLoggedIn,
-        login: login,
-        logout: logout,
-        adminLogin: adminLogin,
-        adminLogout: adminLogout,
-      }}
-    >
-      <AffRegContext.Provider
-        value={{
-          isAffRegistered: isAffRegistered,
-          affregister: affregister,
-        }}
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      // Layout route
+      <Route
+        element={
+          <AuthProvider>
+            <Navbar />
+            <Container>
+              <Outlet />
+            </Container>
+            <Footer />
+          </AuthProvider>
+        }
       >
-        <Router>
-          <Navbar />
-          <Container>
-            <main>{routes}</main>
-          </Container>
-          <Footer />
-        </Router>
-      </AffRegContext.Provider>
-    </AuthContext.Provider>
+        {/* General */}
+        <Route path='/' element={<HomePage />} />
+        <Route path='*' element={<ErrorPage />} />
+        <Route path='search' element={<GameSearchResult />} />
+        <Route path='about-us' element={<AboutUs />} />
+        <Route path='contact-us' element={<ContactUs />} />
+
+        {/* Authentication */}
+        <Route
+          path='auth'
+          element={<ProtectedRoute required={{ loggedIn: false }} redirectPath='/' />}
+        >
+          <Route index element={<Auth />} />
+          <Route path='forgot-password' element={<ForgotPassword />} />
+          <Route path='reset-password' element={<ResetPassword />} />
+        </Route>
+
+        {/* Game Route */}
+        <Route path='game'>
+          <Route index element={<GameSearchResult />} />
+          <Route path=':id'>
+            <Route index element={<GamePage />} />
+            <Route path='review/:rid' element={<ReviewPage />} />
+            <Route
+              path='review-edit'
+              element={
+                <ProtectedRoute required={{ loggedIn: true }}>
+                  <ReviewEditPage />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Route>
+
+        {/* Member Profile Route */}
+        <Route path='profile/:uid' element={<PublicProfileLayout />}>
+          <Route index element={<ReviewCommentHistory />} />
+          <Route path='wishlist' element={<WishList />} />
+        </Route>
+
+        {/* Member Route */}
+        <Route
+          path='member/:uid'
+          element={
+            <ProtectedRoute required={{ loggedIn: true }}>
+              <MemberPanelLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<ReviewCommentHistory />} />
+          <Route path='wishlist' element={<WishList />} />
+          <Route path='change-info' element={<ChangeInfo />} />
+          <Route path='change-password' element={<ChangePassword />} />
+          <Route path='upload-profile-pic' element={<UploadProfilePic />} />
+        </Route>
+
+        {/* Affiliation */}
+        <Route path='affiliation-rule' element={<AffRule />} />
+        <Route
+          path='affiliation-registration'
+          element={
+            <ProtectedRoute required={{ loggedIn: true }}>
+              <AffReg />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='affiliation-suc'
+          element={
+            <ProtectedRoute required={{ loggedIn: true, affiliation: false }}>
+              <AffSuc />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Route */}
+        <Route
+          path='admin-panel'
+          element={
+            <ProtectedRoute required={{ loggedIn: true, admin: true }}>
+              <AdminPanel />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='add-game'
+          element={
+            <ProtectedRoute required={{ loggedIn: true, admin: true }}>
+              <AddGamePage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Test loader API */}
+        <Route
+          path='loader-test'
+          element={<LoaderTest />}
+          loader={async () => {
+            const res = await fetch('http://localhost:8080/api/users', {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            });
+            const data = await res.json();
+
+            // artificial delay
+            const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+            await delay(1500);
+
+            return { data };
+          }}
+        />
+
+        <Route
+          path='deferred-loader-test'
+          element={<DeferredLoaderTest />}
+          loader={async () => {
+            const promise = fetch('http://localhost:8080/api/users', {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            }).then(
+              (res) =>
+                new Promise((resolve) => {
+                  setTimeout(() => resolve(res.json()), 2000); // fake delay
+                }),
+            );
+            return defer({
+              promise: promise,
+            });
+          }}
+        />
+      </Route>,
+    ),
   );
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;

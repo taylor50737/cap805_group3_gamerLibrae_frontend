@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './AffRule.css';
-import Button from '@mui/material/Button';
 import CustomButton from '../shared/components/FormElements/CustomButton';
 
+// You have already registered for the Affiliation Program. Please check your email inbox for the instructions to start earning points. If you have never registered, please contact us via the [object Object]
+
 const AffRule = () => {
+  const [navToAffReg, setNavToAffReg] = useState(false);
+  const [responseMsg, setResponseMsg] = useState(false);
+
+  // const affRegChecker = () => {
+  useEffect(() => {
+    try {
+      fetch('http://localhost:8080/api/auth/users/me', {
+        method: 'GET',
+        credentials: 'include',
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          if (!json.affiliation.affEmail) {
+            setNavToAffReg(true);
+          } else {
+            setResponseMsg(true);
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <div className='affrule font-dmsans'>
       <div className='affrule--block'>
@@ -29,8 +54,20 @@ const AffRule = () => {
         </p>
       </div>
       <div className='affrule--reg--button'>
-        <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>
+        {navToAffReg ? (
+          <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>
+        ) : (
+          <CustomButton>REGISTER</CustomButton>
+        )}
+        {/* to={'/affiliation-registration'} */}
       </div>
+      {responseMsg && (
+        <p className='error--msg'>
+          You have already registered for the Affiliation Program. Please check your email inbox for
+          the instructions to start earning points. If you have never registered, please contact us
+          via the <NavLink to='/contact-us'>Inquiry Form</NavLink>
+        </p>
+      )}
     </div>
   );
 };
