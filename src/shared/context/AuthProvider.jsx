@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
       };
     } else {
       ac = await authMeResponse.json();
-      ac.affiliation = !!ac.affiliation; // force object to boolean since we don't need the detail
+      // ac.affiliation = !!ac.affiliation; // force object to boolean since we don't need the detail
     }
     console.log(ac);
     // TODO: delete this! delay for test purpose only
