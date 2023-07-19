@@ -37,6 +37,7 @@ import ReviewPage from './Review/ReviewPage';
 
 import AuthProvider from './shared/context/AuthProvider';
 import ProtectedRoute from './shared/components/route/ProtectedRoute';
+import AffProvider from './shared/context/AffContext';
 import LoaderTest from './Loader/LoaderTest';
 import DeferredLoaderTest from './Loader/DeferredLoaderTest';
 
@@ -47,11 +48,13 @@ const App = () => {
       <Route
         element={
           <AuthProvider>
-            <Navbar />
-            <Container>
-              <Outlet />
-            </Container>
-            <Footer />
+            <AffProvider>
+              <Navbar />
+              <Container>
+                <Outlet />
+              </Container>
+              <Footer />
+            </AffProvider>
           </AuthProvider>
         }
       >
@@ -112,19 +115,22 @@ const App = () => {
         </Route>
 
         {/* Affiliation */}
+
         <Route path='affiliation-rule' element={<AffRule />} />
+
         <Route
           path='affiliation-registration'
           element={
-            <ProtectedRoute required={{ loggedIn: true }}>
+            <ProtectedRoute required={{ loggedIn: true, affiliationNotEnrolled: true }}>
               <AffReg />
             </ProtectedRoute>
           }
         />
+
         <Route
           path='affiliation-suc'
           element={
-            <ProtectedRoute required={{ loggedIn: true, affiliation: true }}>
+            <ProtectedRoute required={{ loggedIn: true, affiliationEnrolled: true }}>
               <AffSuc />
             </ProtectedRoute>
           }

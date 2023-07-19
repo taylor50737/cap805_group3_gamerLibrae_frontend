@@ -1,11 +1,15 @@
+import { useContext, useEffect } from 'react';
+
 import { Navigate, Outlet } from 'react-router';
 
 import { CircularProgress, Box } from '@mui/material';
 
 import useAuth from '../../hooks/useAuth';
+import { AffContext } from '../../context/AffContext';
 
 const ProtectedRoute = ({ required = {}, redirectPath = '/auth', children }) => {
   const { loading, loggedIn, admin, affiliation } = useAuth();
+  const { affFormPosted, setAffFormPosted } = useContext(AffContext);
 
   if (loading) {
     return (
@@ -23,18 +27,31 @@ const ProtectedRoute = ({ required = {}, redirectPath = '/auth', children }) => 
     );
   }
   console.log(
-    `protected route: loading: ${loading} loggedIn: ${loggedIn}, admin: ${admin}, affiliation: ${affiliation.affEmail}`,
+    `protected route: loading: ${loading} loggedIn: ${loggedIn}, admin: ${admin}, affiliation: ${affiliation}, affiliation: ${affiliation}, affiliationEnrolled: ${affFormPosted.affContextController.affEmail}`,
   );
-  console.log(!affiliation.affEmail);
+  console.log(affFormPosted.affContextController.affEmail);
   if (
     (required.hasOwnProperty('loggedIn') && required.loggedIn != loggedIn) ||
     (required.hasOwnProperty('admin') && required.admin != admin) ||
-    (required.hasOwnProperty('affiliation') && typeof affiliation != 'object')
-    // (required.hasOwnProperty('affEmail') && affiliation.affEmail != 'object')
+    (required.hasOwnProperty('affiliationNotEnrolled') &&
+      affFormPosted.affContextController.affEmail) ||
+    (required.hasOwnProperty('affiliationEnrolled') && !affFormPosted.affContextController.affEmail)
   ) {
     console.log('protected route redirect to ' + redirectPath);
     return <Navigate to={redirectPath} replace />;
   }
+
+  // const test = async () => {
+  //   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  //   await delay(1500);
+  //   if (
+  //     required.hasOwnProperty('affiliationEnrolled') &&
+  //     !affFormPosted.affContextController.affEmail
+  //   ) {
+  //     console.log('protected route redirect to ' + redirectPath);
+  //     return <Navigate to={redirectPath} replace />;
+  //   }
+  // };
 
   return children ? children : <Outlet />;
 };
