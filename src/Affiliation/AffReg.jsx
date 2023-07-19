@@ -1,6 +1,7 @@
 import './AffReg.css';
-import { useContext, useEffect, useState } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AffContext } from '../shared/context/AffContext';
 import CustomInput from '../shared/components/FormElements/CustomInput';
 import CustomButton from '../shared/components/FormElements/CustomButton';
 import { CustomUseForm } from '../shared/hooks/form-hook';
@@ -8,17 +9,23 @@ import { VALIDATOR_EMAIL, VALIDATOR_YOUTUBETWITCH } from '../shared/util/validat
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
 import CustomCheckbox from '../shared/components/FormElements/CustomCheckbox';
-import { set } from 'react-hook-form';
 
-const AffReg = () => {
+const AffReg = ({ sucPost }) => {
   const [isTncChecked, setIsTncChecked] = useState(false);
   const [responseMsg, setResponseMsg] = useState('');
+  const { fetchUserAff } = useContext(AffContext);
+  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
 
   const navigate = useNavigate();
 
   const handleTncCheckbox = () => {
     setIsTncChecked((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    fetchUserAff;
+    setTest(2);
+  }, []);
 
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
     {
@@ -67,40 +74,9 @@ const AffReg = () => {
     console.log(affRegistrationResponse);
     setResponseMsg(affRegistrationResponse.message);
     if (affRegistrationResponse.status === 201) {
-      console.log(affRegistrationResponse.message);
       navigate('/affiliation-suc');
     }
   };
-  // const submitAffRegForm = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     await fetch('http://localhost:8080/api/affiliations/', {
-  //       method: 'POST',
-  //       credentials: 'include',
-  //       body: JSON.stringify({
-  //         affChannelURL: formState.inputs.channelUrl.value,
-  //         affEmail: formState.inputs.email.value,
-  //       }),
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-type': 'application/json; charset=UTF-8',
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((json) => {
-  //         console.log(json.message)}
-  //         if (json.message === 'Successful') {
-  //           setResponseMsg(json.message);
-  //         } else {
-  //           setResponseMsg(json.message);
-  //         }
-  //       });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-
-  // redirect('/affiliation-suc');
-  // };
 
   return (
     <div className='affreg font-dmsans'>

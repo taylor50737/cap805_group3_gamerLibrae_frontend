@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { AffContext } from '../shared/context/AffContext';
 import './AffSuc.css';
 import Button from '@mui/material/Button';
 import CustomButton from '../shared/components/FormElements/CustomButton';
 
 const AffSuc = () => {
+  const { fetchUserAff } = useContext(AffContext);
+  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
+
+  useEffect(() => {
+    fetchUserAff;
+    setTest(3);
+  }, []);
+
   return (
     <div className='affsuc font-dmsans'>
       <div className='affsuc--block'>
@@ -29,26 +38,6 @@ const AffSuc = () => {
         </ol>
       </div>
       <div className='affsuc--back--home--button'>
-        {/* <Button
-          variant='contained'
-          sx={{
-            color: '#0D0C11',
-            bgcolor: '#F2F3EE',
-            borderRadius: 0.8,
-            border: 1,
-            borderColor: '#F2F3EE',
-            fontFamily: '"DM Sans", sans-serif',
-            ':hover': {
-              borderColor: '#F2F3EE !important',
-              borderRadius: 0.8,
-              bgcolor: 'transparent',
-              color: '#F2F3EE',
-              border: 1,
-            },
-          }}
-        >
-          Back to homepage
-        </Button> */}
         <CustomButton to={'/'}>Back to homepage</CustomButton>
       </div>
     </div>
