@@ -1,91 +1,50 @@
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+import { useLoaderData, Await } from 'react-router-dom';
+
 import { Grid, Box } from '@mui/material';
 
 import AdvanceGameSearchBox from '../shared/components/AdvanceGameSearchBox';
 import SortSelector from './components/SortSelector';
 import GameResultList from './components/GameResultList';
 
-const topGamesItems = [
-  {
-    id: 1,
-    title: 'Street Fighter 6',
-    platform: 'PS5',
-    releaseDate: 'June 2, 2023',
-    genre: 'Fighting',
-    mode: 'Multi-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 94,
-    imgSrc: '/images/topGames/streetFighter6.jpg',
-  },
-  {
-    id: 2,
-    title: 'Resident Evil 4',
-    platform: 'PC',
-    releaseDate: 'March 24, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 93,
-    imgSrc: '/images/topGames/residentEvil4.jpg',
-  },
-  {
-    id: 3,
-    title: 'Dead Space',
-    platform: 'Xbox Series X',
-    releaseDate: 'January 27, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 92,
-    imgSrc: '/images/topGames/deadSpace.jpg',
-  },
-  {
-    id: 4,
-    title: 'Hi-Fi RUSH',
-    platform: 'PC',
-    releaseDate: 'January 25, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 90,
-    imgSrc: '/images/topGames/hifiRush.jpg',
-  },
-  {
-    id: 5,
-    title: 'Persona 4 Golden',
-    platform: 'Switch',
-    releaseDate: 'Jan 19, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 89,
-    imgSrc: '/images/topGames/p4g.jpg',
-  },
-  {
-    id: 6,
-    title: 'Dead Cells: Return to Castlevania',
-    platform: 'PC',
-    releaseDate: 'March 6, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 88,
-    imgSrc: '/images/topGames/deadCell.jpg',
-  },
-];
+const sortOptions = ['Score', 'Release Date', 'Popularity'];
 
 const GameSearchResultPage = () => {
-  const [games, setGames] = useState(topGamesItems);
+  const gamesData = useLoaderData();
+  const [games, setGames] = useState([]);
 
-  const handleSortBy = (newGames) => {
-    setGames(newGames);
+  const handleSortBy = (sortOption, desc) => {
+    const clone = structuredClone(games);
+    console.log(desc);
+    switch (sortOption) {
+      // Score
+      case sortOptions[0]:
+        const scoreSortFunc = desc ? (a, b) => b.score - a.score : (a, b) => a.score - b.score;
+        setGames(clone.sort(scoreSortFunc));
+        break;
+
+      // Recent
+      case sortOptions[1]:
+        const releaseDateSortFunc = desc
+          ? (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
+          : (a, b) => new Date(a.releaseDate) - new Date(b.releaseDate);
+        setGames(clone.sort(releaseDateSortFunc));
+        break;
+
+      // Popularity
+      case sortOptions[2]:
+      // TODO?
+
+      default:
+        break;
+    }
   };
 
   return (
-    <Grid container sx={{ mt: 0, mb: 2 }} spacing={'15px'}>
-      <Grid item md={12}>
+    <Grid container sx={{ mt: 0, mb: 2 }} spacing={'1px'}>
+      <Grid item md={12} sx={{ my: 2 }}>
         <Box sx={{ float: 'right', display: 'table' }}>
-          <SortSelector games={games} handleSortBy={handleSortBy} />
+          <SortSelector games={games} sortOptions={sortOptions} handleSortBy={handleSortBy} />
         </Box>
       </Grid>
 
@@ -95,7 +54,13 @@ const GameSearchResultPage = () => {
 
       <Grid item md={9} sx={{}}>
         <Box sx={{ ml: 4 }}>
-          <GameResultList games={games} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await resolve={gamesData.promise} errorElement={<p>Error loading</p>}>
+              {(g) => {
+                return <GameResultList games={games} resolvedGames={g} handleSetGames={setGames} />;
+              }}
+            </Await>
+          </Suspense>
         </Box>
       </Grid>
     </Grid>

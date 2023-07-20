@@ -1,32 +1,23 @@
 import { useState } from 'react';
-import { FormControl, Select, MenuItem } from '@mui/material';
+import { FormControl, Select, MenuItem, Button, IconButton } from '@mui/material';
 
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex;
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpWideShort, faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
 
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-  }
-
-  return array;
-}
-
-const sortByOptions = ['Score', 'Release Date', 'Popularity'];
-
-const SortSelector = ({ games, handleSortBy }) => {
-  const [sortOption, setSortOption] = useState(sortByOptions[0]);
+const SortSelector = ({ sortOptions, handleSortBy }) => {
+  const [sortOption, setSortOption] = useState('');
+  const [desc, setDesc] = useState(true);
 
   const handleChange = (event) => {
-    setSortOption(event.target.value);
-    // Temporary
-    handleSortBy(shuffle(games.slice()));
+    const newSortOption = event.target.value;
+    setSortOption(newSortOption);
+    handleSortBy(newSortOption, desc);
+  };
+
+  const handleReorder = () => {
+    const newDesc = !desc;
+    setDesc(newDesc);
+    handleSortBy(sortOption, newDesc);
   };
 
   return (
@@ -34,7 +25,7 @@ const SortSelector = ({ games, handleSortBy }) => {
       <span style={{ display: 'table-cell', verticalAlign: 'middle', padding: '0px 20px 0px 0px' }}>
         Sort By:
       </span>
-      <FormControl sx={{ minWidth: '150px' }}>
+      <FormControl sx={{ minWidth: '130px' }}>
         <Select
           value={sortOption}
           onChange={handleChange}
@@ -71,13 +62,21 @@ const SortSelector = ({ games, handleSortBy }) => {
             },
           }}
         >
-          {sortByOptions.map((opt, i) => (
+          {sortOptions.map((opt, i) => (
             <MenuItem key={i} value={opt}>
               {opt}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
+
+      <IconButton onClick={handleReorder}>
+        {desc ? (
+          <FontAwesomeIcon icon={faArrowUpWideShort} style={{ color: '#ffffff' }} />
+        ) : (
+          <FontAwesomeIcon icon={faArrowDownShortWide} style={{ color: '#ffffff' }} />
+        )}
+      </IconButton>
     </>
   );
 };

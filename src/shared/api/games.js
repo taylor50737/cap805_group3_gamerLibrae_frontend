@@ -1,4 +1,4 @@
-const postGame = async (postGameBody) => {
+export const postGame = async (postGameBody) => {
   const postGameRes = await fetch(`http://localhost:8080/api/games`, {
     method: 'POST',
     credentials: 'include',
@@ -11,4 +11,12 @@ const postGame = async (postGameBody) => {
   return await postGameRes.json();
 };
 
-export default postGame;
+export const getGames = async (searchParams) => {
+  return fetch(`http://localhost:8080/api/games?${searchParams.toString()}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};

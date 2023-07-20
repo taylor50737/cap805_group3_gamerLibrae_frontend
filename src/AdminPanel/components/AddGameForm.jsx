@@ -31,7 +31,7 @@ import Cropper from 'react-easy-crop';
 // import { CustomUseForm } from '../../shared/hooks/form-hook';
 import { cropImage } from '../../shared/util/cropImage';
 import uploadImage from '../../shared/api/cloudinary';
-import postGame from '../../shared/api/games';
+import { postGame } from '../../shared/api/games';
 
 const genreChoosable = [
   'Action',
