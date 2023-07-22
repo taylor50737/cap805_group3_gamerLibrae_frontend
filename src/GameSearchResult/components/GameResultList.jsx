@@ -2,20 +2,10 @@ import { Link } from 'react-router-dom';
 import { Grid, Typography, Box, Paper, Chip } from '@mui/material';
 
 import Score from '../../shared/components/Score';
-import { useEffect } from 'react';
 
-const GameResultList = ({ games, resolvedGames, handleSetGames }) => {
-  // After games are solved, we set parent state games to be the resolvedGames
-  // This is to avoid 'bad setState while rendering' warning from react
-  // Weird workaround but still worked lol
-  useEffect(() => {
-    if (games.length === 0) {
-      handleSetGames(resolvedGames);
-    }
-  }, [resolvedGames]);
-
+const GameResultList = ({ games }) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       {games.map((game, i) => (
         <Paper
           elevation={10}

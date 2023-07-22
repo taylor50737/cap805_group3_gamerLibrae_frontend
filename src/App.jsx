@@ -66,13 +66,16 @@ const App = () => {
           path='search'
           element={<GameSearchResult />}
           loader={async ({ request }) => {
+            const x = getGames(new URL(request.url).searchParams).then(
+              (res) =>
+                new Promise((resolve) => {
+                  setTimeout(() => resolve(res), 2000); // fake delay
+                }),
+              //   (res) => res.json()
+            );
             return defer({
-              promise: getGames(new URL(request.url).searchParams).then(
-                (res) =>
-                  new Promise((resolve) => {
-                    setTimeout(() => resolve(res.json()), 1000); // fake delay
-                  }),
-              ),
+              gamesPromise: x.then((res) => res.json()),
+              headersPromise: x.then((res) => res.headers),
             });
           }}
         />

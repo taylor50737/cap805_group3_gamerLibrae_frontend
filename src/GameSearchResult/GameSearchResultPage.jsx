@@ -1,50 +1,38 @@
-import { useState, Suspense } from 'react';
-import { useLoaderData, Await } from 'react-router-dom';
+import { useState, Suspense, useEffect } from 'react';
+import { useLoaderData, Await, useLocation, Link, useNavigate, redirect } from 'react-router-dom';
 
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Pagination, PaginationItem } from '@mui/material';
 
 import AdvanceGameSearchBox from '../shared/components/AdvanceGameSearchBox';
 import SortSelector from './components/SortSelector';
 import GameResultList from './components/GameResultList';
 
-const sortOptions = ['Score', 'Release Date', 'Popularity'];
+// key=name to display, value=params in url
+const sortOptions = { Score: 'score', 'Release Date': 'releaseDate' };
 
 const GameSearchResultPage = () => {
-  const gamesData = useLoaderData();
-  const [games, setGames] = useState([]);
+  const { gamesPromise, headersPromise } = useLoaderData();
+  const [resultCounts, setResultCounts] = useState(0);
+  const [resultLimit, setResultLimit] = useState(1);
 
-  const handleSortBy = (sortOption, desc) => {
-    const clone = structuredClone(games);
-    console.log(desc);
-    switch (sortOption) {
-      // Score
-      case sortOptions[0]:
-        const scoreSortFunc = desc ? (a, b) => b.score - a.score : (a, b) => a.score - b.score;
-        setGames(clone.sort(scoreSortFunc));
-        break;
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const page = parseInt(query.get('page') || '0', 10);
 
-      // Recent
-      case sortOptions[1]:
-        const releaseDateSortFunc = desc
-          ? (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
-          : (a, b) => new Date(a.releaseDate) - new Date(b.releaseDate);
-        setGames(clone.sort(releaseDateSortFunc));
-        break;
-
-      // Popularity
-      case sortOptions[2]:
-      // TODO?
-
-      default:
-        break;
-    }
-  };
+  useEffect(() => {
+    const a = async () => {
+      const headers = await headersPromise;
+      setResultCounts(headers.get('Pagination-Count'));
+      setResultLimit(headers.get('Pagination-Limit'));
+    };
+    a();
+  }, [resultCounts, resultLimit]);
 
   return (
     <Grid container sx={{ mt: 0, mb: 2 }} spacing={'1px'}>
       <Grid item md={12} sx={{ my: 2 }}>
         <Box sx={{ float: 'right', display: 'table' }}>
-          <SortSelector games={games} sortOptions={sortOptions} handleSortBy={handleSortBy} />
+          <SortSelector sortOptions={sortOptions} query={query} />
         </Box>
       </Grid>
 
@@ -52,14 +40,30 @@ const GameSearchResultPage = () => {
         <AdvanceGameSearchBox />
       </Grid>
 
-      <Grid item md={9} sx={{}}>
-        <Box sx={{ ml: 4 }}>
+      <Grid item md={9}>
+        <Box sx={{ ml: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Suspense fallback={<p>Loading...</p>}>
-            <Await resolve={gamesData.promise} errorElement={<p>Error loading</p>}>
+            <Await resolve={gamesPromise} errorElement={<p>Error loading</p>}>
               {(g) => {
-                return <GameResultList games={games} resolvedGames={g} handleSetGames={setGames} />;
+                return <GameResultList games={g} />;
               }}
             </Await>
+            <Pagination
+              page={page + 1}
+              count={Math.ceil(resultCounts / resultLimit)}
+              size='large'
+              color='secondary'
+              sx={{ mt: 2 }}
+              renderItem={(item) => (
+                <PaginationItem
+                  component={Link}
+                  to={`/search${item.page === 1 ? '' : `?page=${item.page - 1}`}`}
+                  reloadDocument
+                  {...item}
+                  sx={{ color: 'white', fontWeight: 800 }}
+                />
+              )}
+            />
           </Suspense>
         </Box>
       </Grid>

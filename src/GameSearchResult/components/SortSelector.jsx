@@ -1,23 +1,28 @@
 import { useState } from 'react';
-import { FormControl, Select, MenuItem, Button, IconButton } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import { FormControl, Select, MenuItem } from '@mui/material';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpWideShort, faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
+const SortSelector = ({ sortOptions }) => {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
 
-const SortSelector = ({ sortOptions, handleSortBy }) => {
-  const [sortOption, setSortOption] = useState('');
-  const [desc, setDesc] = useState(true);
+  const [sortOption, setSortOption] = useState(
+    // Auto select if url query already contains sort
+    query.has('sort') && Object.values(sortOptions).includes(query.get('sort'))
+      ? Object.keys(sortOptions).find((key) => sortOptions[key] === query.get('sort'))
+      : '',
+  );
 
   const handleChange = (event) => {
     const newSortOption = event.target.value;
     setSortOption(newSortOption);
-    handleSortBy(newSortOption, desc);
   };
 
-  const handleReorder = () => {
-    const newDesc = !desc;
-    setDesc(newDesc);
-    handleSortBy(sortOption, newDesc);
+  const getNewQuery = (opt) => {
+    console.log(`opt ${opt}`);
+    query.delete('sort');
+    query.append('sort', sortOptions[opt]);
+    return query.toString();
   };
 
   return (
@@ -62,21 +67,15 @@ const SortSelector = ({ sortOptions, handleSortBy }) => {
             },
           }}
         >
-          {sortOptions.map((opt, i) => (
+          {Object.keys(sortOptions).map((opt, i) => (
             <MenuItem key={i} value={opt}>
-              {opt}
+              <Link to={'?' + getNewQuery(opt)} reloadDocument>
+                {opt}
+              </Link>
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-
-      <IconButton onClick={handleReorder}>
-        {desc ? (
-          <FontAwesomeIcon icon={faArrowUpWideShort} style={{ color: '#ffffff' }} />
-        ) : (
-          <FontAwesomeIcon icon={faArrowDownShortWide} style={{ color: '#ffffff' }} />
-        )}
-      </IconButton>
     </>
   );
 };
