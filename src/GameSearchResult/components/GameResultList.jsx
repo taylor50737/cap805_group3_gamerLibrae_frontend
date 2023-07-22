@@ -5,20 +5,24 @@ import Score from '../../shared/components/Score';
 
 const GameResultList = ({ games }) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       {games.map((game, i) => (
-        <Paper elevation={10} sx={{ bgcolor: '#212121', color: 'white', borderRadius: '14px' }}>
+        <Paper
+          elevation={10}
+          sx={{ bgcolor: '#212121', color: 'white', borderRadius: '14px' }}
+          key={i}
+        >
           <Grid container key={i} sx={{ m: 0, width: '100%', height: '100%' }}>
             {/* Cover image */}
             <Grid item md={3}>
-              <Link to={`/game/${game.id}`}>
+              <Link to={`/game/${game._id}`}>
                 <Paper
                   elevation={10}
                   sx={{
                     width: 160,
                     height: 200,
                     borderRadius: '14px',
-                    backgroundImage: `url(${game.imgSrc})`,
+                    backgroundImage: `url(https://res.cloudinary.com/dpfvhna2t/image/upload/${game.portrait})`,
                     backgroundSize: '100% 100%',
                   }}
                 />
@@ -27,38 +31,52 @@ const GameResultList = ({ games }) => {
 
             {/* Information */}
             <Grid item md={7}>
-              <Box sx={{ ml: 2 }}>
-                <Typography sx={{ fontSize: '24px', fontWeight: 800 }}>{game.title}</Typography>
-                <Typography sx={{ fontSize: '16px' }}>
-                  Platform: {game.platform}
-                  <br />
-                  Genre: {game.genre}
-                  <br />
-                  Release Date: {game.releaseDate}
-                  <br />
-                  Mode: {game.mode}
-                </Typography>
-                {game.tags.map((tag, i) => (
-                  <Chip
-                    key={i}
-                    variant='outlined'
-                    label={tag}
-                    sx={{
-                      mr: '4px',
-                      border: 'none',
-                      bgcolor: '#9747ff',
-                      color: '#ffffff',
-                      '.MuiChip-label': { fontSize: '12px', px: '8px' },
-                      '.MuiChip-deleteIcon': { fontSize: '15px' },
-                    }}
-                  />
-                ))}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: '100%',
+                  ml: 2,
+                }}
+              >
+                <article>
+                  <Typography sx={{ fontSize: '20px', fontWeight: 800 }}>{game.name}</Typography>
+                  <Typography sx={{ fontSize: '16px' }}>
+                    Platform: {game.platforms.toString()}
+                    <br />
+                    Genre: {game.genres.toString()}
+                    <br />
+                    Release Date:{' '}
+                    {new Intl.DateTimeFormat('en-CA', {
+                      month: 'long',
+                      year: 'numeric',
+                      day: 'numeric',
+                    }).format(new Date(game.releaseDate))}
+                    <br />
+                    Mode: {game.modes.toString()}
+                  </Typography>
+                  {game.tags.map((tag, i) => (
+                    <Chip
+                      key={i}
+                      variant='outlined'
+                      label={tag}
+                      sx={{
+                        mr: '4px',
+                        border: 'none',
+                        bgcolor: '#9747ff',
+                        color: '#ffffff',
+                        '.MuiChip-label': { fontSize: '12px', px: '8px' },
+                        '.MuiChip-deleteIcon': { fontSize: '15px' },
+                      }}
+                    />
+                  ))}
+                </article>
               </Box>
             </Grid>
 
             {/* Score */}
             <Grid item md={2} sx={{ display: 'flex', alignItems: 'center' }}>
-              <Score score={game.score} size={100} />
+              <Score score={game.score ? Math.round(game.score) : 'NaN'} size={100} />
             </Grid>
           </Grid>
         </Paper>

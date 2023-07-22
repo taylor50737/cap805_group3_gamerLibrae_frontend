@@ -40,6 +40,7 @@ import ProtectedRoute from './shared/components/route/ProtectedRoute';
 import AffProvider from './shared/context/AffContext';
 import LoaderTest from './Loader/LoaderTest';
 import DeferredLoaderTest from './Loader/DeferredLoaderTest';
+import { getGames } from './shared/api/games';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -61,7 +62,23 @@ const App = () => {
         {/* General */}
         <Route path='/' element={<HomePage />} />
         <Route path='*' element={<ErrorPage />} />
-        <Route path='search' element={<GameSearchResult />} />
+        <Route
+          path='search'
+          element={<GameSearchResult />}
+          loader={async ({ request }) => {
+            const x = getGames(new URL(request.url).searchParams).then(
+              (res) =>
+                new Promise((resolve) => {
+                  setTimeout(() => resolve(res), 2000); // fake delay
+                }),
+              //   (res) => res.json()
+            );
+            return defer({
+              gamesPromise: x.then((res) => res.json()),
+              headersPromise: x.then((res) => res.headers),
+            });
+          }}
+        />
         <Route path='about-us' element={<AboutUs />} />
         <Route path='contact-us' element={<ContactUs />} />
 

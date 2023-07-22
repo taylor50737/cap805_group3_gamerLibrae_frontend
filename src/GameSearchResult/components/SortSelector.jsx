@@ -1,32 +1,28 @@
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FormControl, Select, MenuItem } from '@mui/material';
 
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex;
+const SortSelector = ({ sortOptions }) => {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
 
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-  }
-
-  return array;
-}
-
-const sortByOptions = ['Score', 'Release Date', 'Popularity'];
-
-const SortSelector = ({ games, handleSortBy }) => {
-  const [sortOption, setSortOption] = useState(sortByOptions[0]);
+  const [sortOption, setSortOption] = useState(
+    // Auto select if url query already contains sort
+    query.has('sort') && Object.values(sortOptions).includes(query.get('sort'))
+      ? Object.keys(sortOptions).find((key) => sortOptions[key] === query.get('sort'))
+      : '',
+  );
 
   const handleChange = (event) => {
-    setSortOption(event.target.value);
-    // Temporary
-    handleSortBy(shuffle(games.slice()));
+    const newSortOption = event.target.value;
+    setSortOption(newSortOption);
+  };
+
+  const getNewQuery = (opt) => {
+    console.log(`opt ${opt}`);
+    query.delete('sort');
+    query.append('sort', sortOptions[opt]);
+    return query.toString();
   };
 
   return (
@@ -34,7 +30,7 @@ const SortSelector = ({ games, handleSortBy }) => {
       <span style={{ display: 'table-cell', verticalAlign: 'middle', padding: '0px 20px 0px 0px' }}>
         Sort By:
       </span>
-      <FormControl sx={{ minWidth: '150px' }}>
+      <FormControl sx={{ minWidth: '130px' }}>
         <Select
           value={sortOption}
           onChange={handleChange}
@@ -71,9 +67,11 @@ const SortSelector = ({ games, handleSortBy }) => {
             },
           }}
         >
-          {sortByOptions.map((opt, i) => (
+          {Object.keys(sortOptions).map((opt, i) => (
             <MenuItem key={i} value={opt}>
-              {opt}
+              <Link to={'?' + getNewQuery(opt)} reloadDocument>
+                {opt}
+              </Link>
             </MenuItem>
           ))}
         </Select>
