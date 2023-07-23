@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import CustomDropdownList from '../../shared/components/FormElements/CustomDropdownList';
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
+import emailjs from '@emailjs/browser';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import {
   VALIDATOR_EMAIL,
@@ -13,9 +14,23 @@ import InquiryFormTextFieldProps from './InquiryFormTextFieldProps';
 
 const InquiryForm = () => {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const form = useRef();
 
-  const submitInquiryForm = (prev) => {
-    setIsFormSubmitted(prev);
+  const handleFormSubmitted = (val) => {
+    setIsFormSubmitted(val);
+  };
+
+  const submitInquiryForm = (e) => {
+    handleFormSubmitted(true);
+    e.preventDefault();
+    emailjs.sendForm('test1', 'contact_form_test', form.current, 'zJsaM-W6CGcYtmZxM').then(
+      (result) => {
+        console.log(result.text);
+      },
+      (error) => {
+        console.log(error.text);
+      },
+    );
   };
 
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
@@ -73,6 +88,7 @@ const InquiryForm = () => {
         key={data.key}
         element={data.element}
         id={data.id}
+        name={data.name}
         type={data.type}
         label={data.label}
         validators={validatorDeterminator(data.type)}
@@ -87,7 +103,7 @@ const InquiryForm = () => {
   return (
     <div className='inquiryform'>
       {!isFormSubmitted && (
-        <form className='inquiryform--form' onSubmit={() => submitInquiryForm(true)}>
+        <form className='inquiryform--form' ref={form} onSubmit={submitInquiryForm}>
           <div>
             <h4 className='inquiryform--header text-2xl'>Drop Us A Line</h4>
             <div className='inquiryform--textfield'>
