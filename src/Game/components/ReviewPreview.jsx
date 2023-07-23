@@ -6,6 +6,7 @@ import Score from '../../shared/components/Score';
 import CommentCount from '../../Review/components/CommentCount';
 import Vote from '../../Review/components/Vote';
 import ReviewContent from './ReviewContent';
+import { iso8601dateToString } from '../../shared/util/iso8601dateToString';
 
 const ReviewPreview = ({ review }) => {
   return (
@@ -25,21 +26,23 @@ const ReviewPreview = ({ review }) => {
         sx={{ display: 'flex', alignItems: 'center', '& > :last-child': { ml: 'auto' } }}
       >
         {/* Avatar */}
-        <Link to={'/profile/u1'}>
+        <Link to={`/profile/${review.creator}`}>
           <Avatar
-            src={review.avatar}
+            src={`${review.creatorAvatar}`}
             style={{ width: '32px', height: '32px', marginRight: '10px' }}
           />
         </Link>
 
         {/* User name */}
-        <Link to={'/profile/u1'}>
-          <Typography sx={{ fontSize: '14px', color: 'darkgray' }}>{review.userName}</Typography>
+        <Link to={`/profile/${review.creator}`}>
+          <Typography sx={{ fontSize: '14px', color: 'darkgray' }}>
+            {review.creatorUserName}
+          </Typography>
         </Link>
 
         {/* Last child */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <CommentCount count={review.commentCount} size={18} sx={{ mr: '18px' }} />
+          <CommentCount count={review.comments.length} size={18} sx={{ mr: '18px' }} />
           <Vote originalVote={review.vote} size={18} />
         </Box>
       </Grid>
@@ -55,7 +58,9 @@ const ReviewPreview = ({ review }) => {
           minHeight: '100%',
         }}
       >
-        <Typography sx={{ fontSize: '14px', color: 'darkgray' }}>{review.postdate}</Typography>
+        <Typography sx={{ fontSize: '14px', color: 'darkgray' }}>
+          {iso8601dateToString(review.postingDate)}
+        </Typography>
       </Grid>
 
       {/* Title */}
@@ -68,7 +73,7 @@ const ReviewPreview = ({ review }) => {
           transition: '0.1s all 0.1s',
         }}
       >
-        <Link to={'/game/123/review/123'}>
+        <Link to={`review/${review._id}`}>
           <Typography sx={{ fontWeight: 800, fontSize: '20px' }}>{review.title}</Typography>
         </Link>
       </Grid>
@@ -91,7 +96,7 @@ const ReviewPreview = ({ review }) => {
           minHeight: '100%',
         }}
       >
-        <Score score={review.score} size={100} />
+        <Score score={review.rating} size={100} />
       </Grid>
     </Grid>
   );

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Typography, Box, Paper, Chip } from '@mui/material';
 
 import Score from '../../shared/components/Score';
+import { iso8601dateToString } from '../../shared/util/iso8601dateToString';
 
 const GameResultList = ({ games }) => {
   return (
@@ -46,12 +47,7 @@ const GameResultList = ({ games }) => {
                     <br />
                     Genre: {game.genres.toString()}
                     <br />
-                    Release Date:{' '}
-                    {new Intl.DateTimeFormat('en-CA', {
-                      month: 'long',
-                      year: 'numeric',
-                      day: 'numeric',
-                    }).format(new Date(game.releaseDate))}
+                    Release Date: {iso8601dateToString(game.releaseDate)}
                     <br />
                     Mode: {game.modes.toString()}
                   </Typography>

@@ -40,7 +40,10 @@ import ProtectedRoute from './shared/components/route/ProtectedRoute';
 import AffProvider from './shared/context/AffContext';
 import LoaderTest from './Loader/LoaderTest';
 import DeferredLoaderTest from './Loader/DeferredLoaderTest';
-import { getGames } from './shared/api/games';
+import { gameSearchResultLoader } from './shared/loader/gameSearchResultLoader';
+import { gamePageLoader } from './shared/loader/gamePageLoader';
+import { testLoader } from './shared/loader/testLoader';
+import { testDeferredLoader } from './shared/loader/testDeferredLoader';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -62,23 +65,7 @@ const App = () => {
         {/* General */}
         <Route path='/' element={<HomePage />} />
         <Route path='*' element={<ErrorPage />} />
-        <Route
-          path='search'
-          element={<GameSearchResult />}
-          loader={async ({ request }) => {
-            const x = getGames(new URL(request.url).searchParams).then(
-              (res) =>
-                new Promise((resolve) => {
-                  setTimeout(() => resolve(res), 2000); // fake delay
-                }),
-              //   (res) => res.json()
-            );
-            return defer({
-              gamesPromise: x.then((res) => res.json()),
-              headersPromise: x.then((res) => res.headers),
-            });
-          }}
-        />
+        <Route path='search' element={<GameSearchResult />} loader={gameSearchResultLoader} />
         <Route path='about-us' element={<AboutUs />} />
         <Route path='contact-us' element={<ContactUs />} />
 
@@ -94,9 +81,9 @@ const App = () => {
 
         {/* Game Route */}
         <Route path='game'>
-          <Route index element={<GameSearchResult />} />
+          <Route index element={<ErrorPage />} />
           <Route path=':id'>
-            <Route index element={<GamePage />} />
+            <Route index element={<GamePage />} loader={gamePageLoader} />
             <Route path='review/:rid' element={<ReviewPage />} />
             <Route
               path='review-edit'
@@ -172,47 +159,12 @@ const App = () => {
         />
 
         {/* Test loader API */}
-        <Route
-          path='loader-test'
-          element={<LoaderTest />}
-          loader={async () => {
-            const res = await fetch('http://localhost:8080/api/users', {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-            });
-            const data = await res.json();
-
-            // artificial delay
-            const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-            await delay(1500);
-
-            return { data };
-          }}
-        />
+        <Route path='loader-test' element={<LoaderTest />} loader={testLoader} />
 
         <Route
           path='deferred-loader-test'
           element={<DeferredLoaderTest />}
-          loader={async () => {
-            const promise = fetch('http://localhost:8080/api/users', {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-            }).then(
-              (res) =>
-                new Promise((resolve) => {
-                  setTimeout(() => resolve(res.json()), 2000); // fake delay
-                }),
-            );
-            return defer({
-              promise: promise,
-            });
-          }}
+          loader={testDeferredLoader}
         />
       </Route>,
     ),

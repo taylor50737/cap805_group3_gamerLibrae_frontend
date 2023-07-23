@@ -20,3 +20,13 @@ export const getGames = async (searchParams) => {
     },
   });
 };
+
+export const getGame = async (gameId) => {
+  return fetch(`http://localhost:8080/api/games/${gameId}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
