@@ -35,7 +35,7 @@ const ReviewContent = ({ review }) => {
               left: 0,
               right: 0,
               bottom: 0,
-              background: 'linear-gradient(rgba(0, 0, 0, 0) , rgba(0, 0, 0, 0.5))',
+              background: 'linear-gradient(rgba(0, 0, 0, 0) , rgba(0, 0, 0, 0.75))',
               borderRadius: '14px',
               zIndex: 1000,
             }}
@@ -43,7 +43,7 @@ const ReviewContent = ({ review }) => {
           <Button
             variant='contained'
             onClick={() => {
-              navigate('/game/123/review/123');
+              navigate(`review/${review._id}`);
             }}
             sx={{
               position: 'absolute',

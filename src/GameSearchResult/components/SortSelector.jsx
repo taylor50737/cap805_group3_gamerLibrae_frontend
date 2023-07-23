@@ -19,7 +19,6 @@ const SortSelector = ({ sortOptions }) => {
   };
 
   const getNewQuery = (opt) => {
-    console.log(`opt ${opt}`);
     query.delete('sort');
     query.append('sort', sortOptions[opt]);
     return query.toString();
