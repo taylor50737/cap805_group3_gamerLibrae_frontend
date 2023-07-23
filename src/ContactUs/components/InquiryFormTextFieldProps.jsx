@@ -2,6 +2,7 @@ export default [
   {
     key: 2,
     id: 'name',
+    name: 'inquirer_name',
     label: 'Name',
     type: 'text',
     value: 'name',
@@ -12,6 +13,7 @@ export default [
   {
     key: 3,
     id: 'email',
+    name: 'inquirer_email',
     label: 'Email',
     type: 'email',
     value: 'email',
@@ -22,6 +24,7 @@ export default [
   {
     key: 4,
     id: 'subjectLine',
+    name: 'inquiry_subject_line',
     label: 'Subject Line',
     type: 'text',
     value: 'subjectLine',
