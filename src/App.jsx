@@ -44,6 +44,8 @@ import { gamePageLoader } from './shared/loader/gamePageLoader';
 import { testLoader } from './shared/loader/testLoader';
 import { testDeferredLoader } from './shared/loader/testDeferredLoader';
 import { reviewLoader } from './shared/loader/reviewLoader';
+import { reviewEditLoader } from './shared/loader/reviewEditLoader';
+import { submitReviewAction } from './shared/action/submitReviewAction';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -92,6 +94,8 @@ const App = () => {
                   <ReviewEditPage />
                 </ProtectedRoute>
               }
+              action={submitReviewAction}
+              loader={reviewEditLoader}
             />
           </Route>
         </Route>

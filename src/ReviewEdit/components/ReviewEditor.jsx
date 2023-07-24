@@ -19,12 +19,15 @@ import {
 
 import Spoiler from '../util/Spoiler';
 
-const Title = () => {
+const Title = ({ onReviewTitleChange }) => {
   return (
     <InputBase
       label='title'
       placeholder='Title (optional)'
       fullWidth
+      onChange={(event) => {
+        onReviewTitleChange(event.target.value);
+      }}
       sx={{
         color: 'white',
         backgroundColor: '#262626',
@@ -157,7 +160,7 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-export const ReviewEditor = ({ onReviewContentChange }) => {
+export const ReviewEditor = ({ onReviewContentChange, onReviewTitleChange }) => {
   // If you are using tiptap editor with tailwind
   // You need to either
   // 1: explicitly configure tag with tailwind class to it because no default class is applied
@@ -256,7 +259,7 @@ export const ReviewEditor = ({ onReviewContentChange }) => {
   return (
     <div className='rounded-md bg-neutral-700'>
       <div className='px-1 pt-1'>
-        <Title />
+        <Title onReviewTitleChange={onReviewTitleChange} />
       </div>
 
       <div className='px-1 pt-1'>

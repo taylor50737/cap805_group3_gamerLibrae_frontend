@@ -3,6 +3,9 @@ import { Box, Typography } from '@mui/material';
 import ReviewPreview from './ReviewPreview';
 
 const ReviewSection = ({ reviews }) => {
+  // Latest reviews show first
+  reviews.sort((a, b) => new Date(b.postingDate) - new Date(a.postingDate));
+  console.log();
   return (
     <Box
       sx={{
