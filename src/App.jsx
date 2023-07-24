@@ -78,7 +78,7 @@ const App = () => {
         >
           <Route index element={<Auth />} />
           <Route path='forgot-password' element={<ForgotPassword />} />
-          <Route path='reset-password' element={<ResetPassword />} />
+          <Route path='reset-password/:uid/:token' element={<ResetPassword />} />
         </Route>
 
         {/* Game Route */}

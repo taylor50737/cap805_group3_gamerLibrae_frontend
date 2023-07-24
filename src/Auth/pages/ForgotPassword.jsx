@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
@@ -8,7 +8,7 @@ import { VALIDATOR_EMAIL } from '../../shared/util/validators';
 import './ForgotPassword.css';
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
+  const [responseMsg, setResponseMsg] = useState('');
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
       email: {
@@ -20,7 +20,24 @@ const ForgotPassword = () => {
   );
   const forgotPWSubmitHandler = (event) => {
     event.preventDefault();
-    navigate('/auth/reset-password');
+    try {
+      fetch('http://localhost:8080/api/auth/forgot-password', {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          email: formState.inputs.email.value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setResponseMsg(json.message);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
