@@ -6,7 +6,6 @@ import {
   RouterProvider,
   Outlet,
   Route,
-  defer,
 } from 'react-router-dom';
 
 import Navbar from './shared/components/layout/Navbar';
@@ -44,6 +43,7 @@ import { gameSearchResultLoader } from './shared/loader/gameSearchResultLoader';
 import { gamePageLoader } from './shared/loader/gamePageLoader';
 import { testLoader } from './shared/loader/testLoader';
 import { testDeferredLoader } from './shared/loader/testDeferredLoader';
+import { reviewLoader } from './shared/loader/reviewLoader';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -84,7 +84,7 @@ const App = () => {
           <Route index element={<ErrorPage />} />
           <Route path=':id'>
             <Route index element={<GamePage />} loader={gamePageLoader} />
-            <Route path='review/:rid' element={<ReviewPage />} />
+            <Route path='review/:rid' element={<ReviewPage />} loader={reviewLoader} />
             <Route
               path='review-edit'
               element={
