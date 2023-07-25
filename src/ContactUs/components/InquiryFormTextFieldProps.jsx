@@ -35,6 +35,7 @@ export default [
   {
     key: 5,
     id: 'message',
+    name: 'inquiry_message',
     label: 'Message (Maximum 200 characters)',
     type: 'max--text',
     value: 'message',
