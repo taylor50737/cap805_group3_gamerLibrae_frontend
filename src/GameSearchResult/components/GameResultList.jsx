@@ -43,13 +43,14 @@ const GameResultList = ({ games }) => {
                 <article>
                   <Typography sx={{ fontSize: '20px', fontWeight: 800 }}>{game.name}</Typography>
                   <Typography sx={{ fontSize: '16px' }}>
-                    Platform: {game.platforms.toString()}
+                    <span style={{ color: '#a7a8a7' }}>Platforms</span>: {game.platforms.join(`, `)}
                     <br />
-                    Genre: {game.genres.toString()}
+                    <span style={{ color: '#a7a8a7' }}>Genres:</span> {game.genres.join(`, `)}
                     <br />
-                    Release Date: {iso8601dateToString(game.releaseDate)}
+                    <span style={{ color: '#a7a8a7' }}>Release Date:</span>{' '}
+                    {iso8601dateToString(game.releaseDate)}
                     <br />
-                    Mode: {game.modes.toString()}
+                    <span style={{ color: '#a7a8a7' }}>Modes:</span> {game.modes.join(`, `)}
                   </Typography>
                   {game.tags.map((tag, i) => (
                     <Chip
@@ -72,7 +73,10 @@ const GameResultList = ({ games }) => {
 
             {/* Score */}
             <Grid item md={2} sx={{ display: 'flex', alignItems: 'center' }}>
-              <Score score={game.score ? Math.round(game.score) : 'NaN'} size={100} />
+              <Score
+                score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'}
+                size={100}
+              />
             </Grid>
           </Grid>
         </Paper>
