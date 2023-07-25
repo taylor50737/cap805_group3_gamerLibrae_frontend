@@ -18,6 +18,7 @@ const ForgotPassword = () => {
     },
     false,
   );
+
   const forgotPWSubmitHandler = (event) => {
     event.preventDefault();
     try {
@@ -62,8 +63,21 @@ const ForgotPassword = () => {
           errorText='Please enter a valid email address.'
           onInput={inputHandler}
         />
+        {responseMsg ===
+        'Password reset instructions have been mailed to the email address you provided.' ? (
+          <p className='py-3'>{responseMsg}</p>
+        ) : (
+          <p className='py-3 text-red-600'>{responseMsg}</p>
+        )}
         <div className='forgotPW--form--submit'>
-          <CustomButton type='submit' disabled={!formState.isValid}>
+          <CustomButton
+            type='submit'
+            disabled={
+              !formState.isValid ||
+              responseMsg ===
+                'Password reset instructions have been mailed to the email address you provided.'
+            }
+          >
             SUBMIT
           </CustomButton>
         </div>
