@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useNavigate, useNavigation, useLocation } from 'react-router-dom';
+
 import {
   Autocomplete,
   Box,
@@ -11,13 +14,12 @@ import {
   Button,
   Paper,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const genreChoosable = [
   'Action',
@@ -30,8 +32,10 @@ const genreChoosable = [
 ];
 const platformChoosable = ['Switch', 'PS5', 'PC', 'Xbox Series X'];
 const playModeChoosable = ['Single-Player', 'Offline', 'Multi-Player', 'Online'];
-const earliestYear = 1990;
-const currentYear = new Date().getFullYear();
+const EARLIEST_YEAR = 1990;
+const CURRENT_YEAR = new Date().getFullYear();
+const MIN_SCORE = 0;
+const MAX_SCORE = 100;
 
 const scrollBarStyle = {
   '&::-webkit-scrollbar': {
@@ -255,31 +259,56 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
 };
 
 export const AdvanceGameSearchBox = ({ extraSx }) => {
-  const [genres, setGenres] = useState([]);
-  const [platforms, setPlatforms] = useState([]);
-  const [playModes, setPlayModes] = useState([]);
-  const [timePeriod, setTimePeriod] = useState([earliestYear, currentYear]);
-  const [scoreRange, setScoreRange] = useState([0, 100]);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+
+  const [genres, setGenres] = useState(query.has('genres') ? query.get('genres').split(',') : []);
+  const [platforms, setPlatforms] = useState(
+    query.has('platforms') ? query.get('platforms').split(',') : [],
+  );
+  const [modes, setModes] = useState(query.has('modes') ? query.get('modes').split(',') : []);
+  const [releaseDateRange, setRelesaeDateRange] = useState(
+    query.has('releaseDate')
+      ? query.get('releaseDate').split(',').map(Number)
+      : [EARLIEST_YEAR, CURRENT_YEAR],
+  );
+  const [scoreRange, setScoreRange] = useState(
+    query.has('score') ? query.get('score').split(',').map(Number) : [MIN_SCORE, MAX_SCORE],
+  );
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const handleReset = () => {
     setGenres([]);
     setPlatforms([]);
-    setPlayModes([]);
-    setTimePeriod([earliestYear, currentYear]);
-    setScoreRange([0, 100]);
+    setModes([]);
+    setRelesaeDateRange([EARLIEST_YEAR, CURRENT_YEAR]);
+    setScoreRange([MIN_SCORE, MAX_SCORE]);
   };
 
   const handleSubmit = () => {
-    const values = `
-      genres: ${genres}
-      platforms: ${platforms}
-      playModes: ${playModes}
-      timePeriod: ${timePeriod}
-      scoreRange: ${scoreRange}
-    `;
-    console.log(values);
-    navigate('/search');
+    const params = new URLSearchParams();
+    if (genres.length >= 1) {
+      params.append('genres', genres.join(','));
+    }
+    if (platforms.length >= 1) {
+      params.append('platforms', platforms.join(','));
+    }
+    if (modes.length >= 1) {
+      params.append('modes', modes.join(','));
+    }
+    if (releaseDateRange[0] !== EARLIEST_YEAR || releaseDateRange[1] !== CURRENT_YEAR) {
+      params.append('releaseDate', releaseDateRange.join(','));
+    }
+    if (scoreRange[0] !== MIN_SCORE || scoreRange[1] !== MAX_SCORE) {
+      params.append('score', scoreRange.join(','));
+    }
+
+    if (params.size === 0) {
+      navigate(`/search`, { replace: true });
+    } else {
+      navigate(`/search?${params.toString()}`, { replace: true });
+    }
   };
 
   return (
@@ -311,22 +340,22 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
       />
       <MultiCheckboxSelector
         options={playModeChoosable}
-        searchOption={playModes}
-        setSearchOption={setPlayModes}
+        searchOption={modes}
+        setSearchOption={setModes}
       />
       <RangeSelector
         rangeName='Time period'
-        min={earliestYear}
-        max={new Date().getFullYear()}
+        min={EARLIEST_YEAR}
+        max={CURRENT_YEAR}
         step={1}
         minDist={0}
-        range={timePeriod}
-        setRange={setTimePeriod}
+        range={releaseDateRange}
+        setRange={setRelesaeDateRange}
       />
       <RangeSelector
         rangeName='Score'
-        min={0}
-        max={100}
+        min={MIN_SCORE}
+        max={MAX_SCORE}
         step={5}
         minDist={5}
         range={scoreRange}
@@ -358,13 +387,18 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
             sx={{
               bgcolor: '#D9D9D9',
               color: '#000000',
+              height: '100%',
               ':hover': {
                 bgcolor: '#33353d',
                 color: 'white',
               },
             }}
           >
-            Submit
+            {navigation.state === 'loading' ? (
+              <CircularProgress size='20px' sx={{ color: 'gray' }} />
+            ) : (
+              'Submit'
+            )}
           </Button>
         </Grid>
       </Grid>
