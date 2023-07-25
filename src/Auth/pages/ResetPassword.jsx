@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
@@ -8,6 +9,8 @@ import { VALIDATOR_MINLENGTH, VALIDATOR_CONFIRMPASSWORD } from '../../shared/uti
 import './ResetPassword.css';
 
 const ResetPassword = () => {
+  const { uid, token } = useParams();
+  const [responseMsg, setResponseMsg] = useState('');
   const navigate = useNavigate();
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
@@ -24,7 +27,30 @@ const ResetPassword = () => {
   );
   const resetPWSubmitHandler = (event) => {
     event.preventDefault();
-    navigate('/');
+    try {
+      fetch(`http://localhost:8080/api/auth/reset-password/${uid}/${token}`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          newPassword: formState.inputs.newPassword.value,
+          confirmNewPassword: formState.inputs.confirmNewPassword.value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setResponseMsg(json.message);
+          if (json.message === 'Password changed!') {
+            setTimeout(() => {
+              navigate('/auth');
+            }, 3000);
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -53,8 +79,16 @@ const ResetPassword = () => {
           errorText='Please check whether your password is entered correctly!'
           onInput={inputHandler}
         />
+        {responseMsg === 'Password changed!' ? (
+          <p className='py-3'>{responseMsg + ' You will be redirect to login page!'}</p>
+        ) : (
+          <p className='py-3 text-red-600'>{responseMsg}</p>
+        )}
         <div className='resetPW--form--submit'>
-          <CustomButton type='submit' disabled={!formState.isValid}>
+          <CustomButton
+            type='submit'
+            disabled={!formState.isValid || responseMsg === 'Password changed!'}
+          >
             SUBMIT
           </CustomButton>
         </div>

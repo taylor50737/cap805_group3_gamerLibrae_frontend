@@ -44,6 +44,8 @@ import { gamePageLoader } from './shared/loader/gamePageLoader';
 import { testLoader } from './shared/loader/testLoader';
 import { testDeferredLoader } from './shared/loader/testDeferredLoader';
 import { reviewLoader } from './shared/loader/reviewLoader';
+import { reviewEditLoader } from './shared/loader/reviewEditLoader';
+import { submitReviewAction } from './shared/action/submitReviewAction';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -76,7 +78,7 @@ const App = () => {
         >
           <Route index element={<Auth />} />
           <Route path='forgot-password' element={<ForgotPassword />} />
-          <Route path='reset-password' element={<ResetPassword />} />
+          <Route path='reset-password/:uid/:token' element={<ResetPassword />} />
         </Route>
 
         {/* Game Route */}
@@ -92,6 +94,8 @@ const App = () => {
                   <ReviewEditPage />
                 </ProtectedRoute>
               }
+              action={submitReviewAction}
+              loader={reviewEditLoader}
             />
           </Route>
         </Route>
