@@ -3,6 +3,7 @@ import CustomDropdownList from '../../shared/components/FormElements/CustomDropd
 import CustomInput from '../../shared/components/FormElements/CustomInput';
 import CustomButton from '../../shared/components/FormElements/CustomButton';
 import emailjs from '@emailjs/browser';
+import { uid } from 'uid';
 import { CustomUseForm } from '../../shared/hooks/form-hook';
 import {
   VALIDATOR_EMAIL,
@@ -23,14 +24,26 @@ const InquiryForm = () => {
   const submitInquiryForm = (e) => {
     handleFormSubmitted(true);
     e.preventDefault();
-    emailjs.sendForm('test1', 'contact_form_test', form.current, 'zJsaM-W6CGcYtmZxM').then(
-      (result) => {
-        console.log(result.text);
-      },
-      (error) => {
-        console.log(error.text);
-      },
-    );
+    emailjs
+      .sendForm('test1', 'ToTeamTemplete', form.current, 'zJsaM-W6CGcYtmZxM')
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        },
+      )
+      .then(
+        emailjs.sendForm('test1', 'ToInquirerTemplate', form.current, 'zJsaM-W6CGcYtmZxM').then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          },
+        ),
+      );
   };
 
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
@@ -110,10 +123,11 @@ const InquiryForm = () => {
               <CustomDropdownList
                 optionList={inquiryAreas}
                 label='Area of Inquiries'
-                name='Area of Inquiries'
+                name='Area_of_Inquiries'
                 onInput={inputHandler}
                 reset={formState.reset}
               />
+              <input type='hidden' name='inquiry_id' value={uid()} />
               {InquiryFormTextFieldMap}
             </div>
           </div>
