@@ -44,7 +44,7 @@ const ResetPassword = () => {
           setResponseMsg(json.message);
           if (json.message === 'Password changed!') {
             setTimeout(() => {
-              navigate('/');
+              navigate('/auth');
             }, 3000);
           }
         });
@@ -80,7 +80,7 @@ const ResetPassword = () => {
           onInput={inputHandler}
         />
         {responseMsg === 'Password changed!' ? (
-          <p className='py-3'>{responseMsg + ' You will be redirect to homepage!'}</p>
+          <p className='py-3'>{responseMsg + ' You will be redirect to login page!'}</p>
         ) : (
           <p className='py-3 text-red-600'>{responseMsg}</p>
         )}
