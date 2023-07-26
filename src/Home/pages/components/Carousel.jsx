@@ -1,30 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { IconButton, Box, Typography } from '@mui/material';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesLeft, faAnglesRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 
-const displayItems = [
-  {
-    title: 'The Legend of Zelda: Tears of the Kingdom',
-    imgUrl: '/images/carousel/zelda.jpg',
-    pageUrl: 'game/123',
-  },
-  { title: 'Elden ring', imgUrl: '/images/carousel/eldenRing.jpg', pageUrl: 'game/123' },
-  { title: 'Diablo IV', imgUrl: '/images/carousel/diablo4.jpg', pageUrl: 'game/123' },
-  { title: 'Final Fantasy XVI', imgUrl: '/images/carousel/ff16.jpg', pageUrl: 'game/123' },
-  { title: 'Starfield', imgUrl: '/images/carousel/starfield.jpg', pageUrl: 'game/123' },
-];
-
 const autoSwipeTimerMs = 5000;
 
-const Carousel = () => {
+const Carousel = ({ games }) => {
   const [index, setIndex] = useState(0);
   const timer = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (timer.current) {
       clearTimeout(timer.current);
@@ -36,10 +24,10 @@ const Carousel = () => {
 
   // Left swipe = handleSwipe(-1), Right wipe = handleSwipe(1)
   const handleSwipe = (indexChange) => () => {
-    if (index >= displayItems.length - 1 && indexChange > 0) {
+    if (index >= games.length - 1 && indexChange > 0) {
       setIndex(0);
     } else if (index <= 0 && indexChange < 0) {
-      setIndex(displayItems.length - 1);
+      setIndex(games.length - 1);
     } else {
       setIndex(index + indexChange);
     }
@@ -58,7 +46,7 @@ const Carousel = () => {
           fontWeight: 600,
         }}
       >
-        {displayItems[index].title}
+        {games[index].name}
       </Typography>
 
       {/* Left swipe */}
@@ -99,7 +87,7 @@ const Carousel = () => {
           transform: 'translate(-50%, -10%)',
         }}
       >
-        {displayItems.map((_, i) => (
+        {games.map((_, i) => (
           <IconButton
             key={i}
             style={{ color: index == i ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.6)' }}
@@ -112,12 +100,12 @@ const Carousel = () => {
       </Box>
 
       {/* image */}
-      <div
-        style={{
+      <Box
+        sx={{
           width: '100%',
           height: '100%',
           background: 'rgba(0, 0, 0, 0.4)',
-          backgroundImage: `url(${displayItems[index].imgUrl})`,
+          backgroundImage: `url(https://res.cloudinary.com/dpfvhna2t/image/upload/${games[index].banner})`,
           backgroundBlendMode: 'darken',
           backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',
@@ -126,10 +114,12 @@ const Carousel = () => {
           transitionDelay: '100ms',
           transitionProperty: 'background',
           transitionDuration: '500ms',
+          cursor: 'pointer',
         }}
-      >
-        <Link to={displayItems[index].pageUrl} />
-      </div>
+        onClick={() => {
+          navigate(`game/${games[index]._id}`);
+        }}
+      />
     </Box>
   );
 };

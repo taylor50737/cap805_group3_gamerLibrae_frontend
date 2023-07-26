@@ -37,15 +37,12 @@ import ReviewPage from './Review/ReviewPage';
 import AuthProvider from './shared/context/AuthProvider';
 import ProtectedRoute from './shared/components/route/ProtectedRoute';
 import AffProvider from './shared/context/AffContext';
-import LoaderTest from './Loader/LoaderTest';
-import DeferredLoaderTest from './Loader/DeferredLoaderTest';
 import { gameSearchResultLoader } from './shared/loader/gameSearchResultLoader';
 import { gamePageLoader } from './shared/loader/gamePageLoader';
-import { testLoader } from './shared/loader/testLoader';
-import { testDeferredLoader } from './shared/loader/testDeferredLoader';
 import { reviewLoader } from './shared/loader/reviewLoader';
 import { reviewEditLoader } from './shared/loader/reviewEditLoader';
 import { submitReviewAction } from './shared/action/submitReviewAction';
+import { homePageLoader } from './shared/loader/homePageLoader';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -65,7 +62,7 @@ const App = () => {
         }
       >
         {/* General */}
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={<HomePage />} loader={homePageLoader} />
         <Route path='*' element={<ErrorPage />} />
         <Route path='search' element={<GameSearchResult />} loader={gameSearchResultLoader} />
         <Route path='about-us' element={<AboutUs />} />
@@ -160,15 +157,6 @@ const App = () => {
               <AddGamePage />
             </ProtectedRoute>
           }
-        />
-
-        {/* Test loader API */}
-        <Route path='loader-test' element={<LoaderTest />} loader={testLoader} />
-
-        <Route
-          path='deferred-loader-test'
-          element={<DeferredLoaderTest />}
-          loader={testDeferredLoader}
         />
       </Route>,
     ),
