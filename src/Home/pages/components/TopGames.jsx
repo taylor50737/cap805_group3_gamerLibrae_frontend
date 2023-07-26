@@ -37,8 +37,8 @@ const TopGames = ({ games }) => {
             onClick={() => navigate(`/game/${game._id}`)}
             sx={{
               position: 'relative',
-              width: 160,
-              height: 200,
+              width: '150px',
+              aspectRatio: '3/4',
               bgcolor: '#b7b7b7',
               backgroundImage: `url(https://res.cloudinary.com/dpfvhna2t/image/upload/${game.portrait})`,
               backgroundSize: '100% 100%',
