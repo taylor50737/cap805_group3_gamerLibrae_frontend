@@ -28,7 +28,7 @@ const ResetPassword = () => {
   const resetPWSubmitHandler = (event) => {
     event.preventDefault();
     try {
-      fetch(`http://localhost:8080/api/auth/reset-password/${uid}/${token}`, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/auth/reset-password/${uid}/${token}`, {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({
