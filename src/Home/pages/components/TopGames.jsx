@@ -3,20 +3,7 @@ import { Box, Typography, Paper } from '@mui/material';
 
 import Score from '../../../shared/components/Score';
 
-const topGamesItems = [
-  { title: 'Street Fighter 6', score: 94, imgSrc: '/images/topGames/streetFighter6.jpg' },
-  { title: 'Resident Evil 4', score: 93, imgSrc: '/images/topGames/residentEvil4.jpg' },
-  { title: 'Dead Space', score: 92, imgSrc: '/images/topGames/deadSpace.jpg' },
-  { title: 'Hi-Fi RUSH', score: 90, imgSrc: '/images/topGames/hifiRush.jpg' },
-  { title: 'Persona 4 Golden', score: 89, imgSrc: '/images/topGames/p4g.jpg' },
-  {
-    title: 'Dead Cells: Return to Castlevania',
-    score: 88,
-    imgSrc: '/images/topGames/deadCell.jpg',
-  },
-];
-
-const TopGames = () => {
+const TopGames = ({ games }) => {
   const navigate = useNavigate();
   return (
     <Box sx={{ position: 'relative', height: '100%', mt: '4px' }}>
@@ -43,17 +30,17 @@ const TopGames = () => {
           mx: '0px',
         }}
       >
-        {topGamesItems.map((game, i) => (
+        {games.map((game, i) => (
           <Paper
             key={i}
             elevation={10}
-            onClick={() => navigate('/game/123')}
+            onClick={() => navigate(`/game/${game._id}`)}
             sx={{
               position: 'relative',
               width: 160,
               height: 200,
               bgcolor: '#b7b7b7',
-              backgroundImage: `url(${game.imgSrc})`,
+              backgroundImage: `url(https://res.cloudinary.com/dpfvhna2t/image/upload/${game.portrait})`,
               backgroundSize: '100% 100%',
               '&:hover': {
                 opacity: [0.9, 0.8, 0.7],
@@ -62,7 +49,10 @@ const TopGames = () => {
             }}
           >
             <Box sx={{ position: 'absolute', top: '75%', left: '70%' }}>
-              <Score score={game.score} size={50} />
+              <Score
+                score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'}
+                size={50}
+              />
             </Box>
           </Paper>
         ))}

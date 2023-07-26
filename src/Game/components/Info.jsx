@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { Box, Typography, Button, Chip } from '@mui/material';
 import Score from '../../shared/components/Score';
+import { iso8601dateToString } from '../../shared/util/iso8601dateToString';
 
 const Category = styled.span`
   font-size: 20px;
@@ -16,6 +17,7 @@ const Information = styled.span`
 `;
 
 const Info = ({ game }) => {
+  console.log(game);
   return (
     <Box
       style={{
@@ -35,7 +37,7 @@ const Info = ({ game }) => {
           right: '0%',
         }}
       >
-        <Score score={game.score || 'NaN'} size={175} />
+        <Score score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'} size={175} />
       </Box>
 
       {/* Game Information*/}
@@ -59,13 +61,7 @@ const Info = ({ game }) => {
         <Information>{game.developer}</Information>
         <br />
         <Category>Release Date: </Category>
-        <Information>
-          {new Intl.DateTimeFormat('en-CA', {
-            month: 'long',
-            year: 'numeric',
-            day: 'numeric',
-          }).format(new Date(game.releaseDate))}
-        </Information>
+        <Information>{iso8601dateToString(game.releaseDate)}</Information>
         <br />
         <Category>Genre: </Category>
         <Information>{game.genres.join(', ')}</Information>

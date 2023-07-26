@@ -72,6 +72,7 @@ export const Score = ({ score, size }) => {
     font-size: ${size / 2.5}px;
     font-weight: 800;
     color: white;
+    text-shadow: 1px 1px 0 #000;
   `;
 
   let scoreColor = '';
