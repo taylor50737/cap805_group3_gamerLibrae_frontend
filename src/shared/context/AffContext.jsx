@@ -18,7 +18,7 @@ const AffProvider = ({ children }) => {
     setLoading(true);
     console.log('fetch aff info called');
     try {
-      const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/users/${userId}`, {
         method: 'GET',
         credentials: 'include',
         headers: {

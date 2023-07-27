@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
   const fetchAuthMe = async () => {
     setLoading(true);
     console.log('fetch auth me called');
-    const authMeResponse = await fetch('http://localhost:8080/api/auth/users/me', {
+    const authMeResponse = await fetch(`${import.meta.env.VITE_API_PATH}/api/auth/users/me`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleRegister = async ({ userName, email, password }) => {
-    const registerResponse = await fetch('http://localhost:8080/api/auth/signup', {
+    const registerResponse = await fetch(`${import.meta.env.VITE_API_PATH}/api/auth/signup`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleLogin = async ({ email, password }) => {
-    const loginResponse = await fetch('http://localhost:8080/api/auth/session', {
+    const loginResponse = await fetch(`${import.meta.env.VITE_API_PATH}/api/auth/session`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -81,7 +81,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = async () => {
-    const logOutResponse = await fetch('http://localhost:8080/api/auth/session', {
+    const logOutResponse = await fetch(`${import.meta.env.VITE_API_PATH}/api/auth/session`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {

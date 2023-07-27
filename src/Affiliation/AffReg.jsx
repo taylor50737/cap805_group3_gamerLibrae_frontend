@@ -59,18 +59,21 @@ const AffReg = ({ sucPost }) => {
 
   const submitAffRegForm = async (event) => {
     event.preventDefault();
-    const affRegistrationResponse = await fetch('http://localhost:8080/api/affiliations/', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json; charset=UTF-8',
+    const affRegistrationResponse = await fetch(
+      `${import.meta.env.VITE_API_PATH}/api/affiliations/`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+          affChannelURL: formState.inputs.channelUrl.value,
+          affEmail: formState.inputs.email.value,
+        }),
       },
-      body: JSON.stringify({
-        affChannelURL: formState.inputs.channelUrl.value,
-        affEmail: formState.inputs.email.value,
-      }),
-    });
+    );
     console.log(affRegistrationResponse);
     setResponseMsg(affRegistrationResponse.message);
     if (affRegistrationResponse.status === 201) {
