@@ -7,7 +7,6 @@ import {
   Grid,
   Typography,
   Paper,
-  CircularProgress,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -84,15 +83,11 @@ export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
                     navigate(`/search?name=${inputValue}`);
                   }}
                 >
-                  {navigation.state === 'loading' ? (
-                    <CircularProgress size='12px' sx={{ color: 'gray' }} />
-                  ) : (
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                      size='xs'
-                      style={{ color: '#565656' }}
-                    />
-                  )}
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    size='xs'
+                    style={{ color: '#565656' }}
+                  />
                 </IconButton>
               </InputAdornment>
             ),

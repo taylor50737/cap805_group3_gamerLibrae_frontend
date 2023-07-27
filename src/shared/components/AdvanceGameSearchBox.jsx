@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useNavigation, useLocation } from 'react-router-dom';
+import { useLocation, Form } from 'react-router-dom';
 
 import {
   Autocomplete,
@@ -275,8 +275,6 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
   const [scoreRange, setScoreRange] = useState(
     query.has('score') ? query.get('score').split(',').map(Number) : [MIN_SCORE, MAX_SCORE],
   );
-  const navigate = useNavigate();
-  const navigation = useNavigation();
 
   const handleReset = () => {
     setGenres([]);
@@ -284,31 +282,6 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
     setModes([]);
     setRelesaeDateRange([EARLIEST_YEAR, CURRENT_YEAR]);
     setScoreRange([MIN_SCORE, MAX_SCORE]);
-  };
-
-  const handleSubmit = () => {
-    const params = new URLSearchParams();
-    if (genres.length >= 1) {
-      params.append('genres', genres.join(','));
-    }
-    if (platforms.length >= 1) {
-      params.append('platforms', platforms.join(','));
-    }
-    if (modes.length >= 1) {
-      params.append('modes', modes.join(','));
-    }
-    if (releaseDateRange[0] !== EARLIEST_YEAR || releaseDateRange[1] !== CURRENT_YEAR) {
-      params.append('releaseDate', releaseDateRange.join(','));
-    }
-    if (scoreRange[0] !== MIN_SCORE || scoreRange[1] !== MAX_SCORE) {
-      params.append('score', scoreRange.join(','));
-    }
-
-    if (params.size === 0) {
-      navigate(`/search`, { replace: true });
-    } else {
-      navigate(`/search?${params.toString()}`, { replace: true });
-    }
   };
 
   return (
@@ -380,26 +353,62 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
           </Button>
         </Grid>
         <Grid item md={8}>
-          <Button
-            variant='contained'
-            fullWidth
-            onClick={handleSubmit}
-            sx={{
-              bgcolor: '#D9D9D9',
-              color: '#000000',
-              height: '100%',
-              ':hover': {
-                bgcolor: '#33353d',
-                color: 'white',
-              },
-            }}
-          >
-            {navigation.state === 'loading' ? (
-              <CircularProgress size='20px' sx={{ color: 'gray' }} />
-            ) : (
-              'Submit'
-            )}
-          </Button>
+          {/* This GET form will submit a query and redirect to gameSearchResultPage */}
+          <Form action='/search' style={{ height: '100%' }}>
+            <input
+              name='genres'
+              value={genres.join(',')}
+              readOnly
+              disabled={genres.length === 0}
+              style={{ display: 'none' }}
+            />
+            <input
+              name='platforms'
+              value={platforms.join(',')}
+              readOnly
+              disabled={platforms.length === 0}
+              style={{ display: 'none' }}
+            />
+            <input
+              name='modes'
+              value={modes.join(',')}
+              readOnly
+              disabled={modes.length === 0}
+              style={{ display: 'none' }}
+            />
+            <input
+              name='releaseDate'
+              value={releaseDateRange.join(',')}
+              readOnly
+              disabled={
+                releaseDateRange[0] === EARLIEST_YEAR && releaseDateRange[1] === CURRENT_YEAR
+              }
+              style={{ display: 'none' }}
+            />
+            <input
+              name='score'
+              value={scoreRange}
+              readOnly
+              disabled={scoreRange[0] === MIN_SCORE && scoreRange[1] === MAX_SCORE}
+              style={{ display: 'none' }}
+            />
+            <Button
+              variant='contained'
+              fullWidth
+              type='submit'
+              sx={{
+                bgcolor: '#D9D9D9',
+                color: '#000000',
+                height: '100%',
+                ':hover': {
+                  bgcolor: '#33353d',
+                  color: 'white',
+                },
+              }}
+            >
+              Submit
+            </Button>
+          </Form>
         </Grid>
       </Grid>
     </Box>
