@@ -36,19 +36,19 @@ const TeamMember = ({ scrollTo, goToSectionRef }) => {
                 onClick={() => handlePlayerClick(1)}
               />
               <img
-                src='public/images/AboutUs/TeamMember_2.png'
+                src='/images/AboutUs/TeamMember_2.png'
                 alt=''
                 onClick={() => handlePlayerClick(2)}
               />
             </div>
             <div className='team--member--player--row'>
               <img
-                src='public/images/AboutUs/TeamMember_3.png'
+                src='/images/AboutUs/TeamMember_3.png'
                 alt=''
                 onClick={() => handlePlayerClick(3)}
               />
               <img
-                src='public/images/AboutUs/TeamMember_3.png'
+                src='/images/AboutUs/TeamMember_3.png'
                 alt=''
                 onClick={() => handlePlayerClick(4)}
               />

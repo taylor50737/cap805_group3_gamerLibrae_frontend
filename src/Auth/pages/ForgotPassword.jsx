@@ -9,7 +9,7 @@ import './ForgotPassword.css';
 
 const ForgotPassword = () => {
   const [responseMsg, setResponseMsg] = useState('');
-  const path = import.meta.env.VITE_API_URL + '/api/auth/forgot-password';
+  const path = import.meta.env.VITE_API_PATH + '/api/auth/forgot-password';
   const [formState, inputHandler, setFormData] = CustomUseForm(
     {
       email: {
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
   const forgotPWSubmitHandler = (event) => {
     event.preventDefault();
     try {
-      fetch(`${import.meta.env.VITE_API_URL}/api/auth/forgot-password`, {
+      fetch(`${import.meta.env.VITE_API_PATH}/api/auth/forgot-password`, {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({

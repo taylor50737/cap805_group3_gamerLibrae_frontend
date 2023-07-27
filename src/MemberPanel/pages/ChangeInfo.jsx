@@ -23,7 +23,7 @@ const ChangeInfo = () => {
   const changeInfoSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/change-info`, {
+      fetch(`${import.meta.env.VITE_API_PATH}/api/users/change-info`, {
         method: 'PATCH',
         credentials: 'include',
         body: JSON.stringify({
