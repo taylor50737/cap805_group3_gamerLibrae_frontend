@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FormControl, Select, MenuItem } from '@mui/material';
 
 const SortSelector = ({ sortOptions }) => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
+  const navigate = useNavigate();
 
   const [sortOption, setSortOption] = useState(
     // Auto select if url query already contains sort
@@ -14,11 +15,12 @@ const SortSelector = ({ sortOptions }) => {
   );
 
   const handleChange = (event) => {
-    const newSortOption = event.target.value;
-    setSortOption(newSortOption);
+    const newOpt = event.target.value;
+    setSortOption(newOpt);
+    navigate(`?${getNewQueryString(newOpt)}`);
   };
 
-  const getNewQuery = (opt) => {
+  const getNewQueryString = (opt) => {
     query.delete('sort');
     query.append('sort', sortOptions[opt]);
     return query.toString();
@@ -68,9 +70,7 @@ const SortSelector = ({ sortOptions }) => {
         >
           {Object.keys(sortOptions).map((opt, i) => (
             <MenuItem key={i} value={opt}>
-              <Link to={'?' + getNewQuery(opt)} reloadDocument>
-                {opt}
-              </Link>
+              {opt}
             </MenuItem>
           ))}
         </Select>
