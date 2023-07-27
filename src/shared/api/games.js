@@ -1,5 +1,5 @@
 export const postGame = async (postGameBody) => {
-  const postGameRes = await fetch(`http://localhost:8080/api/games`, {
+  const postGameRes = await fetch(`${import.meta.env.VITE_API_PATH}/api/games`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -12,7 +12,7 @@ export const postGame = async (postGameBody) => {
 };
 
 export const getGames = async (searchParams) => {
-  return fetch(`http://localhost:8080/api/games?${searchParams.toString()}`, {
+  return fetch(`${import.meta.env.VITE_API_PATH}/api/games?${searchParams.toString()}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',

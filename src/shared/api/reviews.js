@@ -1,5 +1,5 @@
 export const getReview = async (reviewId) => {
-  return fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+  return fetch(`${import.meta.env.VITE_API_PATH}/api/reviews/${reviewId}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -9,7 +9,7 @@ export const getReview = async (reviewId) => {
 };
 
 export const postReview = async (gameId, review) => {
-  return fetch(`http://localhost:8080/api/reviews`, {
+  return fetch(`${import.meta.env.VITE_API_PATH}/api/reviews`, {
     method: 'POST',
     credentials: 'include',
     headers: {
