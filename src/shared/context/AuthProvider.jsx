@@ -39,8 +39,8 @@ const AuthProvider = ({ children }) => {
     }
     console.log(ac);
     // TODO: delete this! delay for test purpose only
-    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-    await delay(1500);
+    // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+    // await delay(1500);
 
     setAccountInfo(ac);
     setLoading(false);
