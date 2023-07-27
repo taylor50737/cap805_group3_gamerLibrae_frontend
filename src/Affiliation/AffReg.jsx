@@ -14,7 +14,8 @@ const AffReg = ({ sucPost }) => {
   const [isTncChecked, setIsTncChecked] = useState(false);
   const [responseMsg, setResponseMsg] = useState('');
   const { fetchUserAff } = useContext(AffContext);
-  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
+  const { affFormPosted, setAffFormPosted, loading, affState, setAffState } =
+    useContext(AffContext);
 
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const AffReg = ({ sucPost }) => {
 
   useEffect(() => {
     fetchUserAff;
-    setTest(2);
+    setAffState(2);
   }, []);
 
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(

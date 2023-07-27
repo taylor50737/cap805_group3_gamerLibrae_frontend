@@ -6,11 +6,12 @@ import CustomButton from '../shared/components/FormElements/CustomButton';
 
 const AffSuc = () => {
   const { fetchUserAff } = useContext(AffContext);
-  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
+  const { affFormPosted, setAffFormPosted, loading, affState, setAffState } =
+    useContext(AffContext);
 
   useEffect(() => {
     fetchUserAff;
-    setTest(3);
+    setAffState(3);
   }, []);
 
   return (

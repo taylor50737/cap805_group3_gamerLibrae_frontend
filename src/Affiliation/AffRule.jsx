@@ -12,11 +12,12 @@ const AffRule = () => {
   const { loggedIn, affiliation } = useAuth();
   const [responseMsg, setResponseMsg] = useState(false);
   const { fetchUserAff } = useContext(AffContext);
-  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
+  const { affFormPosted, setAffFormPosted, loading, affState, setAffState } =
+    useContext(AffContext);
 
   useEffect(() => {
     fetchUserAff;
-    setTest(1);
+    setAffState(1);
   }, []);
 
   useEffect(() => {
