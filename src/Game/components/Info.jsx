@@ -1,22 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
 import { Box, Typography, Button, Chip } from '@mui/material';
 import Score from '../../shared/components/Score';
-
-const game = {
-  id: 3,
-  title: 'The Legend of Zelda: Tears of the Kingdom',
-  platform: 'Switch',
-  developer: 'Nintendo Entertainment Planning & Development',
-  releaseDate: 'May 12, 2023',
-  genre: 'Open world',
-  mode: 'Single-Player',
-  tags: ['Adventure', 'Zelda', 'Open World', 'Touching'],
-  score: 98,
-  imgSrc: '/images/carousel/zelda.jpg',
-};
+import { iso8601dateToString } from '../../shared/util/iso8601dateToString';
 
 const Category = styled.span`
   font-size: 20px;
@@ -28,16 +16,16 @@ const Information = styled.span`
   font-size: 20px;
 `;
 
-const Info = () => {
+const Info = ({ game }) => {
+  console.log(game);
   return (
     <Box
       style={{
-        background: 'rgba(0, 0, 0, 0.75)',
-        backgroundImage: `url("../${game.imgSrc}")`,
+        background: 'rgba(0, 0, 0, 0.5)',
+        backgroundImage: `url(https://res.cloudinary.com/dpfvhna2t/image/upload/${game.banner})`,
         backgroundBlendMode: 'darken',
         backgroundSize: '100% 100%',
-        borderRadius: '18px',
-        height: '600px',
+        height: '648px', // 16:9
         position: 'relative',
       }}
     >
@@ -49,7 +37,7 @@ const Info = () => {
           right: '0%',
         }}
       >
-        <Score score={game.score} size={175} />
+        <Score score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'} size={175} />
       </Box>
 
       {/* Game Information*/}
@@ -66,20 +54,20 @@ const Info = () => {
           borderRadius: '8px',
         }}
       >
-        <Typography sx={{ fontSize: '32px', fontWeight: 800 }}>{game.title}</Typography>
-        <Category>Platform: </Category> <Information>{game.platform}</Information>
+        <Typography sx={{ fontSize: '32px', fontWeight: 800 }}>{game.name}</Typography>
+        <Category>Platform: </Category> <Information>{game.platforms.join(', ')}</Information>
         <br />
         <Category>Developer: </Category>
         <Information>{game.developer}</Information>
         <br />
         <Category>Release Date: </Category>
-        <Information>{game.releaseDate}</Information>
+        <Information>{iso8601dateToString(game.releaseDate)}</Information>
         <br />
         <Category>Genre: </Category>
-        <Information>{game.genre}</Information>
+        <Information>{game.genres.join(', ')}</Information>
         <br />
         <Category>Mode: </Category>
-        <Information>{game.mode}</Information>
+        <Information>{game.modes.join(', ')}</Information>
         <br />
         <Category>Tags: </Category>
         {game.tags.map((tag, i) => (
@@ -114,17 +102,17 @@ const Info = () => {
       >
         <Button
           onClick={() => {
-            alert(`${game.title} have been added to your wishlist`);
+            alert(`${game.name} have been added to your wishlist`);
           }}
           sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}
         >
           Add to wishlist
         </Button>
-        <NavLink to='/game/g1/review-edit'>
+        <Link to={`/game/${game._id}/review-edit`}>
           <Button sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}>
             Post review
           </Button>
-        </NavLink>
+        </Link>
       </Box>
     </Box>
   );

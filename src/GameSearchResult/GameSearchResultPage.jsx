@@ -1,91 +1,39 @@
-import { useState } from 'react';
-import { Grid, Box } from '@mui/material';
+import { Suspense } from 'react';
+import { useLoaderData, Await, useLocation, Link, useNavigation } from 'react-router-dom';
+
+import { Grid, Box, Pagination, PaginationItem, Stack } from '@mui/material';
 
 import AdvanceGameSearchBox from '../shared/components/AdvanceGameSearchBox';
 import SortSelector from './components/SortSelector';
 import GameResultList from './components/GameResultList';
+import GameResultListSkeleton from './components/GameResultListSkeleton';
 
-const topGamesItems = [
-  {
-    id: 1,
-    title: 'Street Fighter 6',
-    platform: 'PS5',
-    releaseDate: 'June 2, 2023',
-    genre: 'Fighting',
-    mode: 'Multi-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 94,
-    imgSrc: '/images/topGames/streetFighter6.jpg',
-  },
-  {
-    id: 2,
-    title: 'Resident Evil 4',
-    platform: 'PC',
-    releaseDate: 'March 24, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 93,
-    imgSrc: '/images/topGames/residentEvil4.jpg',
-  },
-  {
-    id: 3,
-    title: 'Dead Space',
-    platform: 'Xbox Series X',
-    releaseDate: 'January 27, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 92,
-    imgSrc: '/images/topGames/deadSpace.jpg',
-  },
-  {
-    id: 4,
-    title: 'Hi-Fi RUSH',
-    platform: 'PC',
-    releaseDate: 'January 25, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 90,
-    imgSrc: '/images/topGames/hifiRush.jpg',
-  },
-  {
-    id: 5,
-    title: 'Persona 4 Golden',
-    platform: 'Switch',
-    releaseDate: 'Jan 19, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 89,
-    imgSrc: '/images/topGames/p4g.jpg',
-  },
-  {
-    id: 6,
-    title: 'Dead Cells: Return to Castlevania',
-    platform: 'PC',
-    releaseDate: 'March 6, 2023',
-    genre: 'Fighting',
-    mode: 'Single-Player',
-    tags: ['Adventure', 'Fight', 'Funny'],
-    score: 88,
-    imgSrc: '/images/topGames/deadCell.jpg',
-  },
-];
+// key=name to display, value=params in url
+const sortOptions = { Score: 'score', 'Release Date': 'releaseDate' };
 
 const GameSearchResultPage = () => {
-  const [games, setGames] = useState(topGamesItems);
+  const { gamesPromise, headersPromise } = useLoaderData();
+  const navigation = useNavigation();
 
-  const handleSortBy = (newGames) => {
-    setGames(newGames);
-  };
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const page = parseInt(query.get('page') || '0', 10);
+  const queryWithoutPage = new URLSearchParams(location.search);
+  queryWithoutPage.delete('page');
+
+  const gamesSkeleton = (
+    <Stack spacing={2} sx={{ width: '100%' }}>
+      {Array.from({ length: 5 }, (_, index) => (
+        <GameResultListSkeleton key={index} />
+      ))}
+    </Stack>
+  );
 
   return (
-    <Grid container sx={{ mt: 0, mb: 2 }} spacing={'15px'}>
-      <Grid item md={12}>
+    <Grid container sx={{ mt: 0, mb: 2 }} spacing={'1px'}>
+      <Grid item md={12} sx={{ my: 2 }}>
         <Box sx={{ float: 'right', display: 'table' }}>
-          <SortSelector games={games} handleSortBy={handleSortBy} />
+          <SortSelector sortOptions={sortOptions} query={query} />
         </Box>
       </Grid>
 
@@ -93,9 +41,42 @@ const GameSearchResultPage = () => {
         <AdvanceGameSearchBox />
       </Grid>
 
-      <Grid item md={9} sx={{}}>
-        <Box sx={{ ml: 4 }}>
-          <GameResultList games={games} />
+      <Grid item md={9}>
+        <Box sx={{ ml: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {navigation.state === 'loading' ? (
+            gamesSkeleton
+          ) : (
+            <Suspense fallback={gamesSkeleton}>
+              <Await resolve={gamesPromise} errorElement={<p>Error loading</p>}>
+                {(g) => <GameResultList games={g} />}
+              </Await>
+
+              <Await resolve={headersPromise} errorElement={<p>Error loading</p>}>
+                {(h) => (
+                  <Pagination
+                    page={page + 1}
+                    count={Math.ceil(h.get('Pagination-Count') / h.get('Pagination-Limit'))}
+                    size='large'
+                    color='secondary'
+                    sx={{ mt: 2 }}
+                    renderItem={(item) => (
+                      <PaginationItem
+                        component={Link}
+                        to={`/search${
+                          item.page === 1
+                            ? '?' + queryWithoutPage.toString()
+                            : '?' + queryWithoutPage.toString() + '&page=' + (item.page - 1)
+                        }`}
+                        reloadDocument
+                        {...item}
+                        sx={{ color: 'white', fontWeight: 800 }}
+                      />
+                    )}
+                  />
+                )}
+              </Await>
+            </Suspense>
+          )}
         </Box>
       </Grid>
     </Grid>

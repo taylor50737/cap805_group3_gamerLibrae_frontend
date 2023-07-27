@@ -11,9 +11,11 @@ const CommentSection = ({ comments }) => {
       <Divider sx={{ borderBottomWidth: '2px', borderColor: '#4f5154', my: '10px' }} />
 
       {/* Comment display */}
-      {comments.map((cm, i) => (
-        <Comment key={i} comment={cm} sx={{ mb: '20px' }} />
-      ))}
+      {comments.length === 0 ? (
+        <span>No Comment yet</span>
+      ) : (
+        comments.map((cm, i) => <Comment key={i} comment={cm} sx={{ mb: '20px' }} />)
+      )}
     </Box>
   );
 };

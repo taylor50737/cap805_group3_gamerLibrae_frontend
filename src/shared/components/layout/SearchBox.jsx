@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Autocomplete,
   TextField,
@@ -11,94 +12,41 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import Score from '../Score';
-
-const games = [
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/gollum.jpg',
-    name: 'The Lord of the Rings: Gollum',
-    releaseYear: '2023',
-    platform: 'PS5',
-    developer: 'Daedalic Entertainment',
-    score: 30,
-  },
-  {
-    image: '/images/searchBoxMockImage/diablo.jpg',
-    name: 'Diablo IV',
-    releaseYear: '2023',
-    platform: 'Xbox One',
-    developer: 'Activision Blizzard',
-    score: 65,
-  },
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom1',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom2',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom3',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom4',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom5',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom6',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-  {
-    image: '/images/searchBoxMockImage/zelda.jpg',
-    name: 'The Legend of Zelda: Tears of the Kingdom7',
-    releaseYear: '2023',
-    platform: 'Switch',
-    developer: 'Nintendo EPD',
-    score: 95,
-  },
-];
-
-// TODO: Long options for testing
-// const moreGames = Array(10).fill(games).flat();
+import { getGames } from '../../api/games';
+import { iso8601dateToString } from '../../util/iso8601dateToString';
+import { useDebounce } from '../../hooks/useDebounce';
+import { useNavigate, useNavigation } from 'react-router';
 
 export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
+  const [value, setValue] = useState(null); //selected value, must be one of options
+  const [inputValue, setInputValue] = useState('');
+  const [games, setGames] = useState([]);
+  const navigate = useNavigate();
+  const navigation = useNavigation();
+  const debouncedFetchGames = useDebounce(() => {
+    if (inputValue === '') {
+      setGames([]);
+      return;
+    }
+    const params = new URLSearchParams();
+    params.append('name', inputValue);
+    getGames(params)
+      .then((res) => res.json())
+      .then((games) => {
+        setGames(games);
+      });
+  }, 500); // fetch games after no keystroke for 500ms
+
+  const handleChange = (event, newValue) => {
+    console.log(`value change`);
+    console.log(newValue);
+    setValue(newValue);
+  };
+  const handleInputChange = (event, newInputValue) => {
+    setInputValue(newInputValue);
+    debouncedFetchGames();
+  };
+
   return (
     <Autocomplete
       autoHighlight
@@ -108,16 +56,12 @@ export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
       freeSolo
       options={games}
       getOptionLabel={(game) => (typeof game === 'string' ? game : game.name)}
-      filterOptions={(games, state) => {
-        if (state.inputValue === '') {
-          return [];
-        }
-        return games.filter((game) =>
-          game.name.toLowerCase().includes(state.inputValue.toLowerCase()),
-        );
-      }}
+      value={value}
+      filterOptions={(x) => x}
+      onChange={handleChange}
+      onInputChange={handleInputChange}
       PaperComponent={({ children }) => <Paper sx={{ bgcolor: '#2b2725' }}>{children}</Paper>}
-      ListboxProps={{ sx: { maxHeight: resultBoxHeight ? resultBoxHeight : '500px' } }}
+      ListboxProps={{ sx: { maxHeight: resultBoxHeight ? resultBoxHeight : '370px' } }}
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -132,7 +76,13 @@ export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position='start'>
-                <IconButton size='small' sx={{ pr: 0 }}>
+                <IconButton
+                  size='small'
+                  sx={{ pr: 0 }}
+                  onClick={() => {
+                    navigate(`/search?name=${inputValue}`);
+                  }}
+                >
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
                     size='xs'
@@ -185,15 +135,24 @@ export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
       renderOption={(props, game) => (
         <li {...props} key={game.name}>
           <Grid container>
-            <Grid item xs={2} sm={2} md={2}>
-              <img src={game.image} width='40' height='30' />
+            <Grid item xs={2} sm={2} md={2} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Paper sx={{ width: 45, height: 60 }}>
+                <img
+                  src={`https://res.cloudinary.com/dpfvhna2t/image/upload/${game.portrait}`}
+                  width='45'
+                  height='60'
+                />
+              </Paper>
             </Grid>
 
             <Grid item xs={8} sm={8} md={8}>
-              <Typography sx={{ fontSize: 8, color: 'white' }}>
+              <Typography sx={{ fontSize: 6, fontWeight: 800, color: 'white' }}>
                 {game.name}
+              </Typography>
+              <Typography sx={{ fontSize: 4, color: 'white' }}>
+                {iso8601dateToString(game.releaseDate)}
                 <br />
-                {game.releaseYear} {game.platform}
+                {game.platforms.join(', ')}
                 <br />
                 {game.developer}
               </Typography>
@@ -205,7 +164,10 @@ export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
               md={2}
               sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
-              <Score score={game.score} size={50} />
+              <Score
+                score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'}
+                size={50}
+              />
             </Grid>
           </Grid>
         </li>

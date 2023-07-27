@@ -6,7 +6,6 @@ import {
   RouterProvider,
   Outlet,
   Route,
-  defer,
 } from 'react-router-dom';
 
 import Navbar from './shared/components/layout/Navbar';
@@ -37,8 +36,13 @@ import ReviewPage from './Review/ReviewPage';
 
 import AuthProvider from './shared/context/AuthProvider';
 import ProtectedRoute from './shared/components/route/ProtectedRoute';
-import LoaderTest from './Loader/LoaderTest';
-import DeferredLoaderTest from './Loader/DeferredLoaderTest';
+import AffProvider from './shared/context/AffContext';
+import { gameSearchResultLoader } from './shared/loader/gameSearchResultLoader';
+import { gamePageLoader } from './shared/loader/gamePageLoader';
+import { reviewLoader } from './shared/loader/reviewLoader';
+import { reviewEditLoader } from './shared/loader/reviewEditLoader';
+import { submitReviewAction } from './shared/action/submitReviewAction';
+import { homePageLoader } from './shared/loader/homePageLoader';
 
 const App = () => {
   const router = createBrowserRouter(
@@ -47,18 +51,20 @@ const App = () => {
       <Route
         element={
           <AuthProvider>
-            <Navbar />
-            <Container>
-              <Outlet />
-            </Container>
-            <Footer />
+            <AffProvider>
+              <Navbar />
+              <Container>
+                <Outlet />
+              </Container>
+              <Footer />
+            </AffProvider>
           </AuthProvider>
         }
       >
         {/* General */}
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={<HomePage />} loader={homePageLoader} />
         <Route path='*' element={<ErrorPage />} />
-        <Route path='search' element={<GameSearchResult />} />
+        <Route path='search' element={<GameSearchResult />} loader={gameSearchResultLoader} />
         <Route path='about-us' element={<AboutUs />} />
         <Route path='contact-us' element={<ContactUs />} />
 
@@ -69,15 +75,15 @@ const App = () => {
         >
           <Route index element={<Auth />} />
           <Route path='forgot-password' element={<ForgotPassword />} />
-          <Route path='reset-password' element={<ResetPassword />} />
+          <Route path='reset-password/:uid/:token' element={<ResetPassword />} />
         </Route>
 
         {/* Game Route */}
         <Route path='game'>
-          <Route index element={<GameSearchResult />} />
+          <Route index element={<ErrorPage />} />
           <Route path=':id'>
-            <Route index element={<GamePage />} />
-            <Route path='review/:rid' element={<ReviewPage />} />
+            <Route index element={<GamePage />} loader={gamePageLoader} />
+            <Route path='review/:rid' element={<ReviewPage />} loader={reviewLoader} />
             <Route
               path='review-edit'
               element={
@@ -85,6 +91,8 @@ const App = () => {
                   <ReviewEditPage />
                 </ProtectedRoute>
               }
+              action={submitReviewAction}
+              loader={reviewEditLoader}
             />
           </Route>
         </Route>
@@ -112,19 +120,22 @@ const App = () => {
         </Route>
 
         {/* Affiliation */}
+
         <Route path='affiliation-rule' element={<AffRule />} />
+
         <Route
           path='affiliation-registration'
           element={
-            <ProtectedRoute required={{ loggedIn: true }}>
+            <ProtectedRoute required={{ loggedIn: true, affiliationNotEnrolled: true }}>
               <AffReg />
             </ProtectedRoute>
           }
         />
+
         <Route
           path='affiliation-suc'
           element={
-            <ProtectedRoute required={{ loggedIn: true, affiliation: false }}>
+            <ProtectedRoute required={{ loggedIn: true, affiliationEnrolled: true }}>
               <AffSuc />
             </ProtectedRoute>
           }
@@ -146,50 +157,6 @@ const App = () => {
               <AddGamePage />
             </ProtectedRoute>
           }
-        />
-
-        {/* Test loader API */}
-        <Route
-          path='loader-test'
-          element={<LoaderTest />}
-          loader={async () => {
-            const res = await fetch('http://localhost:8080/api/users', {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-            });
-            const data = await res.json();
-
-            // artificial delay
-            const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-            await delay(1500);
-
-            return { data };
-          }}
-        />
-
-        <Route
-          path='deferred-loader-test'
-          element={<DeferredLoaderTest />}
-          loader={async () => {
-            const promise = fetch('http://localhost:8080/api/users', {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-            }).then(
-              (res) =>
-                new Promise((resolve) => {
-                  setTimeout(() => resolve(res.json()), 2000); // fake delay
-                }),
-            );
-            return defer({
-              promise: promise,
-            });
-          }}
         />
       </Route>,
     ),

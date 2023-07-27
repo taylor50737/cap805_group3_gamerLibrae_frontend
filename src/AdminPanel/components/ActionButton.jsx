@@ -5,7 +5,9 @@ export default function ActionButton({ selectedComments }) {
       cid = selectedComments[0];
     }
     try {
-      const res = await fetch(`http://localhost:8080/api/comments/${cid}`, { method: 'DELETE' });
+      const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/comments/${cid}`, {
+        method: 'DELETE',
+      });
       const data = await res.json();
       console.log(data);
     } catch (error) {

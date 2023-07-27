@@ -10,7 +10,7 @@ export default function CommentTab() {
 
   const fetchComments = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/comments/');
+      const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/comments/`);
       const data = await res.json();
       setComments(data.comments);
     } catch (error) {
@@ -25,7 +25,9 @@ export default function CommentTab() {
     } else if (selectedComments.length === 1) {
       cid = selectedComments[0];
       try {
-        const res = await fetch(`http://localhost:8080/api/comments/${cid}`, { method: 'DELETE' });
+        const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/comments/${cid}`, {
+          method: 'DELETE',
+        });
         const data = await res.json();
         fetchComments();
         setSuccessMessage('Comment deleted');
@@ -35,7 +37,7 @@ export default function CommentTab() {
     } else if (selectedComments.length > 1) {
       const cids = { cids: selectedComments };
       try {
-        const res = await fetch('http://localhost:8080/api/comments/delete', {
+        const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/comments/delete`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

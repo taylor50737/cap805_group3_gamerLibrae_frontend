@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight, faEllipsis, faFlag } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from 'react-router-dom';
+import { iso8601dateToString } from '../../shared/util/iso8601dateToString';
 
 const breadCrumbSx = {
   color: 'white',
@@ -36,9 +37,9 @@ const Banner = ({ review }) => {
       }}
     >
       {/* Avatar */}
-      <Link to={`/profile/${review.userId}`}>
+      <Link to={`/profile/${review.creator}`}>
         <img
-          src={review.avatar}
+          src={review.creatorAvatar} // TODO
           width={64}
           height={64}
           style={{ display: 'inline-block', marginLeft: '20px' }}
@@ -50,12 +51,13 @@ const Banner = ({ review }) => {
         separator={<FontAwesomeIcon icon={faAnglesRight} style={{ color: '#a0a0a3' }} />}
         sx={{ ml: '20px' }}
       >
-        <Link to={`/profile/${review.userId}`}>
-          <Typography sx={breadCrumbSx}>{review.userName}</Typography>
+        <Link to={`/profile/${review.creator}`}>
+          <Typography sx={breadCrumbSx}>{review.creatorUserName}</Typography> {/*TODO*/}
         </Link>
 
-        <Link to={`/game/${review.gameId}`}>
-          <Typography sx={{ ...breadCrumbSx, fontWeight: 600 }}>{review.gameName}</Typography>
+        <Link to={`/game/${review.game}`}>
+          <Typography sx={{ ...breadCrumbSx, fontWeight: 600 }}>{review.gameName}</Typography>{' '}
+          {/*TODO*/}
         </Link>
       </Breadcrumbs>
 
@@ -69,7 +71,7 @@ const Banner = ({ review }) => {
       {/* Last child */}
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography sx={{ fontSize: '16px', color: '#bbc0c7', mx: '10px' }}>
-          {review.postdate}
+          {iso8601dateToString(review.postingDate)}
         </Typography>
         <IconButton onClick={handleClick} sx={{ mr: '10px' }}>
           <FontAwesomeIcon icon={faEllipsis} style={{ color: '#bbc0c7' }} />

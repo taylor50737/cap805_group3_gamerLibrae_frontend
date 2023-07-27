@@ -1,33 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './AffRule.css';
 import CustomButton from '../shared/components/FormElements/CustomButton';
 
+import useAuth from '../shared/hooks/useAuth';
+import { AffContext } from '../shared/context/AffContext';
+
 // You have already registered for the Affiliation Program. Please check your email inbox for the instructions to start earning points. If you have never registered, please contact us via the [object Object]
 
 const AffRule = () => {
-  const [navToAffReg, setNavToAffReg] = useState(false);
+  const { loggedIn, affiliation } = useAuth();
   const [responseMsg, setResponseMsg] = useState(false);
+  const { fetchUserAff } = useContext(AffContext);
+  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
 
-  // const affRegChecker = () => {
   useEffect(() => {
-    try {
-      fetch('http://localhost:8080/api/auth/users/me', {
-        method: 'GET',
-        credentials: 'include',
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          if (!json.affiliation.affEmail) {
-            setNavToAffReg(true);
-          } else {
-            setResponseMsg(true);
-          }
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    fetchUserAff;
+    setTest(1);
   }, []);
+
+  useEffect(() => {
+    if (loggedIn && affFormPosted.affContextController.affEmail) {
+      setResponseMsg(true);
+    }
+  }, [loggedIn, affFormPosted.affContextController]);
 
   return (
     <div className='affrule font-dmsans'>
@@ -54,20 +50,27 @@ const AffRule = () => {
         </p>
       </div>
       <div className='affrule--reg--button'>
-        {navToAffReg ? (
-          <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>
+        {loggedIn ? (
+          responseMsg ? (
+            <p className='error--msg'>
+              You have already registered for the Affiliation Program. Please check your email inbox
+              for the instructions to start earning points. If you have never registered, please
+              contact us via the{' '}
+              <NavLink to='/contact-us'>
+                <u>Inquiry Form</u>
+              </NavLink>
+            </p>
+          ) : (
+            <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>
+          )
         ) : (
-          <CustomButton>REGISTER</CustomButton>
+          <CustomButton to={'/auth'}>LOG IN TO REGISTER</CustomButton>
         )}
         {/* to={'/affiliation-registration'} */}
       </div>
-      {responseMsg && (
-        <p className='error--msg'>
-          You have already registered for the Affiliation Program. Please check your email inbox for
-          the instructions to start earning points. If you have never registered, please contact us
-          via the <NavLink to='/contact-us'>Inquiry Form</NavLink>
-        </p>
-      )}
+      {/* {responseMsg && (
+        
+      )} */}
     </div>
   );
 };
