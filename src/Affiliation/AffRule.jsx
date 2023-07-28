@@ -6,11 +6,9 @@ import CustomButton from '../shared/components/FormElements/CustomButton';
 import useAuth from '../shared/hooks/useAuth';
 import { AffContext } from '../shared/context/AffContext';
 
-// You have already registered for the Affiliation Program. Please check your email inbox for the instructions to start earning points. If you have never registered, please contact us via the [object Object]
-
 const AffRule = () => {
   const { loggedIn, affiliation } = useAuth();
-  const [responseMsg, setResponseMsg] = useState(false);
+  const [affRuleButtonController, setAffRuleButtonController] = useState();
   const { fetchUserAff } = useContext(AffContext);
   const { affFormPosted, setAffFormPosted, loading, affState, setAffState } =
     useContext(AffContext);
@@ -21,10 +19,36 @@ const AffRule = () => {
   }, []);
 
   useEffect(() => {
-    if (loggedIn && affFormPosted.affContextController.affEmail) {
-      setResponseMsg(true);
+    if (!loggedIn) {
+      setAffRuleButtonController(1);
+    } else {
+      if (affFormPosted.affContextController.affEmail) {
+        setAffRuleButtonController(2);
+      } else {
+        setAffRuleButtonController(3);
+      }
     }
   }, [loggedIn, affFormPosted.affContextController]);
+
+  let affRuleButton;
+  if (affRuleButtonController == 1) {
+    affRuleButton = <CustomButton to={'/auth'}>LOG IN TO REGISTER</CustomButton>;
+  }
+  if (affRuleButtonController == 2) {
+    affRuleButton = (
+      <p className='error--msg'>
+        You have already registered for the Affiliation Program. Please check your email inbox for
+        the instructions to start earning points. If you have never registered, please contact us
+        via the{' '}
+        <NavLink to='/contact-us'>
+          <u>Inquiry Form</u>
+        </NavLink>
+      </p>
+    );
+  }
+  if (affRuleButtonController == 3) {
+    affRuleButton = <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>;
+  }
 
   return (
     <div className='affrule font-dmsans'>
@@ -50,28 +74,7 @@ const AffRule = () => {
           est laborum.
         </p>
       </div>
-      <div className='affrule--reg--button'>
-        {loggedIn ? (
-          responseMsg ? (
-            <p className='error--msg'>
-              You have already registered for the Affiliation Program. Please check your email inbox
-              for the instructions to start earning points. If you have never registered, please
-              contact us via the{' '}
-              <NavLink to='/contact-us'>
-                <u>Inquiry Form</u>
-              </NavLink>
-            </p>
-          ) : (
-            <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>
-          )
-        ) : (
-          <CustomButton to={'/auth'}>LOG IN TO REGISTER</CustomButton>
-        )}
-        {/* to={'/affiliation-registration'} */}
-      </div>
-      {/* {responseMsg && (
-        
-      )} */}
+      <div className='affrule--reg--button'>{affRuleButton}</div>
     </div>
   );
 };
