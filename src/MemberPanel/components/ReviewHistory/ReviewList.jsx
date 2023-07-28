@@ -15,16 +15,16 @@ const ReviewList = (props) => {
     <ul>
       {props.items.map((review) => (
         <ReviewItem
-          key={review.rid}
-          id={review.rid}
-          rid={review.rid}
-          gid={review.gid}
+          key={review.id}
+          id={review.id}
+          rid={review.id}
+          gid={review.game}
           imageUrl={review.imageUrl}
           game={review.game}
-          score={review.score}
-          reviewTitle={review.reviewTitle}
-          reviewContext={review.reviewContext}
-          date={review.date}
+          score={review.rating}
+          reviewTitle={review.title}
+          reviewContext={review.content}
+          date={review.postingDate}
           comments={review.comments}
         />
       ))}
