@@ -17,6 +17,22 @@ const Information = styled.span`
 `;
 
 const Info = ({ game }) => {
+  const addWishListHandler = async () => {
+    try {
+      fetch(`${import.meta.env.VITE_API_PATH}/api/games/wishList/${game._id}`, {
+        method: 'PATCH',
+        credentials: 'include',
+        body: JSON.stringify({
+          gameId: game._id,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }).then((response) => response.json());
+    } catch (err) {
+      console.log(err);
+    }
+  };
   console.log(game);
   return (
     <Box
@@ -102,7 +118,7 @@ const Info = ({ game }) => {
       >
         <Button
           onClick={() => {
-            alert(`${game.name} have been added to your wishlist`);
+            addWishListHandler();
           }}
           sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}
         >

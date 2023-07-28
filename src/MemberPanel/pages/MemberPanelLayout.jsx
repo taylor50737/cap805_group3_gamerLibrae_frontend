@@ -1,29 +1,38 @@
 import { useState, useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { useHttpClient } from '../../shared/hooks/http-hook';
+import useAuth from '../../shared/hooks/useAuth';
 
 import MainNavigation from '../components/SideNavigation/MainNavigation';
 
 const MemberPanelLayout = () => {
+  const navigate = useNavigate();
   const [loadedUser, setLoadedUser] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
-  const userId = useParams().uid;
+  const { userId } = useAuth();
+  const memberId = useParams().uid;
 
   useEffect(() => {
+    const checkIsUser = () => {
+      if (userId !== memberId) {
+        navigate(`/member/${userId}`);
+      }
+    };
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `${import.meta.env.VITE_API_PATH}/api/users/${userId}`,
+          `${import.meta.env.VITE_API_PATH}/api/users/${memberId}`,
         );
         setLoadedUser(responseData.user);
       } catch (err) {}
     };
+    checkIsUser();
     fetchUser();
-  }, [sendRequest, userId]);
+  }, [sendRequest, memberId]);
+
   return (
     <div className='overflow-hidden rounded-xl'>
-      {/* <CustomBreadcrumbs uid={userId} /> */}
+      {/* <CustomBreadcrumbs uid={memberId} /> */}
       <div className='pt-5 md:flex'>
         {!isLoading && loadedUser && (
           <>
