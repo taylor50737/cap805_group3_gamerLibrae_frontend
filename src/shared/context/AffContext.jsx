@@ -9,7 +9,7 @@ const AffProvider = ({ children }) => {
     userId: '',
     affContextController: '',
   });
-  const [test, setTest] = useState(0);
+  const [affState, setAffState] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const { loggedIn, userId, affiliation } = useAuth();
@@ -39,9 +39,6 @@ const AffProvider = ({ children }) => {
           affContextController: resJson.user.affiliation,
         };
         console.log(affChecker);
-        // TODO: delete this! delay for test purpose only
-        const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-        await delay(1500);
         return affChecker;
       }
     } catch (error) {
@@ -59,14 +56,16 @@ const AffProvider = ({ children }) => {
       setAffFormPosted(affChecker);
       setLoading(false);
     });
-  }, [loggedIn, userId, affiliation, test]);
+  }, [loggedIn, userId, affiliation, affState]);
 
   useEffect(() => {
     console.log('Updated affFormPosted:', affFormPosted);
   }, [affFormPosted]);
 
   return (
-    <AffContext.Provider value={{ affFormPosted, setAffFormPosted, loading, test, setTest }}>
+    <AffContext.Provider
+      value={{ affFormPosted, setAffFormPosted, loading, affState, setAffState }}
+    >
       {children}
     </AffContext.Provider>
   );

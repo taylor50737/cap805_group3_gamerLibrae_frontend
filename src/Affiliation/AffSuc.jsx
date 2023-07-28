@@ -1,47 +1,40 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AffContext } from '../shared/context/AffContext';
 import './AffSuc.css';
-import Button from '@mui/material/Button';
-import CustomButton from '../shared/components/FormElements/CustomButton';
+import AffSucContentController1 from './components/AffSucContentController1';
+import AffSucContentController2 from './components/AffSucContentController2';
 
 const AffSuc = () => {
-  const { fetchUserAff } = useContext(AffContext);
-  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
+  const { affFormPosted, loading, affState, setAffState } = useContext(AffContext);
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
-    fetchUserAff;
-    setTest(3);
-  }, []);
+    // You can check if the data is already available in affFormPosted
+    // If yes, set isDataFetched to true, otherwise fetch the data
+    if (affFormPosted) {
+      setIsDataFetched(true);
+    } else {
+      // Fetch the affiliation data
+      fetchUserAff().then(() => {
+        setIsDataFetched(true);
+      });
+    }
+    setAffState(3);
+  }, [affFormPosted, setAffState]);
 
-  return (
-    <div className='affsuc font-dmsans'>
-      <div className='affsuc--block'>
-        <h1 className='text-2xl'>
-          Congratulations. You have successfully registered for the Affiliation Program
-        </h1>
-      </div>
-      <div className='affsuc--block'>
-        <h1 className='affsuc--next--title text-2xl'>What's Next</h1>
-        <ol className='affsuc--next--list'>
-          <li>
-            <span className='affsuc--next--step'>Step 1.</span> Check your registered email mailbox
-            for the verification steps.
-          </li>
-          <li>
-            <span className='affsuc--next--step'>Step 2.</span> Get yourself verified as the email
-            instructed.
-          </li>
-          <li>
-            <span className='affsuc--next--step'>Step 3.</span> Boom! You are good to start earning
-            points. Easy. Right?
-          </li>
-        </ol>
-      </div>
-      <div className='affsuc--back--home--button'>
-        <CustomButton to={'/'}>Back to homepage</CustomButton>
-      </div>
-    </div>
-  );
+  // Show loading indicator or placeholder content while waiting for the data to be fetched
+  let affSucContent;
+  if (loading || !isDataFetched) {
+    affSucContent = <></>;
+  } else {
+    if (affFormPosted.affContextController.affEmail) {
+      affSucContent = <AffSucContentController1 />;
+    } else {
+      affSucContent = <AffSucContentController2 />;
+    }
+  }
+
+  return <div className='affsuc font-dmsans'>{affSucContent}</div>;
 };
 
 export default AffSuc;

@@ -6,24 +6,51 @@ import CustomButton from '../shared/components/FormElements/CustomButton';
 import useAuth from '../shared/hooks/useAuth';
 import { AffContext } from '../shared/context/AffContext';
 
-// You have already registered for the Affiliation Program. Please check your email inbox for the instructions to start earning points. If you have never registered, please contact us via the [object Object]
-
 const AffRule = () => {
   const { loggedIn, affiliation } = useAuth();
-  const [responseMsg, setResponseMsg] = useState(false);
+  // const [affRuleButtonController, setAffRuleButtonController] = useState();
   const { fetchUserAff } = useContext(AffContext);
-  const { affFormPosted, setAffFormPosted, loading, test, setTest } = useContext(AffContext);
+  const { affFormPosted, setAffFormPosted, loading, affState, setAffState } =
+    useContext(AffContext);
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
-    fetchUserAff;
-    setTest(1);
-  }, []);
-
-  useEffect(() => {
-    if (loggedIn && affFormPosted.affContextController.affEmail) {
-      setResponseMsg(true);
+    // You can check if the data is already available in affFormPosted
+    // If yes, set isDataFetched to true, otherwise fetch the data
+    if (affFormPosted) {
+      setIsDataFetched(true);
+    } else {
+      // Fetch the affiliation data
+      fetchUserAff().then(() => {
+        setIsDataFetched(true);
+      });
     }
-  }, [loggedIn, affFormPosted.affContextController]);
+    setAffState(1);
+  }, [affFormPosted, setAffState]);
+
+  let affRuleButton;
+  if (loading || !isDataFetched) {
+    affRuleButton = <></>;
+  } else {
+    if (!loggedIn) {
+      affRuleButton = <CustomButton to={'/auth'}>LOG IN TO REGISTER</CustomButton>;
+    } else {
+      if (affFormPosted.affContextController.affEmail) {
+        affRuleButton = (
+          <p className='error--msg'>
+            You have already registered for the Affiliation Program. Please check your email inbox
+            for the instructions to start earning points. If you have never registered, please
+            contact us via the{' '}
+            <NavLink to='/contact-us'>
+              <u>Inquiry Form</u>
+            </NavLink>
+          </p>
+        );
+      } else {
+        affRuleButton = <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>;
+      }
+    }
+  }
 
   return (
     <div className='affrule font-dmsans'>
@@ -49,28 +76,7 @@ const AffRule = () => {
           est laborum.
         </p>
       </div>
-      <div className='affrule--reg--button'>
-        {loggedIn ? (
-          responseMsg ? (
-            <p className='error--msg'>
-              You have already registered for the Affiliation Program. Please check your email inbox
-              for the instructions to start earning points. If you have never registered, please
-              contact us via the{' '}
-              <NavLink to='/contact-us'>
-                <u>Inquiry Form</u>
-              </NavLink>
-            </p>
-          ) : (
-            <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>
-          )
-        ) : (
-          <CustomButton to={'/auth'}>LOG IN TO REGISTER</CustomButton>
-        )}
-        {/* to={'/affiliation-registration'} */}
-      </div>
-      {/* {responseMsg && (
-        
-      )} */}
+      <div className='affrule--reg--button'>{affRuleButton}</div>
     </div>
   );
 };

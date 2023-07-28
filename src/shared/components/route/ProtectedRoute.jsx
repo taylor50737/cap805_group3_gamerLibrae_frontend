@@ -27,31 +27,18 @@ const ProtectedRoute = ({ required = {}, redirectPath = '/auth', children }) => 
     );
   }
   console.log(
-    `protected route: loading: ${loading} loggedIn: ${loggedIn}, admin: ${admin}, affiliation: ${affiliation}, affiliation: ${affiliation}, affiliationEnrolled: ${affFormPosted.affContextController.affEmail}`,
+    `protected route: loading: ${loading} loggedIn: ${loggedIn}, admin: ${admin}, affiliation: ${affiliation}, affiliationEnrolled: ${affFormPosted.affContextController.affEmail}`,
   );
   console.log(affFormPosted.affContextController.affEmail);
   if (
     (required.hasOwnProperty('loggedIn') && required.loggedIn != loggedIn) ||
     (required.hasOwnProperty('admin') && required.admin != admin) ||
     (required.hasOwnProperty('affiliationNotEnrolled') &&
-      affFormPosted.affContextController.affEmail) ||
-    (required.hasOwnProperty('affiliationEnrolled') && !affFormPosted.affContextController.affEmail)
+      affFormPosted.affContextController.affEmail)
   ) {
     console.log('protected route redirect to ' + redirectPath);
     return <Navigate to={redirectPath} replace />;
   }
-
-  // const test = async () => {
-  //   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-  //   await delay(1500);
-  //   if (
-  //     required.hasOwnProperty('affiliationEnrolled') &&
-  //     !affFormPosted.affContextController.affEmail
-  //   ) {
-  //     console.log('protected route redirect to ' + redirectPath);
-  //     return <Navigate to={redirectPath} replace />;
-  //   }
-  // };
 
   return children ? children : <Outlet />;
 };
