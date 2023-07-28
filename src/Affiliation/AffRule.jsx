@@ -97,7 +97,10 @@ const AffRule = () => {
             </li>
             <li>
               <span className='affrule--next--step'>Step 7.</span> When your audiences click through
-              the link and land on our page, you will get points. Once you drive 100 sessions
+              the link and land on our page, you will get points.
+            </li>
+            <li>
+              <span className='affrule--next--step'>Step 8.</span> Once you drive 100 sessions
               without bouncing, you will get 1 point.
             </li>
           </ol>
