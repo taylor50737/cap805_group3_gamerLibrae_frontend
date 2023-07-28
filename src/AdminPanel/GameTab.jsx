@@ -21,8 +21,11 @@ export default function GameTab({}) {
 
   useEffect(() => {
     fetchGames();
-    setFilteredGames(games);
   }, []);
+
+  useEffect(() => {
+    setFilteredGames(games);
+  }, [games]);
 
   //Search box
   const [search, setSearch] = useState('');

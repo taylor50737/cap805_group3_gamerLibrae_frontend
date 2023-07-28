@@ -18,8 +18,11 @@ export default function UserTab() {
 
   useEffect(() => {
     fetchUsers();
-    setFilteredUsers(users);
   }, []);
+
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
 
   //Search box
   const [search, setSearch] = useState('');
