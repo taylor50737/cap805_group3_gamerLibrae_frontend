@@ -55,7 +55,7 @@ export default function CommentTab() {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 7;
 
   useEffect(() => {
     fetchComments();
@@ -184,27 +184,29 @@ export default function CommentTab() {
       {comments.length == 0 ? (
         <div></div>
       ) : (
-        <div className='m-auto text-center'>
-          <div className='join flex justify-around'>
-            <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
-              «
-            </button>
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-              <button
-                key={pageNumber}
-                onClick={() => handlePageChange(pageNumber)}
-                className={
-                  pageNumber === currentPage
-                    ? 'btn-ghost btn-active join-item btn'
-                    : 'btn-ghost join-item btn'
-                }
-              >
-                {pageNumber}
+        <div className='absolute inset-x-0 bottom-[260px]'>
+          <div className='m-auto text-center'>
+            <div className='join flex justify-around'>
+              <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+                «
               </button>
-            ))}
-            <button className='btn-ghost join-item btn' onClick={goToNextPage}>
-              »
-            </button>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                <button
+                  key={pageNumber}
+                  onClick={() => handlePageChange(pageNumber)}
+                  className={
+                    pageNumber === currentPage
+                      ? 'btn-ghost btn-active join-item btn'
+                      : 'btn-ghost join-item btn'
+                  }
+                >
+                  {pageNumber}
+                </button>
+              ))}
+              <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+                »
+              </button>
+            </div>
           </div>
         </div>
       )}

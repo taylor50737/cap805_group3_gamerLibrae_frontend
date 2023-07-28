@@ -20,7 +20,35 @@ export default function UserTab() {
     fetchUsers();
   }, []);
 
-  const fields = ['ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
+
+  //Search box
+  const [search, setSearch] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
+  const handleSearch = (e) => {
+    const searchWord = e.target.value;
+    setSearch(searchWord);
+
+    if (searchWord.trim() === '') {
+      // If search input is empty, show all the games (no filter applied)
+      setFilteredUsers(users);
+    } else {
+      // Create a regular expression to match the search word as a whole word
+      const regex = new RegExp(`\\b${searchWord}`, 'i');
+
+      // Filter games based on partial word matches
+      const filteredUsers = users.filter((user) => regex.test(user.userName));
+
+      // Update the filteredGames state with the filtered games
+      setCurrentPage(1); // Reset to the first page when search changes
+      setFilteredUsers(filteredUsers);
+    }
+  };
+
+  const fields = ['', 'ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -28,7 +56,7 @@ export default function UserTab() {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = isLoading ? [] : users.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(users.length / itemsPerPage);
@@ -56,18 +84,24 @@ export default function UserTab() {
     <div>
       <div className='flex justify-end gap-5'>
         {/* <ActionButton selectedComments={selectedComments} /> */}
-        <input type='text' placeholder='Search' className='input-bordered input w-full max-w-xs' />
+        <input
+          value={search}
+          type='text'
+          placeholder='Search'
+          className='input-bordered input w-full max-w-xs'
+          onChange={handleSearch}
+        />
       </div>
       <div className='m-3 overflow-x-auto'>
         <table className='table'>
           {/* head */}
           <thead>
             <tr>
-              <th>
+              {/* <th>
                 <label>
                   <input type='checkbox' className='checkbox' />
                 </label>
-              </th>
+              </th> */}
               {fields.map((column) => (
                 <th key={column}>{column}</th>
               ))}
@@ -107,27 +141,29 @@ export default function UserTab() {
         </table>
       </div>
       {/* Pagination */}
-      <div className='m-auto text-center'>
-        <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
-            «
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={
-                pageNumber === currentPage
-                  ? 'btn-ghost btn-active join-item btn'
-                  : 'btn-ghost join-item btn'
-              }
-            >
-              {pageNumber}
+      <div className='absolute inset-x-0 bottom-[260px]'>
+        <div className='m-auto text-center'>
+          <div className='join flex justify-around'>
+            <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+              «
             </button>
-          ))}
-          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
-            »
-          </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={
+                  pageNumber === currentPage
+                    ? 'btn-ghost btn-active join-item btn'
+                    : 'btn-ghost join-item btn'
+                }
+              >
+                {pageNumber}
+              </button>
+            ))}
+            <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+              »
+            </button>
+          </div>
         </div>
       </div>
     </div>
