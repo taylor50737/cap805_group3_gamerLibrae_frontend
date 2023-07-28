@@ -7,6 +7,7 @@ const AuthProvider = ({ children }) => {
   const [accountInfo, setAccountInfo] = useState({
     userName: '',
     userId: '',
+    avatar: '',
     loggedIn: false,
     admin: false,
     affiliation: false,
@@ -30,6 +31,7 @@ const AuthProvider = ({ children }) => {
         loggedIn: false,
         userName: '',
         userId: '',
+        avatar: '',
         admin: false,
         affiliation: false,
       };
