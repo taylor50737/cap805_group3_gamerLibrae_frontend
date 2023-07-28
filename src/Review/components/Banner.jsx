@@ -8,6 +8,8 @@ import { faAnglesRight, faEllipsis, faFlag } from '@fortawesome/free-solid-svg-i
 import { Link } from 'react-router-dom';
 import { iso8601dateToString } from '../../shared/util/iso8601dateToString';
 
+import ReportModal from '../../Report/ReportModal';
+
 const breadCrumbSx = {
   color: 'white',
   fontSize: '20px',
@@ -62,9 +64,10 @@ const Banner = ({ review }) => {
       </Breadcrumbs>
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleClose} disableRipple>
-          <FontAwesomeIcon icon={faFlag} style={{ marginRight: '10px' }} />
-          Report
+        <MenuItem disableRipple>
+          {/* <FontAwesomeIcon icon={faFlag} style={{ marginRight: '10px' }} />
+          Report */}
+          <ReportModal type={'review'} id={review._id} />
         </MenuItem>
       </Menu>
 

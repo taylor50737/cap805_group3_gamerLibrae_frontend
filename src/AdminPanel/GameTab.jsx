@@ -1,9 +1,29 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NewButton from './components/NewButton';
+import { getGames } from '../shared/api/games';
 
-export default function GameTab({ games }) {
-  const fields = ['ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
+export default function GameTab({}) {
+  const [games, setGames] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
+
+  const fetchGames = async () => {
+    const searchParams = new URLSearchParams();
+    try {
+      const result = await getGames(searchParams);
+      const data = await result.json();
+      await setGames(data);
+      setIsloading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchGames();
+  }, []);
+
+  const fields = ['', 'ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedGames, setselectedGames] = useState([]);
@@ -12,7 +32,7 @@ export default function GameTab({ games }) {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = games.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : games.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(games.length / itemsPerPage);
@@ -66,37 +86,48 @@ export default function GameTab({ games }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((game, index) => (
-              <tr key={game._id}>
-                <th>
-                  <label>
-                    <input
-                      type='checkbox'
-                      className='checkbox'
-                      data-testid={`selected-game-${game._id}`}
-                      checked={selectedGames.includes(game._id)}
-                      onChange={() => {
-                        if (selectedGames.includes(game._id)) {
-                          setselectedGames((prevSelectedGames) =>
-                            prevSelectedGames.filter((id) => id !== game._id),
-                          );
-                        } else {
-                          setselectedGames((prevSelectedGames) => [...prevSelectedGames, game._id]);
-                        }
-                      }}
-                    />
-                  </label>
-                </th>
-                <td data-testid={`selected-game-${index + 1}`}>{indexOfFirstItem + index + 1}</td>
-                <td>
-                  <Link to={`/game/${game._id}`}>{game.name}</Link>
+            {isLoading ? (
+              <tr>
+                <td colSpan={fields.length} className='text-center'>
+                  <span className='loading loading-spinner loading-lg'></span>
                 </td>
-                <td>{game.developer}</td>
-                <td>{game.publisher}</td>
-                <td>{game.releaseDate}</td>
-                <td>{game.status}Public</td>
               </tr>
-            ))}
+            ) : (
+              currentItems.map((game, index) => (
+                <tr key={game._id}>
+                  <th>
+                    <label>
+                      <input
+                        type='checkbox'
+                        className='checkbox'
+                        data-testid={`selected-game-${game._id}`}
+                        checked={selectedGames.includes(game._id)}
+                        onChange={() => {
+                          if (selectedGames.includes(game._id)) {
+                            setselectedGames((prevSelectedGames) =>
+                              prevSelectedGames.filter((id) => id !== game._id),
+                            );
+                          } else {
+                            setselectedGames((prevSelectedGames) => [
+                              ...prevSelectedGames,
+                              game._id,
+                            ]);
+                          }
+                        }}
+                      />
+                    </label>
+                  </th>
+                  <td data-testid={`selected-game-${index + 1}`}>{indexOfFirstItem + index + 1}</td>
+                  <td>
+                    <Link to={`/game/${game._id}`}>{game.name}</Link>
+                  </td>
+                  <td>{game.developer}</td>
+                  <td>{game.publisher}</td>
+                  <td>{game.releaseDate}</td>
+                  <td>{game.status}Public</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

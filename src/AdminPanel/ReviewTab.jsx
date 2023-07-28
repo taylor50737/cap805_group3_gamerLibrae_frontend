@@ -1,7 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function ReviewTab({ reviews }) {
+export default function ReviewTab() {
+  const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/reviews/`);
+      const data = await res.json();
+      console.log(data);
+      await setReviews(data.users);
+      setIsloading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   const fields = ['Index', 'Review', 'User', 'Game', '#Comments', '#Reports', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,7 +29,7 @@ export default function ReviewTab({ reviews }) {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = reviews.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : reviews.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(reviews.length / itemsPerPage);
@@ -57,26 +76,34 @@ export default function ReviewTab({ reviews }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((review, index) => (
-              <tr key={index}>
-                <th>
-                  <label>
-                    <input type='checkbox' className='checkbox' />
-                  </label>
-                </th>
-                <td>{indexOfFirstItem + index + 1}</td>
-                <td>
-                  <Link to={`/game/${review.gameId}/review/${review._id}`}>
-                    {review.content.split('. ')[0]}...
-                  </Link>
+            {isLoading ? (
+              <tr>
+                <td colSpan={fields.length} className='text-center'>
+                  <span className='loading loading-spinner loading-lg'></span>
                 </td>
-                <td>Get user {review.userId}</td>
-                <td>Get game {review.gameId}</td>
-                <td>{review.comments.length}</td>
-                <td>{review.reviewReportCount}</td>
-                <td>{review.reviewStatus}</td>
               </tr>
-            ))}
+            ) : (
+              currentItems.map((review, index) => (
+                <tr key={index}>
+                  <th>
+                    <label>
+                      <input type='checkbox' className='checkbox' />
+                    </label>
+                  </th>
+                  <td>{indexOfFirstItem + index + 1}</td>
+                  <td>
+                    <Link to={`/game/${review.gameId}/review/${review._id}`}>
+                      {review.content.split('. ')[0]}...
+                    </Link>
+                  </td>
+                  <td>Get user {review.userId}</td>
+                  <td>Get game {review.gameId}</td>
+                  <td>{review.comments.length}</td>
+                  <td>{review.reviewReportCount}</td>
+                  <td>{review.reviewStatus}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

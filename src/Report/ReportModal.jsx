@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFlag } from '@fortawesome/free-solid-svg-icons';
+import useAuth from '../shared/hooks/useAuth';
+import { now } from 'lodash';
 
-export default function ReportModal(type, id) {
+export default function ReportModal({ type, id }) {
   const [report, setReport] = useState('');
   const [empty, setEmpty] = useState(true);
+  const { ...accountInfo } = useAuth();
 
   useEffect(() => {
     if (report.length > 0) setEmpty(false);
@@ -12,17 +17,54 @@ export default function ReportModal(type, id) {
     setEmpty(report.length === 0);
   }, [report]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    let body;
+    if (type === 'review') {
+      const reportDateTime = new Date();
+      const reportContent = report;
+      const creator = accountInfo.userId;
+      const review = id;
+      body = {
+        reportDateTime: reportDateTime,
+        reportContent: reportContent,
+        creator: creator,
+        review: review,
+      };
+    } else if (type === 'comment') {
+      const reportDateTime = new Date();
+      const reportContent = report;
+      const creator = accountInfo.userId;
+      const comment = id;
+      body = {
+        reportDateTime: reportDateTime,
+        reportContent: reportContent,
+        creator: creator,
+        comment: comment,
+      };
+    }
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/reports/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (res.ok) {
+        console.log(res.json());
+      }
+    } catch (error) {
+      console.log(error);
+    }
     setReport('');
   };
 
   return (
     <>
       {/* Open the modal using ID.showModal() method */}
-      <button
-        className='btn rounded-full border-none bg-red-900 hover:bg-red-900'
-        onClick={() => window.report_modal.showModal()}
-      >
+      <button onClick={() => window.report_modal.showModal()}>
+        <FontAwesomeIcon icon={faFlag} style={{ marginRight: '10px' }} />
         Report
       </button>
       <dialog id='report_modal' className='modal modal-bottom m-auto max-w-sm sm:modal-middle'>
