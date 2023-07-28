@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function CommentTab() {
   const fields = ['', 'Index', 'Comment', 'Creator', '#Reports', 'Status'];
-
+  const [isLoading, setIsloading] = useState(true);
   const [comments, setComments] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
@@ -12,7 +12,8 @@ export default function CommentTab() {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/comments/`);
       const data = await res.json();
-      setComments(data.comments);
+      await setComments(data.comments);
+      setIsloading(false);
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +64,7 @@ export default function CommentTab() {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = comments.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : comments.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(comments.length / itemsPerPage);
@@ -135,38 +136,47 @@ export default function CommentTab() {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((comment, index) => (
-              <tr key={index}>
-                <th>
-                  <input
-                    type='checkbox'
-                    className='checkbox'
-                    checked={selectedComments.includes(comment.id)}
-                    onChange={() => {
-                      if (selectedComments.includes(comment.id)) {
-                        setSelectedComments((prevSelectedComments) =>
-                          prevSelectedComments.filter((id) => id !== comment.id),
-                        );
-                      } else {
-                        setSelectedComments((prevSelectedComments) => [
-                          ...prevSelectedComments,
-                          comment.id,
-                        ]);
-                      }
-                    }}
-                  />
-                </th>
-                <td>{indexOfFirstItem + index + 1}</td>
-                <td>
-                  <Link to={`/profile/${comment.commentUserId}`}>
-                    {comment.comment.split('. ')[0]}...
-                  </Link>
+            {/* row */}
+            {isLoading ? (
+              <tr>
+                <td colSpan={fields.length} className='text-center'>
+                  <span className='loading loading-spinner loading-lg'></span>
                 </td>
-                <td>{comment.creator}</td>
-                <td>{comment.reports?.length || 0}</td>
-                <td>{comment.status}</td>
               </tr>
-            ))}
+            ) : (
+              currentItems.map((comment, index) => (
+                <tr key={index}>
+                  <th>
+                    <input
+                      type='checkbox'
+                      className='checkbox'
+                      checked={selectedComments.includes(comment.id)}
+                      onChange={() => {
+                        if (selectedComments.includes(comment.id)) {
+                          setSelectedComments((prevSelectedComments) =>
+                            prevSelectedComments.filter((id) => id !== comment.id),
+                          );
+                        } else {
+                          setSelectedComments((prevSelectedComments) => [
+                            ...prevSelectedComments,
+                            comment.id,
+                          ]);
+                        }
+                      }}
+                    />
+                  </th>
+                  <td>{indexOfFirstItem + index + 1}</td>
+                  <td>
+                    <Link to={`/profile/${comment.commentUserId}`}>
+                      {comment.comment.split('. ')[0]}...
+                    </Link>
+                  </td>
+                  <td>{comment.creator}</td>
+                  <td>{comment.reports?.length || 0}</td>
+                  <td>{comment.status}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
