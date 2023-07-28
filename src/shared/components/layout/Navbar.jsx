@@ -58,33 +58,35 @@ const pages = [
   },
 ];
 
-const publicSettings = [
-  { id: 1, name: 'Sign in', url: '/auth' },
-  { id: 2, name: 'Forgot Password', url: '/auth/forgot-password' },
-];
-
-const memberSettings = [
-  { id: 1, name: 'Member Panel', url: '/member/u2' },
-  { id: 2, name: 'Wishlist', url: '/member/u2/wishlist' },
-  { id: 3, name: 'Change Info', url: '/member/u2/change-info' },
-  { id: 4, name: 'Change Password', url: '/member/u2/change-password' },
-  { id: 5, name: 'Upload Profile Picture', url: '/member/u2/upload-profile-pic' },
-];
-
-const adminSettings = [
-  { id: 1, name: 'Admin Panel', url: '/admin-panel' },
-  { id: 2, name: 'Member Panel', url: '/member/u1' },
-  { id: 3, name: 'Wishlist', url: '/member/u1/wishlist' },
-  { id: 4, name: 'Change Info', url: '/member/u1/change-info' },
-  { id: 5, name: 'Change Password', url: '/member/u1/change-password' },
-  { id: 6, name: 'Upload Profile Picture', url: '/member/u1/upload-profile-pic' },
-];
-
 export const Navbar = () => {
-  const { userName, loggedIn, admin, loading, handleLogout } = useAuth();
+  const { userName, loggedIn, admin, loading, handleLogout, ...accountInfo } = useAuth();
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const userId = accountInfo.userId;
+
+  const publicSettings = [
+    { id: 1, name: 'Sign in', url: '/auth' },
+    { id: 2, name: 'Forgot Password', url: '/auth/forgot-password' },
+  ];
+
+  const memberSettings = [
+    { id: 1, name: 'Member Panel', url: `/member/${userId}` },
+    { id: 2, name: 'Wishlist', url: `/member/${userId}/wishlist` },
+    { id: 3, name: 'Change Info', url: `/member/${userId}/change-info` },
+    { id: 4, name: 'Change Password', url: `/member/${userId}/change-password` },
+    { id: 5, name: 'Upload Profile Picture', url: `/member/${userId}/upload-profile-pic` },
+  ];
+
+  const adminSettings = [
+    { id: 1, name: 'Admin Panel', url: '/admin-panel' },
+    { id: 2, name: 'Member Panel', url: `/member/${userId}` },
+    { id: 3, name: 'Wishlist', url: `/member/${userId}/wishlist` },
+    { id: 4, name: 'Change Info', url: `/member/${userId}/change-info` },
+    { id: 5, name: 'Change Password', url: `/member/${userId}/change-password` },
+    { id: 6, name: 'Upload Profile Picture', url: `/member/${userId}/upload-profile-pic` },
+  ];
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
