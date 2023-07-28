@@ -59,12 +59,10 @@ const pages = [
 ];
 
 export const Navbar = () => {
-  const { userName, loggedIn, admin, loading, handleLogout, ...accountInfo } = useAuth();
+  const { userName, loggedIn, admin, loading, handleLogout, userId, avatar } = useAuth();
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
-  const userId = accountInfo.userId;
 
   const publicSettings = [
     { id: 1, name: 'Sign in', url: '/auth' },
@@ -146,14 +144,7 @@ export const Navbar = () => {
           {loading ? (
             <CircularProgress sx={{ color: 'gray' }} />
           ) : loggedIn ? (
-            <Avatar
-              src={
-                admin
-                  ? 'https://robohash.org/etimpeditcorporis.png?size=50x50&set=set1'
-                  : 'https://robohash.org/nisiiustoomnis.png?size=50x50&set=set1'
-              }
-              alt={loggedIn ? userName : 'Visitor'}
-            />
+            <Avatar src={avatar} alt={loggedIn ? userName : 'Visitor'} />
           ) : (
             <FontAwesomeIcon icon={faUser} style={{ color: '#ffffff' }} />
           )}
