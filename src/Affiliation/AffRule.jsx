@@ -8,46 +8,48 @@ import { AffContext } from '../shared/context/AffContext';
 
 const AffRule = () => {
   const { loggedIn, affiliation } = useAuth();
-  const [affRuleButtonController, setAffRuleButtonController] = useState();
+  // const [affRuleButtonController, setAffRuleButtonController] = useState();
   const { fetchUserAff } = useContext(AffContext);
   const { affFormPosted, setAffFormPosted, loading, affState, setAffState } =
     useContext(AffContext);
+  const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
-    fetchUserAff;
-    setAffState(1);
-  }, []);
-
-  useEffect(() => {
-    if (!loggedIn) {
-      setAffRuleButtonController(1);
+    // You can check if the data is already available in affFormPosted
+    // If yes, set isDataFetched to true, otherwise fetch the data
+    if (affFormPosted) {
+      setIsDataFetched(true);
     } else {
-      if (affFormPosted.affContextController.affEmail) {
-        setAffRuleButtonController(2);
-      } else {
-        setAffRuleButtonController(3);
-      }
+      // Fetch the affiliation data
+      fetchUserAff().then(() => {
+        setIsDataFetched(true);
+      });
     }
-  }, [loggedIn, affFormPosted.affContextController]);
+    setAffState(1);
+  }, [affFormPosted, setAffState]);
 
   let affRuleButton;
-  if (affRuleButtonController == 1) {
-    affRuleButton = <CustomButton to={'/auth'}>LOG IN TO REGISTER</CustomButton>;
-  }
-  if (affRuleButtonController == 2) {
-    affRuleButton = (
-      <p className='error--msg'>
-        You have already registered for the Affiliation Program. Please check your email inbox for
-        the instructions to start earning points. If you have never registered, please contact us
-        via the{' '}
-        <NavLink to='/contact-us'>
-          <u>Inquiry Form</u>
-        </NavLink>
-      </p>
-    );
-  }
-  if (affRuleButtonController == 3) {
-    affRuleButton = <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>;
+  if (loading || !isDataFetched) {
+    affRuleButton = <></>;
+  } else {
+    if (!loggedIn) {
+      affRuleButton = <CustomButton to={'/auth'}>LOG IN TO REGISTER</CustomButton>;
+    } else {
+      if (affFormPosted.affContextController.affEmail) {
+        affRuleButton = (
+          <p className='error--msg'>
+            You have already registered for the Affiliation Program. Please check your email inbox
+            for the instructions to start earning points. If you have never registered, please
+            contact us via the{' '}
+            <NavLink to='/contact-us'>
+              <u>Inquiry Form</u>
+            </NavLink>
+          </p>
+        );
+      } else {
+        affRuleButton = <CustomButton to={'/affiliation-registration'}>REGISTER</CustomButton>;
+      }
+    }
   }
 
   return (
