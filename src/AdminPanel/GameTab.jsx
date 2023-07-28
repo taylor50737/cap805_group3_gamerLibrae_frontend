@@ -21,8 +21,34 @@ export default function GameTab({}) {
 
   useEffect(() => {
     fetchGames();
+    setFilteredGames(games);
   }, []);
 
+  //Search box
+  const [search, setSearch] = useState('');
+  const [filteredGames, setFilteredGames] = useState([]);
+
+  const handleSearch = (e) => {
+    const searchWord = e.target.value;
+    setSearch(searchWord);
+
+    if (searchWord.trim() === '') {
+      // If search input is empty, show all the games (no filter applied)
+      setFilteredGames(games);
+    } else {
+      // Create a regular expression to match the search word as a whole word
+      const regex = new RegExp(`\\b${searchWord}`, 'i');
+
+      // Filter games based on partial word matches
+      const filteredGames = games.filter((game) => regex.test(game.name));
+
+      // Update the filteredGames state with the filtered games
+      setCurrentPage(1); // Reset to the first page when search changes
+      setFilteredGames(filteredGames);
+    }
+  };
+
+  //Table variables
   const fields = ['', 'ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +58,7 @@ export default function GameTab({}) {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = isLoading ? [] : games.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : filteredGames.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(games.length / itemsPerPage);
@@ -63,9 +89,11 @@ export default function GameTab({}) {
         <div>
           {/* <ActionButton selectedComments={selectedComments} /> */}
           <input
+            value={search}
             type='text'
             placeholder='Search'
             className='input-bordered input w-full max-w-xs'
+            onChange={handleSearch}
           />
         </div>
       </div>
@@ -132,27 +160,29 @@ export default function GameTab({}) {
         </table>
       </div>
       {/* Pagination */}
-      <div className='m-auto text-center'>
-        <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
-            «
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={
-                pageNumber === currentPage
-                  ? 'btn-ghost btn-active join-item btn'
-                  : 'btn-ghost join-item btn'
-              }
-            >
-              {pageNumber}
+      <div className='absolute inset-x-0 bottom-[260px] '>
+        <div className='m-auto text-center'>
+          <div className='join flex justify-around'>
+            <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+              «
             </button>
-          ))}
-          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
-            »
-          </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={
+                  pageNumber === currentPage
+                    ? 'btn-ghost btn-active join-item btn'
+                    : 'btn-ghost join-item btn'
+                }
+              >
+                {pageNumber}
+              </button>
+            ))}
+            <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+              »
+            </button>
+          </div>
         </div>
       </div>
     </div>
