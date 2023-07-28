@@ -44,11 +44,11 @@ export default function AdminPanel() {
 
       <div className='mx-10 mt-20'>
         <div className='absolute text-xl'>{currentTab}</div>
-        {currentTab === 'Game' && <GameTab games={games} />}
-        {currentTab === 'User' && <UserTab users={users} />}
-        {currentTab === 'Review' && <ReviewTab reviews={reviews} />}
-        {currentTab === 'Comment' && <CommentTab reviews={reviews} />}
-        {currentTab === 'Report' && <ReportTab reviews={reviews} />}
+        {currentTab === 'Game' && <GameTab />}
+        {currentTab === 'User' && <UserTab />}
+        {currentTab === 'Review' && <ReviewTab />}
+        {currentTab === 'Comment' && <CommentTab />}
+        {currentTab === 'Report' && <ReportTab />}
       </div>
     </div>
   );

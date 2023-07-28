@@ -3,6 +3,9 @@
     max-width: 80vw;
     padding-left: 10vw;
   }
+  .affsuc--next--step {
+    display: block !important;
+  }
 }
 
 .affrule--block {
@@ -11,6 +14,11 @@
 
 .affrule--para {
   padding-top: 1rem;
+  line-height: 1.5rem;
+}
+
+.affrule--about--aff {
+  max-width: 80%;
 }
 
 .affrule--reg--button {

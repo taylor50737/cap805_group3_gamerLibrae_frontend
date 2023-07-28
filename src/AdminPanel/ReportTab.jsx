@@ -1,37 +1,35 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function ReportTab({ reviews }) {
-  const fields = ['ID', 'Report', 'User', 'Status'];
+export default function ReportTab() {
+  const [reports, setReports] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/reports/`);
+      const data = await res.json();
+      console.log(data);
+      await setReports(data.reports);
+      setIsloading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fields = ['', 'ID', 'Report', 'User', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
-  // Filter out all reports
-  const [reports, setReports] = useState([]);
-
-  useEffect(() => {
-    const extractedReports = [];
-
-    for (let i = 0; i < reviews.length; i++) {
-      const review = reviews[i];
-      const reviewReports = review.reports;
-
-      if (reviewReports) {
-        for (let j = 0; j < reviewReports.length; j++) {
-          const report = reviewReports[j];
-          extractedReports.push(report);
-        }
-      }
-    }
-
-    setReports(extractedReports);
-  }, [reviews]);
-
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = reports.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : reports.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(reports.length / itemsPerPage);
@@ -66,11 +64,11 @@ export default function ReportTab({ reviews }) {
           {/* head */}
           <thead>
             <tr>
-              <th>
+              {/* <th>
                 <label>
                   <input type='checkbox' className='checkbox' />
                 </label>
-              </th>
+              </th> */}
               {fields.map((column) => (
                 <th key={column}>{column}</th>
               ))}
@@ -78,46 +76,56 @@ export default function ReportTab({ reviews }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((report, index) => (
-              <tr key={index}>
-                <th>
-                  <label>
-                    <input type='checkbox' className='checkbox' />
-                  </label>
-                </th>
-                <td>{indexOfFirstItem + index + 1}</td>
-                <Link to={`/profile/${report.report_userId}`}>
-                  <td>{report.report}</td>
-                </Link>
-                <td>{report.report_userId}</td>
-                <td>{report.status}Reviewed</td>
+            {isLoading ? (
+              <tr>
+                <td colSpan={fields.length} className='text-center'>
+                  <span className='loading loading-spinner loading-lg'></span>
+                </td>
               </tr>
-            ))}
+            ) : (
+              currentItems.map((report, index) => (
+                <tr key={index}>
+                  <th>
+                    <label>
+                      <input type='checkbox' className='checkbox' />
+                    </label>
+                  </th>
+                  <td>{indexOfFirstItem + index + 1}</td>
+                  <Link to={`/profile/${report.report_userId}`}>
+                    <td>{report.reportContent}</td>
+                  </Link>
+                  <td>{report.creator}</td>
+                  <td>{report.status}Reviewed</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
       {/* Pagination */}
-      <div className='m-auto text-center'>
-        <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
-            «
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={
-                pageNumber === currentPage
-                  ? 'btn-ghost btn-active join-item btn'
-                  : 'btn-ghost join-item btn'
-              }
-            >
-              {pageNumber}
+      <div className='absolute inset-x-0 bottom-[260px]'>
+        <div className='m-auto text-center'>
+          <div className='join flex justify-around'>
+            <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+              «
             </button>
-          ))}
-          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
-            »
-          </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={
+                  pageNumber === currentPage
+                    ? 'btn-ghost btn-active join-item btn'
+                    : 'btn-ghost join-item btn'
+                }
+              >
+                {pageNumber}
+              </button>
+            ))}
+            <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+              »
+            </button>
+          </div>
         </div>
       </div>
     </div>

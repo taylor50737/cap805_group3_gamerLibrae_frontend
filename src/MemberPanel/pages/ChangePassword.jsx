@@ -26,7 +26,26 @@ const ChangePassword = () => {
   );
   const changePWSubmitHandler = (event) => {
     event.preventDefault();
-    setResponseMsg('You have successfully changed your password!');
+    try {
+      fetch(`${import.meta.env.VITE_API_PATH}/api/users/change-password`, {
+        method: 'PATCH',
+        credentials: 'include',
+        body: JSON.stringify({
+          currentPassword: formState.inputs.currentPassword.value,
+          newPassword: formState.inputs.newPassword.value,
+          confirmPassword: formState.inputs.confirmPassword.value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setResponseMsg(json.message);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

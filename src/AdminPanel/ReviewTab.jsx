@@ -1,8 +1,80 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function ReviewTab({ reviews }) {
-  const fields = ['Index', 'Review', 'User', 'Game', '#Comments', '#Reports', 'Status'];
+export default function ReviewTab() {
+  const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
+
+  const getUser = async (userId) => {
+    return fetch(`${import.meta.env.VITE_API_PATH}/api/users/${userId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
+  const getGame = async (gameId) => {
+    return fetch(`${import.meta.env.VITE_API_PATH}/api/games/${gameId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
+  const fetchReviews = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/reviews/`);
+      let data = await res.json();
+      data = await getUserName(data.reviews);
+      data = await getGameName(data);
+      await setReviews(data);
+      setIsloading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getUserName = async (data) => {
+    let newData = [...data]; // Create a new array to avoid mutating the original data
+    for (let i = 0; i < newData.length; i++) {
+      let userName;
+      try {
+        const res = await getUser(newData[i].creator);
+        const user = await res.json();
+        userName = user.user.userName;
+        newData[i].creatorName = userName; // Add the 'creatorName' property to the review object
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return newData;
+  };
+
+  const getGameName = async (data) => {
+    let newData = [...data]; // Create a new array to avoid mutating the original data
+    for (let i = 0; i < newData.length; i++) {
+      let gameName;
+      try {
+        const res = await getGame(newData[i].game);
+        const game = await res.json();
+        gameName = game.name;
+        newData[i].gameName = gameName; // Add the 'creatorName' property to the review object
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return newData;
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  const fields = ['', 'Index', 'Review', 'Creator', 'Game', '#Comments', '#Reports', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -10,7 +82,7 @@ export default function ReviewTab({ reviews }) {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = reviews.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : reviews.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(reviews.length / itemsPerPage);
@@ -45,11 +117,11 @@ export default function ReviewTab({ reviews }) {
           {/* head */}
           <thead>
             <tr>
-              <th>
+              {/* <th>
                 <label>
                   <input type='checkbox' className='checkbox' />
                 </label>
-              </th>
+              </th> */}
               {fields.map((column) => (
                 <th key={column}>{column}</th>
               ))}
@@ -57,51 +129,63 @@ export default function ReviewTab({ reviews }) {
           </thead>
           <tbody>
             {/* row */}
-            {currentItems.map((review, index) => (
-              <tr key={index}>
-                <th>
-                  <label>
-                    <input type='checkbox' className='checkbox' />
-                  </label>
-                </th>
-                <td>{indexOfFirstItem + index + 1}</td>
-                <td>
-                  <Link to={`/game/${review.gameId}/review/${review._id}`}>
-                    {review.content.split('. ')[0]}...
-                  </Link>
+            {isLoading ? (
+              <tr>
+                <td colSpan={fields.length} className='text-center'>
+                  <span className='loading loading-spinner loading-lg'></span>
                 </td>
-                <td>Get user {review.userId}</td>
-                <td>Get game {review.gameId}</td>
-                <td>{review.comments.length}</td>
-                <td>{review.reviewReportCount}</td>
-                <td>{review.reviewStatus}</td>
               </tr>
-            ))}
+            ) : (
+              currentItems.map((review, index) => (
+                <tr key={index}>
+                  <th>
+                    <label>
+                      <input type='checkbox' className='checkbox' />
+                    </label>
+                  </th>
+                  <td>{indexOfFirstItem + index + 1}</td>
+                  <td>
+                    <Link to={`/game/${review.gameId}/review/${review._id}`}>
+                      {review.content.length > 10
+                        ? review.content.substring(0, 10) + '...'
+                        : review.content}
+                    </Link>
+                  </td>
+                  <td>{review.creatorName}</td>
+                  <td>{review.gameName}</td>
+                  <td>{review.comments.length}</td>
+                  <td>{review.reports.length}</td>
+                  <td>{review.status}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
       {/* Pagination */}
-      <div className='m-auto text-center'>
-        <div className='join flex justify-around'>
-          <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
-            «
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={
-                pageNumber === currentPage
-                  ? 'btn-ghost btn-active join-item btn'
-                  : 'btn-ghost join-item btn'
-              }
-            >
-              {pageNumber}
+      <div className='absolute inset-x-0 bottom-[260px]'>
+        <div className='m-auto text-center'>
+          <div className='join flex justify-around'>
+            <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
+              «
             </button>
-          ))}
-          <button className='btn-ghost join-item btn' onClick={goToNextPage}>
-            »
-          </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={
+                  pageNumber === currentPage
+                    ? 'btn-ghost btn-active join-item btn'
+                    : 'btn-ghost join-item btn'
+                }
+              >
+                {pageNumber}
+              </button>
+            ))}
+            <button className='btn-ghost join-item btn' onClick={goToNextPage}>
+              »
+            </button>
+          </div>
         </div>
       </div>
     </div>
