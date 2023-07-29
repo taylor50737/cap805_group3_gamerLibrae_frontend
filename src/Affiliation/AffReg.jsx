@@ -60,7 +60,7 @@ const AffReg = ({ sucPost }) => {
 
   const submitAffRegForm = async (event) => {
     event.preventDefault();
-    if (channelUrl.isValid && email.isValid && isTncChecked) {
+    if (formState.inputs.channelUrl.isValid && formState.inputs.email.isValid && isTncChecked) {
       try {
         const affRegistrationResponse = await fetch(
           `${import.meta.env.VITE_API_PATH}/api/affiliations/`,
