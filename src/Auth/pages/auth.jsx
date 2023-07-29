@@ -14,6 +14,7 @@ import './auth.css';
 import useAuth from '../../shared/hooks/useAuth';
 
 const Auth = () => {
+  const [error, setError] = useState(null);
   const { handleLogin, handleRegister } = useAuth();
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formState, inputHandler, setFormData] = CustomUseForm(
@@ -59,13 +60,17 @@ const Auth = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const authSubmitHandler = (event) => {
+  const authSubmitHandler = async (event) => {
     event.preventDefault();
     if (isLoginMode) {
-      handleLogin({
+      const errorMsg = await handleLogin({
         email: formState.inputs.email.value,
         password: formState.inputs.password.value,
       });
+
+      if (errorMsg) {
+        setError(errorMsg);
+      }
     } else {
       handleRegister({
         userName: formState.inputs.userName.value,
@@ -142,6 +147,7 @@ const Auth = () => {
             {isLoginMode ? 'Sign Up' : 'Log In'}
           </CustomTextButton>
         </div>
+        {error && <p className='error--msg'>{error}</p>}
       </form>
     </div>
   );
