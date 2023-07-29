@@ -6,7 +6,7 @@
 
 .auth {
   font-family: 'DM Sans', sans-serif;
-  margin: 5rem 0;
+  margin-top: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,4 +42,8 @@
   font-size: 0.875rem;
   letter-spacing: 0.02857em;
   line-height: 1.75;
+}
+
+.error--msg {
+  margin-top: 2rem;
 }

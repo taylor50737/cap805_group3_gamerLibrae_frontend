@@ -79,6 +79,9 @@ const AuthProvider = ({ children }) => {
       console.log('log in success');
       fetchAuthMe();
       redirect('/');
+    } else {
+      const resJson = await loginResponse.json();
+      return resJson.error;
     }
   };
 
