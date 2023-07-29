@@ -60,32 +60,36 @@ const AffReg = ({ sucPost }) => {
 
   const submitAffRegForm = async (event) => {
     event.preventDefault();
-    try {
-      const affRegistrationResponse = await fetch(
-        `${import.meta.env.VITE_API_PATH}/api/affiliations/`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            Accept: 'application/json',
-            'Content-type': 'application/json; charset=UTF-8',
+    if (channelUrl.isValid && email.isValid && isTncChecked) {
+      try {
+        const affRegistrationResponse = await fetch(
+          `${import.meta.env.VITE_API_PATH}/api/affiliations/`,
+          {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              Accept: 'application/json',
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify({
+              affChannelURL: formState.inputs.channelUrl.value,
+              affEmail: formState.inputs.email.value,
+            }),
           },
-          body: JSON.stringify({
-            affChannelURL: formState.inputs.channelUrl.value,
-            affEmail: formState.inputs.email.value,
-          }),
-        },
-      );
+        );
 
-      if (affRegistrationResponse.status === 201) {
-        navigate('/affiliation-suc');
-      } else {
-        const resJson = await affRegistrationResponse.json();
-        console.log(resJson.message);
-        setResponseMsg(resJson.message);
+        if (affRegistrationResponse.status === 201) {
+          navigate('/affiliation-suc');
+        } else {
+          const resJson = await affRegistrationResponse.json();
+          console.log(resJson.message);
+          setResponseMsg(resJson.message);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      setResponseMsg('Invalid input found or the T&C checkbox has not been checked.');
     }
   };
 
