@@ -69,42 +69,40 @@ const AffRule = () => {
         </p>
       </div>
       <div className='affrule--block'>
-        <h1 className='text-2xl'>What to do</h1>
-        <p className='affrule--para'>
-          <ol>
-            <li>
-              <span className='affrule--next--step'>Step 1.</span> Click on the button below.
-            </li>
-            <li>
-              <span className='affrule--next--step'>Step 2.</span> Fill in the form by providing us
-              your channel URL and email address.
-            </li>
-            <li>
-              <span className='affrule--next--step'>Step 3.</span> Check your registered email
-              mailbox for the verification steps.
-            </li>
-            <li>
-              <span className='affrule--next--step'>Step 4.</span> Get yourself verified as the
-              email instructed.
-            </li>
-            <li>
-              <span className='affrule--next--step'>Step 5.</span> Boom! You are good to start
-              earning points. Easy. Right?
-            </li>
-            <li>
-              <span className='affrule--next--step'>Step 6.</span> Put the affiliate link on your
-              videos.
-            </li>
-            <li>
-              <span className='affrule--next--step'>Step 7.</span> When your audiences click through
-              the link and land on our page, you will get points.
-            </li>
-            <li>
-              <span className='affrule--next--step'>Step 8.</span> Once you drive 100 sessions
-              without bouncing, you will get 1 point.
-            </li>
-          </ol>
-        </p>
+        <h1 className='affrule--next--title text-2xl'>What to do</h1>
+        <ol className='affrule--next--list'>
+          <li>
+            <span className='affrule--next--step'>Step 1.</span> Click on the button below.
+          </li>
+          <li>
+            <span className='affrule--next--step'>Step 2.</span> Fill in the form by providing us
+            your channel URL and email address.
+          </li>
+          <li>
+            <span className='affrule--next--step'>Step 3.</span> Check your registered email mailbox
+            for the verification steps.
+          </li>
+          <li>
+            <span className='affrule--next--step'>Step 4.</span> Get yourself verified as the email
+            instructed.
+          </li>
+          <li>
+            <span className='affrule--next--step'>Step 5.</span> Boom! You are good to start earning
+            points. Easy. Right?
+          </li>
+          <li>
+            <span className='affrule--next--step'>Step 6.</span> Put the affiliate link on your
+            videos.
+          </li>
+          <li>
+            <span className='affrule--next--step'>Step 7.</span> When your audiences click through
+            the link and land on our page, you will get points.
+          </li>
+          <li>
+            <span className='affrule--next--step'>Step 8.</span> Once you drive 100 sessions without
+            bouncing, you will get 1 point.
+          </li>
+        </ol>
       </div>
       <div className='affrule--reg--button'>{affRuleButton}</div>
     </div>
