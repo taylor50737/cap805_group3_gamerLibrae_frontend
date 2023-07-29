@@ -80,3 +80,7 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+.error--msg {
+  margin-bottom: 2rem !important;
+}
