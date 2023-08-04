@@ -3,8 +3,34 @@
     max-width: 80vw;
     padding-left: 10vw;
   }
-  .affsuc--next--step {
+  .affrule--next--step {
     display: block !important;
+  }
+
+  .affrule--about--aff {
+    max-width: 100% !important;
+  }
+
+  .affrule--next--step {
+    display: block !important;
+  }
+
+  .affrule--next--list {
+    padding-left: 0 !important;
+  }
+
+  .affrule,
+  .affrule--next--title,
+  .affrule--next--list {
+    text-align: center;
+  }
+
+  .affrule--next--list li:nth-of-type(1) {
+    padding-top: 0;
+  }
+
+  .affrule--next--list li {
+    padding-top: 1.5rem;
   }
 }
 
@@ -26,6 +52,10 @@
   justify-content: center;
   margin-top: 2rem;
   margin-bottom: 3rem;
+}
+
+.affrule--next--list {
+  padding: 1rem 0 0 0.5rem;
 }
 
 .error--msg {

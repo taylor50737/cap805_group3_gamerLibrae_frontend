@@ -103,7 +103,7 @@ export default function ReportTab() {
         </table>
       </div>
       {/* Pagination */}
-      <div className='absolute inset-x-0 bottom-[260px]'>
+      <div className=''>
         <div className='m-auto text-center'>
           <div className='join flex justify-around'>
             <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>

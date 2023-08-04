@@ -168,7 +168,7 @@ export default function CommentTab() {
                   <td>{indexOfFirstItem + index + 1}</td>
                   <td>
                     <Link to={`/profile/${comment.commentUserId}`}>
-                      {comment.comment.split('. ')[0]}...
+                      {comment.content.split('. ')[0]}...
                     </Link>
                   </td>
                   <td>{comment.creator}</td>
@@ -184,7 +184,7 @@ export default function CommentTab() {
       {comments.length == 0 ? (
         <div></div>
       ) : (
-        <div className='absolute inset-x-0 bottom-[260px]'>
+        <div className=''>
           <div className='m-auto text-center'>
             <div className='join flex justify-around'>
               <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>

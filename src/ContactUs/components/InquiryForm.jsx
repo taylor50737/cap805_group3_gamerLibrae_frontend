@@ -15,47 +15,19 @@ import InquiryFormTextFieldProps from './InquiryFormTextFieldProps';
 
 const InquiryForm = () => {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
   const form = useRef();
-
-  const handleFormSubmitted = (val) => {
-    setIsFormSubmitted(val);
-  };
-
-  const submitInquiryForm = (e) => {
-    handleFormSubmitted(true);
-    e.preventDefault();
-    emailjs
-      .sendForm('test1', 'ToTeamTemplete', form.current, 'zJsaM-W6CGcYtmZxM')
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        },
-      )
-      .then(
-        emailjs.sendForm('test1', 'ToInquirerTemplate', form.current, 'zJsaM-W6CGcYtmZxM').then(
-          (result) => {
-            console.log(result.text);
-          },
-          (error) => {
-            console.log(error.text);
-          },
-        ),
-      );
-  };
 
   const [formState, inputHandler, setFormData, resetForm] = CustomUseForm(
     {
       inquiryAreas: {
         value: 0,
       },
-      name: {
+      inquirerName: {
         value: '',
         isValid: false,
       },
-      email: {
+      inquirerEmail: {
         value: '',
         isValid: false,
       },
@@ -70,6 +42,44 @@ const InquiryForm = () => {
     },
     false,
   );
+
+  const submitInquiryForm = (e) => {
+    e.preventDefault();
+    if (
+      formState.inputs.inquirerName.isValid &&
+      formState.inputs.inquirerEmail.isValid &&
+      formState.inputs.subjectLine.isValid &&
+      formState.inputs.message.isValid
+    ) {
+      // handleFormSubmitted(true);
+      setIsFormSubmitted(true);
+      emailjs
+        .sendForm('test1', 'ToTeamTemplete', form.current, 'zJsaM-W6CGcYtmZxM')
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          },
+        )
+        .then(
+          emailjs.sendForm('test1', 'ToInquirerTemplate', form.current, 'zJsaM-W6CGcYtmZxM').then(
+            (result) => {
+              console.log(result.text);
+            },
+            (error) => {
+              console.log(error.text);
+            },
+          ),
+        );
+    } else {
+      setErrorMsg('Invalid input found.');
+    }
+  };
+
+  console.log(errorMsg);
+  console.log(isFormSubmitted);
 
   const validatorDeterminator = (type) => {
     let validator;
@@ -135,8 +145,8 @@ const InquiryForm = () => {
             <CustomButton
               type='submit'
               disabled={
-                !formState.inputs.name.isValid ||
-                !formState.inputs.email.isValid ||
+                !formState.inputs.inquirerName.isValid ||
+                !formState.inputs.inquirerEmail.isValid ||
                 !formState.inputs.subjectLine.isValid ||
                 !formState.inputs.message.isValid
               }
@@ -154,6 +164,7 @@ const InquiryForm = () => {
               RESET
             </CustomButton>
           </div>
+          {errorMsg && <p className='error--msg'>{errorMsg}</p>}
         </form>
       )}
       {isFormSubmitted && (
