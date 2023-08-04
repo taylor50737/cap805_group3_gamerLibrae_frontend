@@ -42,6 +42,7 @@ import { gamePageLoader } from './shared/loader/gamePageLoader';
 import { reviewLoader } from './shared/loader/reviewLoader';
 import { reviewEditLoader } from './shared/loader/reviewEditLoader';
 import { submitReviewAction } from './shared/action/submitReviewAction';
+import { submitCommentAction } from './shared/action/submitCommentAction';
 import { homePageLoader } from './shared/loader/homePageLoader';
 
 const App = () => {
@@ -83,7 +84,12 @@ const App = () => {
           <Route index element={<ErrorPage />} />
           <Route path=':id'>
             <Route index element={<GamePage />} loader={gamePageLoader} />
-            <Route path='review/:rid' element={<ReviewPage />} loader={reviewLoader} />
+            <Route
+              path='review/:rid'
+              element={<ReviewPage />}
+              loader={reviewLoader}
+              action={submitCommentAction}
+            />
             <Route
               path='review-edit'
               element={

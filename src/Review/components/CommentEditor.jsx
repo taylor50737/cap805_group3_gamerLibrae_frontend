@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useFetcher } from 'react-router-dom';
 
 import { Box, TextField, IconButton, Avatar } from '@mui/material';
 
@@ -6,32 +7,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 import penguin from '/images/avatar/penguin.png';
+import useAuth from '../../shared/hooks/useAuth';
 
 const CommentEditor = () => {
-  const [text, setText] = useState('');
+  const fetcher = useFetcher();
+  const { loggedIn } = useAuth();
+  const [content, setContent] = useState('');
 
-  return (
+  return loggedIn ? (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Avatar src={penguin} style={{ height: 36, width: 36, marginLeft: 20 }} />
       <TextField
         multiline
         maxRows={3}
         variant='outlined'
-        value={text}
+        value={content}
         onChange={(event) => {
-          setText(event.target.value);
+          setContent(event.target.value);
         }}
         inputProps={{ maxLength: 320 }}
         InputProps={{
           endAdornment: (
-            <IconButton
-              onClick={() => {
-                setText('');
-                alert(text);
-              }}
-            >
-              <FontAwesomeIcon icon={faPaperPlane} size='sm' style={{ color: '#ffffff' }} />
-            </IconButton>
+            <fetcher.Form method='POST'>
+              <input name='content' value={content} readOnly style={{ display: 'none' }} />
+              <IconButton type='submit'>
+                <FontAwesomeIcon icon={faPaperPlane} size='sm' style={{ color: '#ffffff' }} />
+              </IconButton>
+            </fetcher.Form>
           ),
         }}
         sx={{
@@ -61,6 +63,8 @@ const CommentEditor = () => {
         }}
       />
     </Box>
+  ) : (
+    <span>Log in to post comment</span>
   );
 };
 
