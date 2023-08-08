@@ -38,7 +38,9 @@ const GameSearchResultPage = () => {
       </Grid>
 
       <Grid item md={3}>
-        <AdvanceGameSearchBox />
+        <Box sx={{ height: '482px' }}>
+          <AdvanceGameSearchBox extraSx={{ justifyContent: 'space-between', height: '100%' }} />
+        </Box>
       </Grid>
 
       <Grid item md={9}>
