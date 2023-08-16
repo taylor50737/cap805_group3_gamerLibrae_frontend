@@ -21,6 +21,8 @@ const UploadProfilePic = () => {
     setSuccessSubmission('You have successfully uploaded your image!');
   };
 
+  console.log(formState.isValid);
+
   return (
     <div className='flex flex-col items-center rounded-lg bg-gray-700 py-4 pb-4 pr-8'>
       <h1 className='text-3xl'>Upload Profile Picture</h1>
