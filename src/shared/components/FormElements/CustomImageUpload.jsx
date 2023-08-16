@@ -66,12 +66,29 @@ const CustomImageUpload = (props) => {
       setIsValid(false);
       fileIsValid = false;
     }
-    props.onInput(props.id, pickedFile, fileIsValid);
+    // props.onInput(props.id, pickedFile, fileIsValid);
   };
 
   const pickImageHandler = () => {
     filePickerRef.current.click();
   };
+
+  const handleCroppedImage = () => {
+    cropImage(imageSrc, croppedAreaPixels, console.log).then((image) => {
+      setCroppedImage(image);
+      setDialogOpen(false);
+      props.onInput(props.id, image, isValid);
+    });
+  };
+
+  const resetImageHandler = () => {
+    setImageSrc();
+    setCroppedImage();
+    setFile();
+    setIsValid(false);
+    props.onReset();
+  };
+
   return (
     <div className='form-control'>
       <input
@@ -94,11 +111,16 @@ const CustomImageUpload = (props) => {
               }}
             />
           )}
-          {!croppedImage && <p>Please pick a image.</p>}
+          {!croppedImage && <p>Please pick an image.</p>}
         </div>
-        <CustomButton type='button' onClick={pickImageHandler}>
-          PICK IMAGE
-        </CustomButton>
+        <div className='image--upload--button--section'>
+          <CustomButton type='button' onClick={pickImageHandler}>
+            PICK IMAGE
+          </CustomButton>
+          <CustomButton type='button' onClick={resetImageHandler}>
+            RESET
+          </CustomButton>
+        </div>
         <div>
           <Dialog open={dialogOpen} maxWidth='md' fullWidth>
             <DialogTitle>Crop Your Image</DialogTitle>
@@ -127,12 +149,7 @@ const CustomImageUpload = (props) => {
                 Cancel
               </Button>
               <Button
-                onClick={() =>
-                  cropImage(imageSrc, croppedAreaPixels, console.log).then((image) => {
-                    setCroppedImage(image);
-                    setDialogOpen(false);
-                  })
-                }
+                onClick={handleCroppedImage}
                 sx={{ bgcolor: '#4e5154', color: 'white', '&:hover': { bgcolor: '#1a1919' } }}
               >
                 Crop
