@@ -21,3 +21,18 @@
   height: 100%;
   object-fit: cover;
 }
+
+.image--upload--button--section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image--upload--button--section button:nth-child(1) {
+  margin-right: 0.75rem;
+}
+
+.image--upload--button--section button:nth-child(2) {
+  margin-left: 0.75rem;
+}
