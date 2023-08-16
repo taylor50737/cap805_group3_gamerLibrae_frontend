@@ -53,7 +53,7 @@ const Info = ({ game }) => {
           right: '0%',
         }}
       >
-        <Score score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'} size={175} />
+        <Score score={typeof game.score === 'number' ? Math.round(game.score) : '-'} size={175} />
       </Box>
 
       {/* Game Information*/}

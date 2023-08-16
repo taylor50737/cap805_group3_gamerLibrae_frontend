@@ -50,7 +50,7 @@ const TopGames = ({ games }) => {
           >
             <Box sx={{ position: 'absolute', top: '75%', left: '70%' }}>
               <Score
-                score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'}
+                score={typeof game.score === 'number' ? Math.round(game.score) : '-'}
                 size={50}
               />
             </Box>

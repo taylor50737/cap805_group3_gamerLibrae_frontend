@@ -65,7 +65,7 @@ const WishListItem = ({ games }) => {
             {/* Score */}
             <Grid item md={2} sx={{ display: 'flex', alignItems: 'center' }}>
               <Score
-                score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'}
+                score={typeof game.score === 'number' ? Math.round(game.score) : '-'}
                 size={100}
               />
             </Grid>
