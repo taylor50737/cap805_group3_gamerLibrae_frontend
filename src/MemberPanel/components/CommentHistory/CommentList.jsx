@@ -17,16 +17,16 @@ const CommentList = (props) => {
     <ul>
       {props.items.map((comment) => (
         <CommentItem
-          key={comment.cid}
-          id={comment.cid}
-          gid={comment.gid}
-          game={comment.game}
-          reviewId={comment.rid}
-          reviewCreatorId={comment.reviewCreatorId}
-          reviewCreator={comment.reviewCreator}
-          reviewTitle={comment.reviewTitle}
-          commentContext={comment.commentContext}
-          date={comment.date}
+          key={comment.id}
+          id={comment.id}
+          gid={comment.review.game.id}
+          game={comment.review.game.name}
+          reviewId={comment.review.id}
+          reviewCreatorId={comment.review.creator.id}
+          reviewCreator={comment.review.creator.userName}
+          reviewTitle={comment.review.title}
+          commentContext={comment.content}
+          date={comment.postDate}
         />
       ))}
     </ul>

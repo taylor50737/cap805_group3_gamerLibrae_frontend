@@ -52,7 +52,7 @@ const UploadProfilePic = () => {
   // console.log(formState.inputs.image.value);
 
   return (
-    <div className='flex flex-col items-center rounded-lg bg-gray-700 py-4 pb-4 pr-8'>
+    <div className='flex flex-col items-center rounded-lg bg-gray-700 py-4 pb-1 pr-8'>
       <h1 className='text-3xl'>Upload Profile Picture</h1>
       <form
         className='flex flex-col items-center justify-center py-12'
