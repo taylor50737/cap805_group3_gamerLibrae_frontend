@@ -34,7 +34,7 @@ const Review = ({ review }) => {
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CommentCount count={review.comments.length} size={20} sx={{ mr: '20px' }} />
-          <Vote originalVote={review.vote} size={20} sx={{ mr: '20px' }} />
+          {/* <Vote originalVote={review.vote} size={20} sx={{ mr: '20px' }} /> */}
           <Score score={review.rating} size={90} />
         </Box>
       </Box>

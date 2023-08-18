@@ -209,44 +209,8 @@ export const ReviewEditor = ({ onReviewContentChange, onReviewTitleChange }) => 
     },
     content: `
       <h3>
-        Hi there,
+        Insert review here...
       </h3>
-      <mark data-color="#666637" style="background-color: #666637; color: inherit">Highlighted text</mark>
-      <p>
-        this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-      </p>
-
-      <ul>
-        <li>
-          That’s a bullet list with one …
-        </li>
-        <li>
-          … or two list items.
-        </li>
-      </ul>
-
-      <ol>
-        <li>
-          That’s a oredered list with one …
-        </li>
-        <li>
-          … or two list items.
-        </li>
-      </ol>
-
-      <p>
-        I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forgot to check the other examples too.
-      </p>
-
-      <blockquote>
-        Wow, that’s amazing. Good work, boy! 👏
-        <br />
-        — Mom
-      </blockquote>
-
-      <span data-type="spoiler">
-        Test Spoiler
-      <span data-type="spoiler">
     `,
     onUpdate({ editor }) {
       onReviewContentChange(editor.getHTML());
