@@ -8,11 +8,54 @@ export default function CommentTab() {
   const [selectedComments, setSelectedComments] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
 
+  const getUser = async (userId) => {
+    return fetch(`${import.meta.env.VITE_API_PATH}/api/users/${userId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
+  const getUserName = async (data) => {
+    let newData = [...data]; // Create a new array to avoid mutating the original data
+    for (let i = 0; i < newData.length; i++) {
+      let userName;
+      try {
+        const res = await getUser(newData[i].creator);
+        const user = await res.json();
+        userName = user.user.userName;
+        newData[i].creatorName = userName; // Add the 'creatorName' property to the comment object
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return newData;
+  };
+
+  const getPlainTextFromHTML = async (data) => {
+    let newData = [...data]; // Create a new array to avoid mutating the original data
+    for (let i = 0; i < newData.length; i++) {
+      try {
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = newData[i].content;
+        const plainTextContent = tempElement.textContent || tempElement.innerText || '';
+        newData[i].content = plainTextContent; // Add the 'creatorName' property to the review object
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return newData;
+  };
+
   const fetchComments = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/comments/`);
-      const data = await res.json();
-      await setComments(data.comments);
+      let data = await res.json();
+      data = await getUserName(data.comments);
+      data = await getPlainTextFromHTML(data);
+      await setComments(data);
       setIsloading(false);
     } catch (error) {
       console.log(error);
@@ -30,6 +73,7 @@ export default function CommentTab() {
           method: 'DELETE',
         });
         const data = await res.json();
+        setSelectedComments([]);
         fetchComments();
         setSuccessMessage('Comment deleted');
       } catch (error) {
@@ -46,6 +90,7 @@ export default function CommentTab() {
           body: JSON.stringify(cids),
         });
         const data = await res.json();
+        setSelectedComments([]);
         setSuccessMessage('Comments deleted');
         fetchComments();
       } catch (error) {
@@ -61,10 +106,38 @@ export default function CommentTab() {
     fetchComments();
   }, []);
 
+  useEffect(() => {
+    setFilteredComments(comments);
+  }, [comments]);
+
+  //Search box
+  const [search, setSearch] = useState('');
+  const [filteredComments, setFilteredComments] = useState([]);
+
+  const handleSearch = (e) => {
+    const searchWord = e.target.value;
+    setSearch(searchWord);
+
+    if (searchWord.trim() === '') {
+      // If search input is empty, show all the games (no filter applied)
+      setFilteredComments(comments);
+    } else {
+      // Create a regular expression to match the search word as a whole word
+      const regex = new RegExp(`\\b${searchWord}`, 'i');
+
+      // Filter games based on partial word matches
+      const filteredComments = comments.filter((comment) => regex.test(comment.creatorName));
+
+      // Update the filteredGames state with the filtered games
+      setCurrentPage(1); // Reset to the first page when search changes
+      setFilteredComments(filteredComments);
+    }
+  };
+
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = isLoading ? [] : comments.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : filteredComments.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(comments.length / itemsPerPage);
@@ -91,7 +164,6 @@ export default function CommentTab() {
   return (
     <div>
       <div className='flex justify-end gap-5'>
-        {successMessage && <div role='alert'>{successMessage}</div>}
         <div className='dropdown-bottom dropdown'>
           <label tabIndex={0} className='btn-primary btn'>
             Action
@@ -108,7 +180,13 @@ export default function CommentTab() {
             </li>
           </ul>
         </div>
-        <input type='text' placeholder='Search' className='input-bordered input w-full max-w-xs' />
+        <input
+          type='text'
+          value={search}
+          placeholder='Search by User'
+          className='input-bordered input w-full max-w-xs'
+          onChange={handleSearch}
+        />
       </div>
       <div className='m-3 overflow-x-auto'>
         <table className='table'>
@@ -167,11 +245,11 @@ export default function CommentTab() {
                   </th>
                   <td>{indexOfFirstItem + index + 1}</td>
                   <td>
-                    <Link to={`/profile/${comment.commentUserId}`}>
+                    <Link to={`/profile/${comment.creator}`}>
                       {comment.content.split('. ')[0]}...
                     </Link>
                   </td>
-                  <td>{comment.creator}</td>
+                  <td>{comment.creatorName}</td>
                   <td>{comment.reports?.length || 0}</td>
                   <td>{comment.status}</td>
                 </tr>

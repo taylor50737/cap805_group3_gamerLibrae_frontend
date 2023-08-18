@@ -24,22 +24,26 @@ export default function ReportModal({ type, id }) {
       const reportContent = report;
       const creator = accountInfo.userId;
       const review = id;
+      const status = 'pending';
       body = {
         reportDateTime: reportDateTime,
         reportContent: reportContent,
         creator: creator,
         review: review,
+        status: status,
       };
     } else if (type === 'comment') {
       const reportDateTime = new Date();
       const reportContent = report;
       const creator = accountInfo.userId;
       const comment = id;
+      const status = 'pending';
       body = {
         reportDateTime: reportDateTime,
         reportContent: reportContent,
         creator: creator,
         comment: comment,
+        status: status,
       };
     }
     try {
