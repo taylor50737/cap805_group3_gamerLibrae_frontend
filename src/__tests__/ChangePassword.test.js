@@ -29,13 +29,13 @@ describe('ChangePassword', () => {
     const newPasswordInput = screen.getByLabelText('New Password');
     const confirmNewPassword = screen.getByLabelText('Confirm New Password');
 
-    fireEvent.change(currentPasswordInput, { target: { value: '12345' } });
-    fireEvent.change(newPasswordInput, { target: { value: '67890' } });
-    fireEvent.change(confirmNewPassword, { target: { value: '67890' } });
+    fireEvent.change(currentPasswordInput, { target: { value: '12345678' } });
+    fireEvent.change(newPasswordInput, { target: { value: '67890123' } });
+    fireEvent.change(confirmNewPassword, { target: { value: '67890123' } });
 
-    expect(currentPasswordInput.value).toBe('12345');
-    expect(newPasswordInput.value).toBe('67890');
-    expect(confirmNewPassword.value).toBe('67890');
+    expect(currentPasswordInput.value).toBe('12345678');
+    expect(newPasswordInput.value).toBe('67890123');
+    expect(confirmNewPassword.value).toBe('67890123');
   });
 
   test('Displays error message when current password field is empty', () => {
@@ -61,7 +61,7 @@ describe('ChangePassword', () => {
     fireEvent.blur(newPasswordInput);
 
     const errorMessage = screen.getByText(
-      'Please enter a valid new password, at least 5 characters.',
+      'Please enter a valid new password, at least 8 characters.',
     );
     expect(errorMessage).toBeInTheDocument();
   });
@@ -72,8 +72,8 @@ describe('ChangePassword', () => {
     const newPasswordInput = screen.getByLabelText('New Password');
     const confirmNewPassword = screen.getByLabelText('Confirm New Password');
 
-    fireEvent.change(newPasswordInput, { target: { value: '12345' } });
-    fireEvent.change(confirmNewPassword, { target: { value: '67890' } }); // user enter different confirm new password
+    fireEvent.change(newPasswordInput, { target: { value: '1234678' } });
+    fireEvent.change(confirmNewPassword, { target: { value: '67890123' } }); // user enter different confirm new password
     fireEvent.blur(confirmNewPassword);
 
     const errorMessage = screen.getByText(
@@ -91,12 +91,12 @@ describe('ChangePassword', () => {
     const submitButton = screen.getByText('SUBMIT');
 
     fireEvent.change(currentPasswordInput, { target: { value: '' } }); // User did not enter the current password
-    fireEvent.change(newPasswordInput, { target: { value: '12345' } });
-    fireEvent.change(confirmNewPassword, { target: { value: '12345' } });
+    fireEvent.change(newPasswordInput, { target: { value: '12345678' } });
+    fireEvent.change(confirmNewPassword, { target: { value: '12345678' } });
 
     expect(currentPasswordInput.value).toBe('');
-    expect(newPasswordInput.value).toBe('12345');
-    expect(confirmNewPassword.value).toBe('12345');
+    expect(newPasswordInput.value).toBe('12345678');
+    expect(confirmNewPassword.value).toBe('12345678');
     expect(submitButton).toBeDisabled(); // Expect the button to be initially disabled
   });
 
@@ -108,13 +108,13 @@ describe('ChangePassword', () => {
     const confirmNewPassword = screen.getByLabelText('Confirm New Password');
     const submitButton = screen.getByText('SUBMIT');
 
-    fireEvent.change(currentPasswordInput, { target: { value: '12345' } });
-    fireEvent.change(newPasswordInput, { target: { value: '56789' } });
-    fireEvent.change(confirmNewPassword, { target: { value: '56789' } });
+    fireEvent.change(currentPasswordInput, { target: { value: '12345678' } });
+    fireEvent.change(newPasswordInput, { target: { value: '56789123' } });
+    fireEvent.change(confirmNewPassword, { target: { value: '56789123' } });
 
-    expect(currentPasswordInput.value).toBe('12345');
-    expect(newPasswordInput.value).toBe('56789');
-    expect(confirmNewPassword.value).toBe('56789');
+    expect(currentPasswordInput.value).toBe('12345678');
+    expect(newPasswordInput.value).toBe('56789123');
+    expect(confirmNewPassword.value).toBe('56789123');
     expect(submitButton).toBeEnabled(); // Expect the button to be enabled now
   });
 });

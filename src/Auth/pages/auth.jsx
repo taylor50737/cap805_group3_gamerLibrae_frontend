@@ -120,8 +120,8 @@ const Auth = () => {
           placeholder={
             isLoginMode ? 'Enter your password' : 'Enter a password with at least 8 characters'
           }
-          validators={[VALIDATOR_MINLENGTH(3)]}
-          errorText='Please enter a valid password, at least 3 characters.'
+          validators={[VALIDATOR_MINLENGTH(8)]}
+          errorText='Please enter a valid password, at least 8 characters.'
           onInput={inputHandler}
         />
         {!isLoginMode && (

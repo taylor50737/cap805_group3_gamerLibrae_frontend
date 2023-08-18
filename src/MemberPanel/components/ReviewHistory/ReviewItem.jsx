@@ -18,7 +18,7 @@ const ReviewItem = (props) => {
   const plainText = getPlainTextFromHTML(htmlString);
 
   useEffect(() => {
-    const fetchReviews = async () => {
+    const fetchGames = async () => {
       try {
         const responseData = await sendRequest(
           `${import.meta.env.VITE_API_PATH}/api/games/${props.game}`,
@@ -26,7 +26,7 @@ const ReviewItem = (props) => {
         setLoadedGame(responseData);
       } catch (err) {}
     };
-    fetchReviews();
+    fetchGames();
   }, [sendRequest, props.game]);
 
   return (

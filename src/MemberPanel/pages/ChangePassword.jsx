@@ -58,8 +58,8 @@ const ChangePassword = () => {
           type='password'
           label='Current Password'
           placeholder='Enter your current password'
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText='Please enter a valid current password, at least 5 characters.'
+          validators={[VALIDATOR_MINLENGTH(8)]}
+          errorText='Please enter a valid current password, at least 8 characters.'
           onInput={inputHandler}
         />
         <CustomInput
@@ -67,9 +67,9 @@ const ChangePassword = () => {
           id='newPassword'
           type='password'
           label='New Password'
-          placeholder='Enter a new password with at least 5 characters'
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText='Please enter a valid new password, at least 5 characters.'
+          placeholder='Enter a new password with at least 8 characters'
+          validators={[VALIDATOR_MINLENGTH(8)]}
+          errorText='Please enter a valid new password, at least 8 characters.'
           onInput={inputHandler}
         />
         <CustomInput

@@ -1,4 +1,7 @@
-import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useHttpClient } from '../../../shared/hooks/http-hook';
+import { iso8601dateToString } from '../../../shared/util/iso8601dateToString';
 
 const CommentItem = (props) => {
   return (
@@ -7,7 +10,7 @@ const CommentItem = (props) => {
         <div className='flex'>
           <div className='h-32 w-1/2 px-4 py-7'>
             <div className='flex flex-row'>
-              <div className='text-sm'>User: &nbsp;</div>
+              <div className='text-sm'>Creator: &nbsp;</div>
               <NavLink
                 to={`/profile/${props.reviewCreatorId}`}
                 className='line-clamp-1 text-sm font-semibold tracking-wide text-indigo-200 hover:underline'
@@ -37,7 +40,9 @@ const CommentItem = (props) => {
             </div>
           </div>
           <div className='w-1/2 px-4 py-4'>
-            <p className='mt-2 line-clamp-1 text-sm text-slate-400'>{props.date}</p>
+            <p className='mt-2 line-clamp-1 text-sm text-slate-400'>
+              {iso8601dateToString(props.date)}
+            </p>
             <p className='text-sm'>Comment:</p>
             <p className=' line-clamp-3 text-slate-500'>{props.commentContext}</p>
           </div>
