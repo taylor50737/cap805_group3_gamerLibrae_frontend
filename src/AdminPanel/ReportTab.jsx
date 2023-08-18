@@ -4,13 +4,40 @@ import { Link } from 'react-router-dom';
 export default function ReportTab() {
   const [reports, setReports] = useState([]);
   const [isLoading, setIsloading] = useState(true);
+  const [selectedReports, setSelectedReports] = useState([]);
 
-  const fetchUsers = async () => {
+  const getUser = async (userId) => {
+    return fetch(`${import.meta.env.VITE_API_PATH}/api/users/${userId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
+  const getUserName = async (data) => {
+    let newData = [...data]; // Create a new array to avoid mutating the original data
+    for (let i = 0; i < newData.length; i++) {
+      let userName;
+      try {
+        const res = await getUser(newData[i].creator);
+        const user = await res.json();
+        userName = user.user.userName;
+        newData[i].creatorName = userName; // Add the 'creatorName' property to the comment object
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return newData;
+  };
+
+  const fetchReports = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/reports/`);
-      const data = await res.json();
-      console.log(data);
-      await setReports(data.reports);
+      let data = await res.json();
+      data = await getUserName(data.reports);
+      await setReports(data);
       setIsloading(false);
     } catch (err) {
       console.log(err);
@@ -18,10 +45,38 @@ export default function ReportTab() {
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchReports();
   }, []);
 
-  const fields = ['', 'ID', 'Report', 'User', 'Status'];
+  useEffect(() => {
+    setFilteredReports(reports);
+  }, [reports]);
+
+  //Search box
+  const [search, setSearch] = useState('');
+  const [filteredReports, setFilteredReports] = useState([]);
+
+  const handleSearch = (e) => {
+    const searchWord = e.target.value;
+    setSearch(searchWord);
+
+    if (searchWord.trim() === '') {
+      // If search input is empty, show all the games (no filter applied)
+      setFilteredReports(reports);
+    } else {
+      // Create a regular expression to match the search word as a whole word
+      const regex = new RegExp(`\\b${searchWord}`, 'i');
+
+      // Filter games based on partial word matches
+      const filteredReports = reports.filter((report) => regex.test(report.creatorName));
+
+      // Update the filteredGames state with the filtered games
+      setCurrentPage(1); // Reset to the first page when search changes
+      setFilteredReports(filteredReports);
+    }
+  };
+
+  const fields = ['ID', 'Report', 'User'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -29,7 +84,7 @@ export default function ReportTab() {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = isLoading ? [] : reports.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : filteredReports.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(reports.length / itemsPerPage);
@@ -53,11 +108,55 @@ export default function ReportTab() {
     }
   };
 
+  const changeReportStatus = async () => {
+    let rid;
+    if (selectedReports.length === 0) {
+      setSuccessMessage('No content has been selected');
+    } else if (selectedReports.length === 1) {
+      rid = selectedReports[0];
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/reports/${rid}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            status: 'reviewed',
+          }),
+        });
+        const data = await res.json();
+        fetchReports();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log(reports);
+  }, [reports]);
+
   return (
     <div>
       <div className='flex justify-end gap-5'>
         {/* <ActionButton selectedComments={selectedComments} /> */}
-        <input type='text' placeholder='Search' className='input-bordered input w-full max-w-xs' />
+        {/* <div className='dropdown-bottom dropdown'>
+          <label tabIndex={0} className='btn-primary btn'>
+            Action
+          </label>
+          <ul
+            tabIndex={0}
+            className='dropdown-content menu rounded-box z-[1] w-52 bg-black p-2 shadow'
+          >
+            <li>
+              <button onClick={() => changeReportStatus()}>Reviewed</button>
+            </li>
+          </ul>
+        </div> */}
+        <input
+          type='text'
+          value={search}
+          placeholder='Search by User'
+          className='input-bordered input w-full max-w-xs'
+          onChange={handleSearch}
+        />
       </div>
       <div className='m-3 overflow-x-auto'>
         <table className='table'>
@@ -85,17 +184,32 @@ export default function ReportTab() {
             ) : (
               currentItems.map((report, index) => (
                 <tr key={index}>
-                  <th>
+                  {/* <th>
                     <label>
-                      <input type='checkbox' className='checkbox' />
+                      <input
+                        type='checkbox'
+                        className='checkbox'
+                        checked={selectedReports.includes(report.id)}
+                        onChange={() => {
+                          if (selectedReports.includes(report.id)) {
+                            setSelectedReports((prevSelectedReports) =>
+                              prevSelectedReports.filter((id) => id !== report.id),
+                            );
+                          } else {
+                            setSelectedReports((prevSelectedReports) => [
+                              ...prevSelectedReports,
+                              report.id,
+                            ]);
+                          }
+                        }}
+                      />
                     </label>
-                  </th>
+                  </th> */}
                   <td>{indexOfFirstItem + index + 1}</td>
-                  <Link to={`/profile/${report.report_userId}`}>
+                  <Link to={`/profile/${report.creator}`}>
                     <td>{report.reportContent}</td>
                   </Link>
-                  <td>{report.creator}</td>
-                  <td>{report.status}Reviewed</td>
+                  <td>{report.creatorName}</td>
                 </tr>
               ))
             )}

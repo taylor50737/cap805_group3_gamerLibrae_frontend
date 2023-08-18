@@ -2,12 +2,8 @@ import GameTab from './GameTab';
 import UserTab from './UserTab';
 import ReviewTab from './ReviewTab';
 import CommentTab from './CommentTab';
-import ActionButton from './components/ActionButton';
-import NewButton from './components/NewButton';
-import { games, users, reviews } from './tempData';
 import { useState } from 'react';
 import ReportTab from './ReportTab';
-import ReportModal from '../Report/ReportModal';
 
 export default function AdminPanel() {
   const tabs = [
@@ -26,7 +22,6 @@ export default function AdminPanel() {
 
   return (
     <div className='m-10'>
-      <ReportModal />
       {/* Admin Panel */}
       <div className='m-auto flex justify-center'>
         <div className='btn-group'>

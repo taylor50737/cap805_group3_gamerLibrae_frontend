@@ -48,7 +48,7 @@ export default function UserTab() {
     }
   };
 
-  const fields = ['', 'ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
+  const fields = ['ID', 'Username', 'Email', 'Tier', 'Affilate', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -87,7 +87,7 @@ export default function UserTab() {
         <input
           value={search}
           type='text'
-          placeholder='Search'
+          placeholder='Search User'
           className='input-bordered input w-full max-w-xs'
           onChange={handleSearch}
         />
@@ -118,11 +118,11 @@ export default function UserTab() {
             ) : (
               currentItems.map((user, index) => (
                 <tr key={user.userName}>
-                  <th>
+                  {/* <th>
                     <label>
                       <input type='checkbox' className='checkbox' />
                     </label>
-                  </th>
+                  </th> */}
                   <td>{indexOfFirstItem + index + 1}</td>
                   <td className='avatar'>
                     <div className='w-8'>
@@ -141,7 +141,7 @@ export default function UserTab() {
         </table>
       </div>
       {/* Pagination */}
-      <div className='absolute inset-x-0 bottom-[260px]'>
+      <div className=''>
         <div className='m-auto text-center'>
           <div className='join flex justify-around'>
             <button className='btn-ghost join-item btn' onClick={goToPreviousPage}>
