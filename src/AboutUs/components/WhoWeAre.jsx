@@ -16,17 +16,14 @@ function WhoAreWe({ scrollTo, goToSectionRef }) {
             </cite>
           </p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
+            Gamer Librae is developed by Team 852_Code9 in 2023. We are a passionate team of
+            dedicated gamers who believe in providing the most unbiased and genuine reviews out
+            there. Every review you find on our platform comes straight from real gamers who have
+            immersed themselves in the world of gaming. Gamer Librae is about the collective voice
+            of gamers sharing their experiences to enrich your gaming journey. Enjoy yourself in the
+            ultimate destination for authentic game reviews.
           </p>
         </div>
-        <button className='aboutus--downarrow' onClick={() => scrollTo(goToSectionRef)}>
-          <KeyboardDoubleArrowDownIcon fontSize='large' sx={{ color: '#ff00a0' }} />
-        </button>
       </div>
     </div>
   );
