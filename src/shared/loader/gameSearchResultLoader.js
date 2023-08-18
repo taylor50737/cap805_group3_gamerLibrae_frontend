@@ -11,7 +11,7 @@ export const gameSearchResultLoader = async ({ request }) => {
   const gamesRes = getGames(params).then(
     (res) =>
       new Promise((resolve) => {
-        setTimeout(() => resolve(res), 1500); // fake delay
+        setTimeout(() => resolve(res), 0); // fake delay
       }),
   );
   return defer({

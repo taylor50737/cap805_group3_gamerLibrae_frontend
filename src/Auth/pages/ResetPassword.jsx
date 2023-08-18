@@ -45,7 +45,7 @@ const ResetPassword = () => {
           if (json.message === 'Password changed!') {
             setTimeout(() => {
               navigate('/auth');
-            }, 3000);
+            }, 0);
           }
         });
     } catch (err) {
