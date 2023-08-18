@@ -14,6 +14,7 @@ export default [
     label: 'Email Address',
     type: 'email',
     value: 'email',
+    name: 'email',
     defaultValue: '',
     errorText: 'Please enter a valid email address',
   },

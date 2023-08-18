@@ -1,5 +1,5 @@
 import './AffReg.css';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AffContext } from '../shared/context/AffContext';
 import CustomInput from '../shared/components/FormElements/CustomInput';
@@ -9,6 +9,7 @@ import { VALIDATOR_EMAIL, VALIDATOR_YOUTUBETWITCH } from '../shared/util/validat
 import AffRegTextFieldProps from './components/AffRegTextFieldProps';
 import AffTNC from './components/AffRegTNC';
 import CustomCheckbox from '../shared/components/FormElements/CustomCheckbox';
+import emailjs from '@emailjs/browser';
 
 const AffReg = ({ sucPost }) => {
   const [isTncChecked, setIsTncChecked] = useState(false);
@@ -16,6 +17,8 @@ const AffReg = ({ sucPost }) => {
   const { fetchUserAff } = useContext(AffContext);
   const { affFormPosted, setAffFormPosted, loading, affState, setAffState } =
     useContext(AffContext);
+
+  const form = useRef();
 
   const navigate = useNavigate();
 
@@ -50,6 +53,7 @@ const AffReg = ({ sucPost }) => {
         id={data.id}
         type={data.type}
         label={data.label}
+        name={data.name}
         validators={data.type === 'email' ? [VALIDATOR_EMAIL()] : [VALIDATOR_YOUTUBETWITCH()]}
         errorText={data.errorText}
         onInput={inputHandler}
@@ -80,6 +84,14 @@ const AffReg = ({ sucPost }) => {
 
         if (affRegistrationResponse.status === 201) {
           navigate('/affiliation-suc');
+          emailjs.sendForm('Test1', 'ToRegistorTemplate', form.current, 'uDorBlNM9ZCEXKuqp').then(
+            (result) => {
+              console.log(result.text);
+            },
+            (error) => {
+              console.log(error.text);
+            },
+          );
         } else {
           const resJson = await affRegistrationResponse.json();
           console.log(resJson.message);
@@ -95,7 +107,7 @@ const AffReg = ({ sucPost }) => {
 
   return (
     <div className='affreg font-dmsans'>
-      <form className='affreg--form' onSubmit={submitAffRegForm}>
+      <form className='affreg--form' ref={form} onSubmit={submitAffRegForm}>
         <div className='affreg--block'>
           <h4 className='text-lg'>
             Please fill in the below form to register for the affiliation program.
