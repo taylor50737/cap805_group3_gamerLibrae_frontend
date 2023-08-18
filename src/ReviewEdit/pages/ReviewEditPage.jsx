@@ -53,7 +53,7 @@ export const ReviewEditPage = () => {
 
       {/* Submit buttons */}
       <div className='flex justify-end'>
-        <Button
+        {/* <Button
           variant='contained'
           onClick={() => {
             // Insert form submission here
@@ -74,7 +74,7 @@ export const ReviewEditPage = () => {
           }}
         >
           Save draft
-        </Button>
+        </Button> */}
 
         <Form method='post'>
           <input name='score' value={score} readOnly style={{ display: 'none' }} />

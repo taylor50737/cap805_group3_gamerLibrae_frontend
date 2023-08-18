@@ -6,7 +6,7 @@ export const gamePageLoader = async ({ request, params }) => {
   const gameRes = getGame(params.id).then(
     (res) =>
       new Promise((resolve) => {
-        setTimeout(() => resolve(res), 500); // fake delay
+        setTimeout(() => resolve(res), 0); // fake delay
       }),
   );
 

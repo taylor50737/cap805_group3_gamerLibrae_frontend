@@ -8,7 +8,7 @@ export const reviewLoader = async ({ request, params }) => {
   const reviewRes = getReview(params.rid).then(
     (res) =>
       new Promise((resolve) => {
-        setTimeout(() => resolve(res), 500); // fake delay
+        setTimeout(() => resolve(res), 0); // fake delay
       }),
   );
 
