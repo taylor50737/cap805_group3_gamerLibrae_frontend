@@ -43,7 +43,7 @@ const ReviewPreview = ({ review }) => {
         {/* Last child */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CommentCount count={review.comments.length} size={18} sx={{ mr: '18px' }} />
-          <Vote originalVote={review.vote} size={18} />
+          {/* <Vote originalVote={review.vote} size={18} /> */}
         </Box>
       </Grid>
 
