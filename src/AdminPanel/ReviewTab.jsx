@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 export default function ReviewTab() {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsloading] = useState(true);
+  const [selectedReviews, setSelectedReviews] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const getUser = async (userId) => {
     return fetch(`${import.meta.env.VITE_API_PATH}/api/users/${userId}`, {
@@ -31,6 +33,7 @@ export default function ReviewTab() {
       let data = await res.json();
       data = await getUserName(data.reviews);
       data = await getGameName(data);
+      data = await getPlainTextFromHTML(data);
       await setReviews(data);
       setIsloading(false);
     } catch (err) {
@@ -70,9 +73,72 @@ export default function ReviewTab() {
     return newData;
   };
 
+  const getPlainTextFromHTML = async (data) => {
+    let newData = [...data]; // Create a new array to avoid mutating the original data
+    for (let i = 0; i < newData.length; i++) {
+      try {
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = newData[i].content;
+        const plainTextContent = tempElement.textContent || tempElement.innerText || '';
+        newData[i].content = plainTextContent; // Add the 'creatorName' property to the review object
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return newData;
+  };
+
   useEffect(() => {
     fetchReviews();
   }, []);
+
+  useEffect(() => {
+    setFilteredReviews(reviews);
+  }, [reviews]);
+
+  //Search box
+  const [search, setSearch] = useState('');
+  const [filteredReviews, setFilteredReviews] = useState([]);
+
+  const handleSearch = (e) => {
+    const searchWord = e.target.value;
+    setSearch(searchWord);
+
+    if (searchWord.trim() === '') {
+      // If search input is empty, show all the games (no filter applied)
+      setFilteredReviews(reviews);
+    } else {
+      // Create a regular expression to match the search word as a whole word
+      const regex = new RegExp(`\\b${searchWord}`, 'i');
+
+      // Filter games based on partial word matches
+      const filteredReviews = reviews.filter((review) => regex.test(review.creatorName));
+
+      // Update the filteredGames state with the filtered games
+      setCurrentPage(1); // Reset to the first page when search changes
+      setFilteredReviews(filteredReviews);
+    }
+  };
+
+  const deleteReview = async () => {
+    let rid;
+    if (selectedReviews.length === 0) {
+      setSuccessMessage('No content has been selected');
+    } else if (selectedReviews.length === 1) {
+      rid = selectedReviews[0];
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_PATH}/api/reviews/${rid}`, {
+          method: 'DELETE',
+        });
+        const data = await res.json();
+        setSelectedReviews([]);
+        fetchReviews();
+        setSuccessMessage('Review deleted');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const fields = ['', 'Index', 'Review', 'Creator', 'Game', '#Comments', '#Reports', 'Status'];
 
@@ -82,7 +148,7 @@ export default function ReviewTab() {
   // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = isLoading ? [] : reviews.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = isLoading ? [] : filteredReviews.slice(indexOfFirstItem, indexOfLastItem);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(reviews.length / itemsPerPage);
@@ -109,8 +175,29 @@ export default function ReviewTab() {
   return (
     <div>
       <div className='flex justify-end gap-5'>
-        {/* <ActionButton selectedComments={selectedComments} /> */}
-        <input type='text' placeholder='Search' className='input-bordered input w-full max-w-xs' />
+        <div className='dropdown-bottom dropdown'>
+          <label tabIndex={0} className='btn-primary btn'>
+            Action
+          </label>
+          <ul
+            tabIndex={0}
+            className='dropdown-content menu rounded-box z-[1] w-52 bg-black p-2 shadow'
+          >
+            {/* <li>
+          <a>Edit</a>
+        </li> */}
+            <li>
+              <button onClick={() => deleteReview()}>Delete</button>
+            </li>
+          </ul>
+        </div>
+        <input
+          type='text'
+          value={search}
+          placeholder='Search by User'
+          className='input-bordered input w-full max-w-xs'
+          onChange={handleSearch}
+        />
       </div>
       <div className='m-3 overflow-x-auto'>
         <table className='table'>
@@ -140,7 +227,23 @@ export default function ReviewTab() {
                 <tr key={index}>
                   <th>
                     <label>
-                      <input type='checkbox' className='checkbox' />
+                      <input
+                        type='checkbox'
+                        className='checkbox'
+                        checked={selectedReviews.includes(review._id)}
+                        onChange={() => {
+                          if (selectedReviews.includes(review._id)) {
+                            setSelectedReviews((prevSelectedReviews) =>
+                              prevSelectedReviews.filter((id) => id !== review._id),
+                            );
+                          } else {
+                            setSelectedReviews((prevSelectedReviews) => [
+                              ...prevSelectedReviews,
+                              review._id,
+                            ]);
+                          }
+                        }}
+                      />
                     </label>
                   </th>
                   <td>{indexOfFirstItem + index + 1}</td>

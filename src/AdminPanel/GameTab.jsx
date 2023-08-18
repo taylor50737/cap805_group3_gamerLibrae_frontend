@@ -52,7 +52,7 @@ export default function GameTab({}) {
   };
 
   //Table variables
-  const fields = ['', 'ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
+  const fields = ['ID', 'Game', 'Developer', 'Publisher', 'Release Date', 'Status'];
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedGames, setselectedGames] = useState([]);
@@ -94,7 +94,7 @@ export default function GameTab({}) {
           <input
             value={search}
             type='text'
-            placeholder='Search'
+            placeholder='Search Game'
             className='input-bordered input w-full max-w-xs'
             onChange={handleSearch}
           />
@@ -126,7 +126,7 @@ export default function GameTab({}) {
             ) : (
               currentItems.map((game, index) => (
                 <tr key={game._id}>
-                  <th>
+                  {/* <th>
                     <label>
                       <input
                         type='checkbox'
@@ -147,7 +147,7 @@ export default function GameTab({}) {
                         }}
                       />
                     </label>
-                  </th>
+                  </th> */}
                   <td data-testid={`selected-game-${index + 1}`}>{indexOfFirstItem + index + 1}</td>
                   <td>
                     <Link to={`/game/${game._id}`}>{game.name}</Link>
