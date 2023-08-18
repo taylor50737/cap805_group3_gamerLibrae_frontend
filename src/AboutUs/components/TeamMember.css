@@ -1,6 +1,23 @@
 @media screen and (max-width: 600px) {
   .team--member--player {
     flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .team--member--player--desc {
+    margin-left: 0 !important;
+  }
+
+  .team--member--player--desc h1 {
+    font-size: 15px !important;
+  }
+
+  .team--member--player--desc p {
+    font-size: 10.5px !important;
+  }
+
+  .team--member--player--desc > * {
+    padding: 0.4rem !important;
   }
 }
 
@@ -36,6 +53,7 @@
 
 .team--member--player--row > img:hover {
   width: calc(var(--s) / 2);
+  cursor: pointer;
   /* height: var(--s); */
 }
 
