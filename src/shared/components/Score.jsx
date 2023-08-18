@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 const green = 'rgba(0, 255, 159, 1)';
 const yellow = 'rgba(255, 245, 0, 1)';
 const red = 'rgba(231, 77, 77, 1)';
+const gray = 'rgba(220,220,220, 1)';
 
 const toZeroOpacity = (color) => color.substring(0, color.length - 2) + '0)';
 
@@ -80,8 +81,10 @@ export const Score = ({ score, size }) => {
     scoreColor = green;
   } else if (score > 40) {
     scoreColor = yellow;
-  } else {
+  } else if (score > 0) {
     scoreColor = red;
+  } else {
+    scoreColor = gray;
   }
   return (
     <ScoreContainer>

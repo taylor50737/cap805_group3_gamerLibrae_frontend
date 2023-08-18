@@ -12,7 +12,7 @@ const CommentSection = ({ comments }) => {
 
       {/* Comment display */}
       {comments.length === 0 ? (
-        <span>No Comment yet</span>
+        <div className='pb-3 text-center'>No Comment yet</div>
       ) : (
         comments.map((cm, i) => <Comment key={i} comment={cm} sx={{ mb: '20px' }} />)
       )}

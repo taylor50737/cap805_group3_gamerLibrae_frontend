@@ -11,12 +11,12 @@ import useAuth from '../../shared/hooks/useAuth';
 
 const CommentEditor = () => {
   const fetcher = useFetcher();
-  const { loggedIn } = useAuth();
+  const { loggedIn, avatar } = useAuth();
   const [content, setContent] = useState('');
 
   return loggedIn ? (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Avatar src={penguin} style={{ height: 36, width: 36, marginLeft: 20 }} />
+      <Avatar src={avatar} style={{ height: 36, width: 36, marginLeft: 20 }} />
       <TextField
         multiline
         maxRows={3}

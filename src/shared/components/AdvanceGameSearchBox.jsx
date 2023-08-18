@@ -15,6 +15,7 @@ import {
   Paper,
   Typography,
   CircularProgress,
+  Tooltip,
 } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -31,7 +32,7 @@ const genreChoosable = [
   'Puzzlers',
 ];
 const platformChoosable = ['Switch', 'PS5', 'PC', 'Xbox Series X'];
-const playModeChoosable = ['Single-Player', 'Offline', 'Multi-Player', 'Online'];
+const playModeChoosable = ['Single-Player', 'Multi-Player', 'Offline', 'Online'];
 const EARLIEST_YEAR = 1990;
 const CURRENT_YEAR = new Date().getFullYear();
 const MIN_SCORE = 0;
@@ -136,7 +137,8 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
             {...getTagProps({ i })}
             sx={{
               border: 'none',
-              bgcolor: '#9747ff',
+              borderRadius: '8px',
+              bgcolor: '#b47bff',
               color: '#ffffff',
               '.MuiChip-label': { fontSize: '12px', px: '8px' },
               '.MuiChip-deleteIcon': { fontSize: '15px' },
@@ -149,7 +151,7 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
           color: 'white',
           '& fieldset': {
             borderWidth: '2px',
-            borderRadius: '18px',
+            borderRadius: '4px',
             borderColor: '#B7B7B7',
           },
           '&:hover fieldset': {
@@ -169,7 +171,7 @@ const MultiDropdownSelector = ({ categoryName, options, searchOption, setSearchO
 
 const MultiCheckboxSelector = ({ options, searchOption, setSearchOption }) => {
   return (
-    <FormGroup sx={{ borderWidth: '2px', borderColor: '#B7B7B7', borderRadius: '18px' }}>
+    <FormGroup sx={{ borderWidth: '2px', borderColor: '#B7B7B7', borderRadius: '4px' }}>
       <Grid container>
         {options.map((option, i) => (
           <Grid key={i} item md={6}>
@@ -209,6 +211,16 @@ const MultiCheckboxSelector = ({ options, searchOption, setSearchOption }) => {
   );
 };
 
+function ValueLabelComponent(props) {
+  const { children, value } = props;
+
+  return (
+    <Tooltip enterTouchDelay={0} placement='top' title={value}>
+      {children}
+    </Tooltip>
+  );
+}
+
 const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) => {
   const handleChange = (event, newRange, activeThumb) => {
     if (!Array.isArray(newRange)) {
@@ -227,7 +239,7 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
       <Typography sx={{ display: 'inline', float: 'left', color: '#808080' }}>
         {rangeName}
       </Typography>
-      <Typography sx={{ display: 'inline', float: 'right', fontWeight: 600 }}>
+      <Typography sx={{ display: 'inline', float: 'right' }}>
         {range[0]} - {range[1]}
       </Typography>
       <Slider
@@ -237,6 +249,9 @@ const RangeSelector = ({ rangeName, min, max, step, minDist, range, setRange }) 
         min={min}
         max={max}
         step={step}
+        slots={{
+          valueLabel: ValueLabelComponent,
+        }}
         sx={{
           '.MuiSlider-thumb': {
             color: '#d7dbe0',
@@ -290,10 +305,12 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
         ...extraSx,
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'space-around',
         borderRadius: 2,
-        p: '10px',
+        p: '15px',
         gap: '10px',
-        bgcolor: '#292525',
+        bgcolor: '#343c48',
+        fontFamily: 'dmsans',
         overflowX: 'hidden',
         overflowY: 'auto',
         ...scrollBarStyle,
@@ -311,11 +328,17 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
         searchOption={platforms}
         setSearchOption={setPlatforms}
       />
-      <MultiCheckboxSelector
+      <MultiDropdownSelector
+        categoryName='Mode'
         options={playModeChoosable}
         searchOption={modes}
         setSearchOption={setModes}
       />
+      {/* <MultiCheckboxSelector
+        options={playModeChoosable}
+        searchOption={modes}
+        setSearchOption={setModes}
+      /> */}
       <RangeSelector
         rangeName='Time period'
         min={EARLIEST_YEAR}
@@ -335,24 +358,26 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
         setRange={setScoreRange}
       />
       <Grid container spacing={'10px'}>
-        <Grid item md={4}>
+        <Grid item md={6}>
           <Button
             variant='contained'
             fullWidth
             onClick={handleReset}
             sx={{
-              bgcolor: '#D9D9D9',
-              color: '#000000',
+              bgcolor: 'transparent',
+              color: '#f2f3ee',
               ':hover': {
-                bgcolor: '#33353d',
-                color: 'white',
+                bgcolor: 'rgba(183, 183, 183, 0.5)',
+                color: '#f2f3ee',
               },
+              border: '1px solid #f2f3ee',
+              borderRadius: '3.2px',
             }}
           >
             Reset
           </Button>
         </Grid>
-        <Grid item md={8}>
+        <Grid item md={6}>
           {/* This GET form will submit a query and redirect to gameSearchResultPage */}
           <Form action='/search' style={{ height: '100%' }}>
             <input
@@ -397,13 +422,15 @@ export const AdvanceGameSearchBox = ({ extraSx }) => {
               fullWidth
               type='submit'
               sx={{
-                bgcolor: '#D9D9D9',
-                color: '#000000',
+                bgcolor: '#f2f3ee',
+                color: '#0d0c11',
                 height: '100%',
                 ':hover': {
-                  bgcolor: '#33353d',
-                  color: 'white',
+                  bgcolor: 'transparent',
+                  color: '#f2f3ee',
                 },
+                border: '1px solid #f2f3ee',
+                borderRadius: '3.2px',
               }}
             >
               Submit

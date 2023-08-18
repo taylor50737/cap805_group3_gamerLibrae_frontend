@@ -48,7 +48,7 @@ const TeamMember = ({ scrollTo, goToSectionRef }) => {
                 onClick={() => handlePlayerClick(3)}
               />
               <img
-                src='/images/AboutUs/TeamMember_3.png'
+                src='/images/AboutUs/TeamMember_4.png'
                 alt=''
                 onClick={() => handlePlayerClick(4)}
               />

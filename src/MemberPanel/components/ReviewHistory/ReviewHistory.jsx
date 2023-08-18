@@ -16,7 +16,10 @@ const ReviewHistory = () => {
         const responseData = await sendRequest(
           `${import.meta.env.VITE_API_PATH}/api/reviews/user/${userId}`,
         );
-        setLoadedReviews(responseData.reviews);
+        const sortedReviews = responseData.reviews.sort(
+          (a, b) => new Date(b.postingDate) - new Date(a.postingDate),
+        );
+        setLoadedReviews(sortedReviews);
       } catch (err) {}
     };
     fetchReviews();

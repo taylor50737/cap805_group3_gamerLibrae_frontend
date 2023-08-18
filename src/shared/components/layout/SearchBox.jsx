@@ -165,7 +165,7 @@ export const SearchBox = ({ fullWidth, marginLeft, resultBoxHeight }) => {
               sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
               <Score
-                score={typeof game.score === 'number' ? Math.round(game.score) : 'NaN'}
+                score={typeof game.score === 'number' ? Math.round(game.score) : '-'}
                 size={50}
               />
             </Grid>
